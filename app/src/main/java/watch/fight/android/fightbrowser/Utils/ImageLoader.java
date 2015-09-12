@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /*
+    DEPRECATED (Using Picasso Instead because .... it's way better)
     This class is responsible for async loading an image.  Will call setImage on a passed in imageview after acquiring image.
  */
 

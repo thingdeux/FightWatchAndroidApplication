@@ -23,9 +23,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import watch.fight.android.fightbrowser.Twitch.TwitchConsumer;
+import watch.fight.android.fightbrowser.Twitch.TwitchFeaturedStream;
 import watch.fight.android.fightbrowser.Twitch.TwitchHttpLoader;
 import watch.fight.android.fightbrowser.Twitch.TwitchStream;
+import watch.fight.android.fightbrowser.Twitch.TwitchStreamHolder;
 import watch.fight.android.fightbrowser.Twitch.TwitchStreamListAdapter;
 
 public class BrowserActivity extends AppCompatActivity {
@@ -47,6 +48,8 @@ public class BrowserActivity extends AppCompatActivity {
         mRecylerView = (RecyclerView) findViewById(R.id.browser_recycler_view);
         mLayoutManager = new GridLayoutManager(this, RECYCLER_VIEW_GRID_MAX);
 
+        mAdapter = new TwitchStreamListAdapter();
+        mRecylerView.setAdapter(mAdapter);
         mRecylerView.setLayoutManager(mLayoutManager);
         setUILoading();
         loadTwitchStream();
@@ -74,11 +77,15 @@ public class BrowserActivity extends AppCompatActivity {
                 Log.d(TAG, "Received Twitch Response: " + result);
                 // Receive the response from the Twitch API, populate the recyclerviewadapter
                 Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-//                String testJsonString = getTestJsonString(R.raw.test_twitch);
                 TwitchStream ts = gson.fromJson(result, TwitchStream.class);
-                mAdapter = new TwitchStreamListAdapter(ts.getFeatured());
-                mRecylerView.setAdapter(mAdapter);
-                setUIReady();
+                TwitchStreamHolder.getInstance().setFeaturedStreams(ts.getFeatured());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                        setUIReady();
+                    }
+                });
             }
         });
 

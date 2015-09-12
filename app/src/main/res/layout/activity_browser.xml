@@ -10,6 +10,8 @@
     <TextView android:id="@+id/twitch_loading_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAppearance="@android:style/TextAppearance.Medium"
         android:text="@string/twitch_loading_message"/>
 
 

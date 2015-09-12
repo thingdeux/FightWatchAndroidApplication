@@ -24,6 +24,7 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> {
     protected Bitmap doInBackground(Void... params) {
         try {
             URL urlConnection = new URL(url);
+            Log.v("ImageLoader", "Loading Image Url: " + url);
             HttpURLConnection connection = (HttpURLConnection) urlConnection
                     .openConnection();
             connection.setDoInput(true);

@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">FightBrowser</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">FGC Companion</string>
+    <string name="action_settings">Preferences</string>
+    <string name="twitch_stream_image_description">Twitch Stream Image</string>
+    <string name="twitch_watch_button">Watch</string>
+    <string name="twitch_Chat_button">Chat</string>
+    <string name="twitch_loading_message">Loading Featured Twitch Streams</string>
 </resources>

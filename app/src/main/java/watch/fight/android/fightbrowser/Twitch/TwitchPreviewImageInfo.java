@@ -1,5 +1,7 @@
 package watch.fight.android.fightbrowser.Twitch;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 
 /**
@@ -18,19 +20,28 @@ public class TwitchPreviewImageInfo {
     @Expose
     private String template;
 
-    public String getSmall() {
+    public String getSmallImage() {
         return small;
     }
 
-    public String getMedium() {
+    public String getMediumImage() {
         return medium;
     }
 
-    public String getLarge() {
+    public String getLargeImage() {
         return large;
     }
 
-    public String getTemplate() {
+    public String getTemplateImage() {
         return template;
+    }
+
+    public String getTemplateImage(int width, int height) {
+        String templateToModify = template;
+        templateToModify = templateToModify.replace("{width}", "" + width);
+        templateToModify = templateToModify.replace("{height}", "" + height);
+        Log.d("StringReplace", templateToModify);
+        return templateToModify;
+
     }
 }

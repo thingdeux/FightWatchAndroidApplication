@@ -1,14 +1,18 @@
 package watch.fight.android.fightbrowser;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,6 +23,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import watch.fight.android.fightbrowser.Twitch.TwitchConsumer;
+import watch.fight.android.fightbrowser.Twitch.TwitchHttpLoader;
 import watch.fight.android.fightbrowser.Twitch.TwitchStream;
 import watch.fight.android.fightbrowser.Twitch.TwitchStreamListAdapter;
 
@@ -26,6 +32,10 @@ public class BrowserActivity extends AppCompatActivity {
     private RecyclerView mRecylerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private boolean haveStreamsLoaded = false;
+    private static int RECYCLER_VIEW_GRID_MAX = 2;
+    private TextView mLoadingTextView;
+    private TwitchHttpLoader mTwitchLoader;
 
     private static String TAG = BrowserActivity.TAG;
 
@@ -33,22 +43,63 @@ public class BrowserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
 
-        // Create Twitch Test Data
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        String testJsonString = getTestJsonString(R.raw.test_twitch);
-        Log.v(TAG, testJsonString);
-
-        TwitchStream ts = gson.fromJson(testJsonString, TwitchStream.class);
+        mLoadingTextView = (TextView) findViewById(R.id.twitch_loading_text);
         mRecylerView = (RecyclerView) findViewById(R.id.browser_recycler_view);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecylerView.setLayoutManager(mLayoutManager);
+        mLayoutManager = new GridLayoutManager(this, RECYCLER_VIEW_GRID_MAX);
 
-        mAdapter = new TwitchStreamListAdapter(ts.getFeatured());
-        mRecylerView.setAdapter(mAdapter);
+        mRecylerView.setLayoutManager(mLayoutManager);
+        setUILoading();
+        loadTwitchStream();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!haveStreamsLoaded) {
+            setUILoading();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // TODO : Clear all cached images and responses.
+    }
+
+    public void loadTwitchStream() {
+        mTwitchLoader = new TwitchHttpLoader();
+        mTwitchLoader.setCustomObjectListener(new TwitchHttpLoader.IHttpResponse() {
+            @Override
+            public void onReceivedResponse(String result) {
+                Log.d(TAG, "Received Twitch Response: " + result);
+                // Receive the response from the Twitch API, populate the recyclerviewadapter
+                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+//                String testJsonString = getTestJsonString(R.raw.test_twitch);
+                TwitchStream ts = gson.fromJson(result, TwitchStream.class);
+                mAdapter = new TwitchStreamListAdapter(ts.getFeatured());
+                mRecylerView.setAdapter(mAdapter);
+                setUIReady();
+            }
+        });
+
+        mTwitchLoader.getTwitchData("https://api.twitch.tv/kraken/streams/featured");
+
 
     }
 
+    public void setUILoading() {
+        if (mRecylerView != null) {
+            mRecylerView.setVisibility(View.INVISIBLE);
+            mLoadingTextView.setVisibility(View.VISIBLE);
+        }
+    }
 
+    public void setUIReady() {
+        if (mRecylerView != null) {
+            mLoadingTextView.setVisibility(View.INVISIBLE);
+            mRecylerView.setVisibility(View.VISIBLE);
+        }
+    }
 
 
 

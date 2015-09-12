@@ -35,7 +35,7 @@ public class BrowserActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private boolean haveStreamsLoaded = false;
     private static int RECYCLER_VIEW_GRID_MAX = 2;
-    private TextView mLoadingTextView;
+    private View mLoadingTextView;
     private TwitchHttpLoader mTwitchLoader;
 
     private static String TAG = BrowserActivity.TAG;
@@ -44,7 +44,7 @@ public class BrowserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
 
-        mLoadingTextView = (TextView) findViewById(R.id.twitch_loading_text);
+        mLoadingTextView = (View) findViewById(R.id.twitch_loading_container);
         mRecylerView = (RecyclerView) findViewById(R.id.browser_recycler_view);
         mLayoutManager = new GridLayoutManager(this, RECYCLER_VIEW_GRID_MAX);
 
@@ -60,6 +60,7 @@ public class BrowserActivity extends AppCompatActivity {
         super.onResume();
         if (!haveStreamsLoaded) {
             setUILoading();
+            loadTwitchStream();
         }
     }
 

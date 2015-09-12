@@ -4,5 +4,6 @@
     <string name="twitch_stream_image_description">Twitch Stream Image</string>
     <string name="twitch_watch_button">Watch</string>
     <string name="twitch_Chat_button">Chat</string>
-    <string name="twitch_loading_message">Loading Featured Twitch Streams</string>
+    <string name="twitch_loading_message_title">Please Wait</string>
+    <string name="twitch_loading_message_subtitle">Loading Featured Twitch Streams</string>
 </resources>

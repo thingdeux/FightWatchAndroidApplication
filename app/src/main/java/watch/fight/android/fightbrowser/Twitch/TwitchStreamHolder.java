@@ -2,17 +2,21 @@ package watch.fight.android.fightbrowser.Twitch;
 
 import android.util.Log;
 
+import watch.fight.android.fightbrowser.Twitch.models.TwitchFeaturedStream;
+import watch.fight.android.fightbrowser.Twitch.models.TwitchStreamInfo;
+
 /**
  * Created by josh on 9/12/15.
  */
 public class TwitchStreamHolder {
     private static TwitchStreamHolder mStreamHolder = null;
-    private TwitchFeaturedStream[] mStreams;
+    private TwitchFeaturedStream[] mFeaturedStreams;
+    private TwitchStreamInfo[] mStreams;
 
     public static TwitchStreamHolder getInstance() {
         if (mStreamHolder == null) {
             TwitchStreamHolder tsh = new TwitchStreamHolder();
-            tsh.setFeaturedStreams(new TwitchFeaturedStream[0]);
+            tsh.setStreams(new TwitchStreamInfo[0]);
             mStreamHolder = tsh;
         }
         return mStreamHolder;
@@ -21,16 +25,22 @@ public class TwitchStreamHolder {
     protected TwitchStreamHolder() {
     }
 
+    public TwitchStreamInfo[] getStreams() { return mStreams; }
+
+    public TwitchStreamInfo getStream(int position) { return mStreams[position]; }
+
+    public void setStreams(TwitchStreamInfo[] streams) { mStreams = streams; }
+
     public TwitchFeaturedStream[] getFeatured() {
-        return mStreams;
+        return mFeaturedStreams;
     }
 
     public TwitchFeaturedStream getFeatured(int position) {
-        return mStreams[position];
+        return mFeaturedStreams[position];
     }
 
     public void setFeaturedStreams(TwitchFeaturedStream[] featured) {
         Log.d("TwitchStreamHolder", "Setting " + featured.length + " streams");
-        mStreams = featured;
+        mFeaturedStreams = featured;
     }
 }

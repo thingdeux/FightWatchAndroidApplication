@@ -13,15 +13,15 @@ import android.view.View;
 public class BrowserActivity extends AppCompatActivity {
     private void initPaging() {
         // Create Fragments
-        BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
-        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street Fighter");
+//        BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
+        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Hearthstone");
+        BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Starcraft");
 
         // Setup FragmentManager
         BrowserPagerAdapter browserAdapter = new BrowserPagerAdapter(getSupportFragmentManager());
-        browserAdapter.addFragment(twitchBrowser);
+//        browserAdapter.addFragment(twitchBrowser);
         browserAdapter.addFragment(gameSpecificBrowser);
-
-        Log.e("BrowserActivity", browserAdapter.toString());
+        browserAdapter.addFragment(gameSpecificBrowser2);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.browser_viewPager);
         viewPager.setAdapter(browserAdapter);

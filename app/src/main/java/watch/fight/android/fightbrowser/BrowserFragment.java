@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import watch.fight.android.fightbrowser.Twitch.TwitchHttpLoader;
-import watch.fight.android.fightbrowser.Twitch.TwitchStream;
+import watch.fight.android.fightbrowser.Twitch.models.TwitchStream;
 import watch.fight.android.fightbrowser.Twitch.TwitchStreamHolder;
 import watch.fight.android.fightbrowser.Twitch.TwitchStreamListAdapter;
 
@@ -29,10 +29,10 @@ public class BrowserFragment extends Fragment {
     private View mLoadingTextView;
     private TwitchHttpLoader mTwitchLoader;
 
-    private static final String TAG = BrowserFragment.TAG;
+    private static final String TAG = BrowserFragment.class.getSimpleName();
 
     public static final String BROWSER_FRAGMENT_TYPE = "watch.fight.android.fightbrowser.fragment_type";
-    public static final String BROWSER_FRAGMENT_GAME = "watch.fight.android.fightbrowser.fragment_type";
+    public static final String BROWSER_FRAGMENT_GAME = "watch.fight.android.fightbrowser.fragment_game";
     public static final int BROWSER_FRAGMENT_FEATURED_TYPE = 1;
     public static final int BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE = 2;
     public static final int BROWSER_FRAGMENT_POPULAR_TYPE = 3;
@@ -60,6 +60,7 @@ public class BrowserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v(TAG, "onCreateView Called");
         View v = inflater.inflate(R.layout.fragment_twitch_browser, container, false);
 
         mLoadingTextView = (View) v.findViewById(R.id.twitch_loading_container);
@@ -70,28 +71,39 @@ public class BrowserFragment extends Fragment {
         mRecylerView.setAdapter(mAdapter);
         mRecylerView.setLayoutManager(mLayoutManager);
         setUILoading();
-        if (savedInstanceState != null) {
-            int fragment_type = savedInstanceState.getInt(BROWSER_FRAGMENT_TYPE);
-            String gameName = savedInstanceState.getString(BROWSER_FRAGMENT_GAME);
+
+        Bundle args = getArguments();
+
+        if (args != null) {
+
+            int fragment_type = args.getInt(BROWSER_FRAGMENT_TYPE, 0);
+            String gameName = args.getString(BROWSER_FRAGMENT_GAME, null);
 
             if (fragment_type > 0) {
                 switch (fragment_type) {
                     case BROWSER_FRAGMENT_FEATURED_TYPE:
-                        loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30");
+                        Log.v(TAG, "Received Featured Fragment Intent");
+                        loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30", fragment_type);
                         break;
                     case BROWSER_FRAGMENT_POPULAR_TYPE:
-                        loadTwitchStream("https://api.twitch.tv/kraken/streams/featured");
+                        Log.v(TAG, "Received Popular Fragment Intent");
+                        loadTwitchStream("https://api.twitch.tv/kraken/streams/featured", fragment_type);
                         break;
                     case BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE:
-                        loadTwitchStream("https://api.twitch.tv/kraken/streams/featured");
-                        break;
-                    default:
+                        Log.v(TAG, "Received Game Specific Fragment Intent");
+                        if (gameName != null) {
+                            loadTwitchStream("https://api.twitch.tv/kraken/search/streams?q=" + gameName + "&limit=30", fragment_type);
+                        } else {
+                            throw new IllegalArgumentException("Game name required for a game specific fragment");
+                        }
                         break;
                 }
-
+                haveStreamsLoaded = true;
             }
         } else {
-            loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30");
+            Log.v(TAG, "No arguments found in intent");
+            loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30", 0);
+            haveStreamsLoaded = true;
         }
 
         return v;
@@ -100,13 +112,15 @@ public class BrowserFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!haveStreamsLoaded) {
-            setUILoading();
-            loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30");
-        }
+        // TODO : Query Twitch Again if it's been more than .... 2 mins from last call.
+        Log.v(TAG, "onResume Called");
+//        if (!haveStreamsLoaded) {
+//            setUILoading();
+//            loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30");
+//        }
     }
 
-    public void loadTwitchStream(String url) {
+    public void loadTwitchStream(String url, final int fragmentType) {
         // TODO : Catch no response and set Error UI State
         // TODO : Catch No Results and set Empty Streams UI State
         mTwitchLoader = new TwitchHttpLoader();
@@ -117,7 +131,18 @@ public class BrowserFragment extends Fragment {
                 // Receive the response from the Twitch API, populate the recyclerviewadapter
                 Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 TwitchStream ts = gson.fromJson(result, TwitchStream.class);
-                TwitchStreamHolder.getInstance().setFeaturedStreams(ts.getFeatured());
+
+                switch (fragmentType) {
+                    case BROWSER_FRAGMENT_FEATURED_TYPE:
+                        TwitchStreamHolder.getInstance().setStreams(ts.getStreamsFromFeatured());
+                        break;
+                    case BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE:
+                        TwitchStreamHolder.getInstance().setStreams(ts.getStreams());
+                        break;
+                    case BROWSER_FRAGMENT_POPULAR_TYPE:
+                        break;
+                }
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

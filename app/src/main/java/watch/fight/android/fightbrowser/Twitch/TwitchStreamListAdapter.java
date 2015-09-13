@@ -2,10 +2,8 @@ package watch.fight.android.fightbrowser.Twitch;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +14,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Twitch.models.TwitchStreamInfo;
 
 /**
  * Created by josh on 9/11/15.
@@ -66,11 +63,11 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
 
 //        Picasso.with(holder.mContext).setIndicatorsEnabled(true);
         Picasso.with(holder.mContext)
-                .load(mStreamHolder.getFeatured(position).getStream().getPreview().getMediumImage())
+                .load(mStreamHolder.getStream(position).getPreview().getMediumImage())
                 .placeholder(R.drawable.twitch_stream_default)
                 .into(holder.mImageView);
 
-        TwitchStreamInfo stream = mStreamHolder.getFeatured(position).getStream();
+        TwitchStreamInfo stream = mStreamHolder.getStream(position);
         // Lop off the game name if it's greater than 12 Characters and replace with ...
         String gameTitle = stream.getGame();
         if (gameTitle.length() >= 12) {
@@ -83,7 +80,7 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
         holder.mTextViewStreamChannelName.setText(stream.getChannel().getName());
 
         // Set Click Listener to get twitch url
-        holder.mStreamUrl = "twitch://open?stream=" + mStreamHolder.getFeatured(position).getStream().getChannel().getName();
+        holder.mStreamUrl = "twitch://open?stream=" + mStreamHolder.getStream(position).getChannel().getName();
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +95,7 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
 
     @Override
     public int getItemCount() {
-        return mStreamHolder.getFeatured().length;
+        return mStreamHolder.getStreams().length;
     }
 
     private boolean isTwitchAppInstalled(String packagename, Context context) {

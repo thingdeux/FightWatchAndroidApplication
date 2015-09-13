@@ -1,7 +1,5 @@
 package watch.fight.android.fightbrowser.Twitch;
 
-
-
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
+
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -18,7 +16,7 @@ import java.net.URL;
  * Created by josh on 9/12/15.
  */
 public class TwitchConsumer extends AsyncTask<Void, Void, String> {
-    private static final String TAG = TwitchConsumer.TAG;
+    private static final String TAG = TwitchConsumer.class.getSimpleName();
     private String mUrl;
     private TwitchHttpLoader.IHttpResponse mCallback;
 

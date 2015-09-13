@@ -1,6 +1,7 @@
-package watch.fight.android.fightbrowser.Twitch;
+package watch.fight.android.fightbrowser.Twitch.models;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by josh on 9/11/15.
@@ -16,6 +17,7 @@ public class TwitchFeaturedStream {
     private String title;
 
     @Expose
+    @SerializedName("stream")
     private TwitchStreamInfo stream;
 
     public String getImage() {

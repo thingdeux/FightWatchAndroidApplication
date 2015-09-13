@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.UUID;
+
 import watch.fight.android.fightbrowser.Twitch.TwitchHttpLoader;
 import watch.fight.android.fightbrowser.Twitch.models.TwitchStream;
 import watch.fight.android.fightbrowser.Twitch.TwitchStreamHolder;
@@ -28,6 +30,7 @@ public class BrowserFragment extends Fragment {
     private static int RECYCLER_VIEW_GRID_MAX = 2;
     private View mLoadingTextView;
     private TwitchHttpLoader mTwitchLoader;
+    private UUID mFragmentID = UUID.randomUUID();
 
     private static final String TAG = BrowserFragment.class.getSimpleName();
 
@@ -67,7 +70,7 @@ public class BrowserFragment extends Fragment {
         mRecylerView = (RecyclerView) v.findViewById(R.id.browser_recycler_view);
         mLayoutManager = new GridLayoutManager(this.getActivity(), RECYCLER_VIEW_GRID_MAX);
 
-        mAdapter = new TwitchStreamListAdapter();
+        mAdapter = new TwitchStreamListAdapter(mFragmentID);
         mRecylerView.setAdapter(mAdapter);
         mRecylerView.setLayoutManager(mLayoutManager);
         setUILoading();
@@ -82,15 +85,12 @@ public class BrowserFragment extends Fragment {
             if (fragment_type > 0) {
                 switch (fragment_type) {
                     case BROWSER_FRAGMENT_FEATURED_TYPE:
-                        Log.v(TAG, "Received Featured Fragment Intent");
                         loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30", fragment_type);
                         break;
                     case BROWSER_FRAGMENT_POPULAR_TYPE:
-                        Log.v(TAG, "Received Popular Fragment Intent");
                         loadTwitchStream("https://api.twitch.tv/kraken/streams/featured", fragment_type);
                         break;
                     case BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE:
-                        Log.v(TAG, "Received Game Specific Fragment Intent");
                         if (gameName != null) {
                             loadTwitchStream("https://api.twitch.tv/kraken/search/streams?q=" + gameName + "&limit=30", fragment_type);
                         } else {
@@ -134,10 +134,10 @@ public class BrowserFragment extends Fragment {
 
                 switch (fragmentType) {
                     case BROWSER_FRAGMENT_FEATURED_TYPE:
-                        TwitchStreamHolder.getInstance().setStreams(ts.getStreamsFromFeatured());
+                        TwitchStreamHolder.getInstance(mFragmentID).setStreams(ts.getStreamsFromFeatured());
                         break;
                     case BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE:
-                        TwitchStreamHolder.getInstance().setStreams(ts.getStreams());
+                        TwitchStreamHolder.getInstance(mFragmentID).setStreams(ts.getStreams());
                         break;
                     case BROWSER_FRAGMENT_POPULAR_TYPE:
                         break;

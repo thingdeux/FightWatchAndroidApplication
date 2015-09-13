@@ -2,6 +2,9 @@ package watch.fight.android.fightbrowser.Twitch;
 
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 import watch.fight.android.fightbrowser.Twitch.models.TwitchFeaturedStream;
 import watch.fight.android.fightbrowser.Twitch.models.TwitchStreamInfo;
 
@@ -9,17 +12,20 @@ import watch.fight.android.fightbrowser.Twitch.models.TwitchStreamInfo;
  * Created by josh on 9/12/15.
  */
 public class TwitchStreamHolder {
-    private static TwitchStreamHolder mStreamHolder = null;
+//    private static TwitchStreamHolder mStreamHolder = null;
+    private static HashMap<UUID, TwitchStreamHolder> mStreamHolder = new HashMap<UUID, TwitchStreamHolder>();
     private TwitchFeaturedStream[] mFeaturedStreams;
     private TwitchStreamInfo[] mStreams;
 
-    public static TwitchStreamHolder getInstance() {
-        if (mStreamHolder == null) {
+    // TODO : Need to Refactor StreamHolder to allow for multiple datasets
+
+    public static TwitchStreamHolder getInstance(UUID fragmentId) {
+        if (mStreamHolder.get(fragmentId) == null) {
             TwitchStreamHolder tsh = new TwitchStreamHolder();
             tsh.setStreams(new TwitchStreamInfo[0]);
-            mStreamHolder = tsh;
+            mStreamHolder.put(fragmentId, tsh);
         }
-        return mStreamHolder;
+        return mStreamHolder.get(fragmentId);
     }
 
     protected TwitchStreamHolder() {

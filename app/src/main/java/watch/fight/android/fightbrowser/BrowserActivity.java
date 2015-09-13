@@ -1,27 +1,30 @@
 package watch.fight.android.fightbrowser;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 
 public class BrowserActivity extends AppCompatActivity {
     private void initPaging() {
         // Create Fragments
-//        BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
-        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Hearthstone");
-        BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Starcraft");
+        BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
+        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street");
+        BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Mortal");
+        BrowserFragment gameSpecificBrowser3 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Smash");
+        BrowserFragment gameSpecificBrowser4 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Tekken");
 
         // Setup FragmentManager
         BrowserPagerAdapter browserAdapter = new BrowserPagerAdapter(getSupportFragmentManager());
-//        browserAdapter.addFragment(twitchBrowser);
+        browserAdapter.addFragment(twitchBrowser);
         browserAdapter.addFragment(gameSpecificBrowser);
         browserAdapter.addFragment(gameSpecificBrowser2);
+        browserAdapter.addFragment(gameSpecificBrowser3);
+        browserAdapter.addFragment(gameSpecificBrowser4);
+
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.browser_viewPager);
         viewPager.setAdapter(browserAdapter);

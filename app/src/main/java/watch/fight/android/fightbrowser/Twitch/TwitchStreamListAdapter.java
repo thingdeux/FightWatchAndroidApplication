@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.UUID;
 
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Twitch.models.TwitchStreamInfo;
@@ -42,8 +45,8 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
     }
 
     // Provide constructor for the dataset to use in the recycler view
-    public TwitchStreamListAdapter() {
-        mStreamHolder = TwitchStreamHolder.getInstance();
+    public TwitchStreamListAdapter(@NonNull UUID uniqueFragmentId) {
+        mStreamHolder = TwitchStreamHolder.getInstance(uniqueFragmentId);
     }
 
     @Override

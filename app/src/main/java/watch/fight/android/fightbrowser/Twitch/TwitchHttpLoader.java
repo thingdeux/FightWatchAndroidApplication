@@ -23,9 +23,7 @@ public class TwitchHttpLoader {
 
     public void getTwitchData(String Url) {
         TwitchConsumer tc = new TwitchConsumer(Url, listener);
-        Log.d("TwitchHttpLoader", "Created consumer");
         tc.execute();
-        Log.d("TwitchHttpLoader", "Fired off execution of HttpLoader");
     }
 
 

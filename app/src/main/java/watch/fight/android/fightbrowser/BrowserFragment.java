@@ -29,7 +29,33 @@ public class BrowserFragment extends Fragment {
     private View mLoadingTextView;
     private TwitchHttpLoader mTwitchLoader;
 
-    private static String TAG = BrowserFragment.TAG;
+    private static final String TAG = BrowserFragment.TAG;
+
+    public static final String BROWSER_FRAGMENT_TYPE = "watch.fight.android.fightbrowser.fragment_type";
+    public static final String BROWSER_FRAGMENT_GAME = "watch.fight.android.fightbrowser.fragment_type";
+    public static final int BROWSER_FRAGMENT_FEATURED_TYPE = 1;
+    public static final int BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE = 2;
+    public static final int BROWSER_FRAGMENT_POPULAR_TYPE = 3;
+
+
+    public static BrowserFragment newInstance(int type, String gameName) {
+        BrowserFragment browserFragment = new BrowserFragment();
+        Bundle args = new Bundle();
+        args.putInt(BROWSER_FRAGMENT_TYPE, type);
+        args.putString(BROWSER_FRAGMENT_GAME, gameName);
+        browserFragment.setArguments(args);
+
+        return browserFragment;
+    }
+
+    public static BrowserFragment newInstance(int type) {
+        BrowserFragment browserFragment = new BrowserFragment();
+        Bundle args = new Bundle();
+        args.putInt(BROWSER_FRAGMENT_TYPE, type);
+        browserFragment.setArguments(args);
+
+        return browserFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +70,30 @@ public class BrowserFragment extends Fragment {
         mRecylerView.setAdapter(mAdapter);
         mRecylerView.setLayoutManager(mLayoutManager);
         setUILoading();
-        loadTwitchStream();
+        if (savedInstanceState != null) {
+            int fragment_type = savedInstanceState.getInt(BROWSER_FRAGMENT_TYPE);
+            String gameName = savedInstanceState.getString(BROWSER_FRAGMENT_GAME);
+
+            if (fragment_type > 0) {
+                switch (fragment_type) {
+                    case BROWSER_FRAGMENT_FEATURED_TYPE:
+                        loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30");
+                        break;
+                    case BROWSER_FRAGMENT_POPULAR_TYPE:
+                        loadTwitchStream("https://api.twitch.tv/kraken/streams/featured");
+                        break;
+                    case BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE:
+                        loadTwitchStream("https://api.twitch.tv/kraken/streams/featured");
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        } else {
+            loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30");
+        }
+
         return v;
     }
 
@@ -53,11 +102,13 @@ public class BrowserFragment extends Fragment {
         super.onResume();
         if (!haveStreamsLoaded) {
             setUILoading();
-            loadTwitchStream();
+            loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30");
         }
     }
 
-    public void loadTwitchStream() {
+    public void loadTwitchStream(String url) {
+        // TODO : Catch no response and set Error UI State
+        // TODO : Catch No Results and set Empty Streams UI State
         mTwitchLoader = new TwitchHttpLoader();
         mTwitchLoader.setCustomObjectListener(new TwitchHttpLoader.IHttpResponse() {
             @Override
@@ -77,7 +128,7 @@ public class BrowserFragment extends Fragment {
             }
         });
 
-        mTwitchLoader.getTwitchData("https://api.twitch.tv/kraken/streams/featured");
+        mTwitchLoader.getTwitchData(url);
 
 
     }

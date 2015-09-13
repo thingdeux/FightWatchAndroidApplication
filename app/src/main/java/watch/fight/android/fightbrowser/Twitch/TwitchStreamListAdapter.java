@@ -1,7 +1,13 @@
 package watch.fight.android.fightbrowser.Twitch;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import watch.fight.android.fightbrowser.R;
 
@@ -19,15 +27,20 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
     private TwitchStreamHolder mStreamHolder;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
+        public View mCardView;
+        public TextView mTextViewStreamInfo;
+        public TextView mTextViewStreamChannelName;
         public ImageView mImageView;
+        public String mStreamUrl;
         public Context mContext;
 
         public ViewHolder(View v) {
             super(v);
             mContext = v.getContext();
-            mTextView = (TextView) v.findViewById(R.id.twitch_stream_title);
+            mTextViewStreamChannelName = (TextView) v.findViewById(R.id.twitch_stream_broadcaster_name);
+            mTextViewStreamInfo = (TextView) v.findViewById(R.id.twitch_stream_title);
             mImageView = (ImageView) v.findViewById(R.id.twitch_stream_header);
+            mCardView = (View) v.findViewById(R.id.card_view);
         }
     }
 
@@ -47,26 +60,55 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
 
     // Replace the contents of a view (called by layout manager
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // Get element from the dataset and replace the current contents of the viewholder with it
         holder.mImageView.setImageResource(R.drawable.twitch_stream_default);
-        // Deprecated ... so so Deprecated (Thanks Picasso)
-        /* ImageLoader loader = new ImageLoader(mStreamHolder.getFeatured(position).getStream().getPreview().getMediumImage(), holder.mImageView);
-        loader.execute(); */
-        Picasso.with(holder.mContext).setIndicatorsEnabled(true);
+
+//        Picasso.with(holder.mContext).setIndicatorsEnabled(true);
         Picasso.with(holder.mContext)
                 .load(mStreamHolder.getFeatured(position).getStream().getPreview().getMediumImage())
                 .placeholder(R.drawable.twitch_stream_default)
                 .into(holder.mImageView);
 
-        // TODO : Only load images when the user is not scrolling, load Twitch PlaceHolder in each view until then
-        holder.mTextView.setText(mStreamHolder.getFeatured(position).getTitle());
+        TwitchStreamInfo stream = mStreamHolder.getFeatured(position).getStream();
+        // Lop off the game name if it's greater than 12 Characters and replace with ...
+        String gameTitle = stream.getGame();
+        if (gameTitle.length() >= 12) {
+            gameTitle = gameTitle.substring(0, 11) + "...";
+        }
+
+        holder.mTextViewStreamInfo.setText("Playing " + gameTitle +
+                " for " + stream.getViewers() + " viewers");
+
+        holder.mTextViewStreamChannelName.setText(stream.getChannel().getName());
+
+        // Set Click Listener to get twitch url
+        holder.mStreamUrl = "twitch://open?stream=" + mStreamHolder.getFeatured(position).getStream().getChannel().getName();
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("TwitchStreamList", "Opening Stream " + holder.mStreamUrl);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(holder.mStreamUrl));
+                v.getContext().startActivity(i);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-//        Log.v("RecyclerAdapter", "Stream Holder has streams " + mData.length + " found");
         return mStreamHolder.getFeatured().length;
+    }
+
+    private boolean isTwitchAppInstalled(String packagename, Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
 }

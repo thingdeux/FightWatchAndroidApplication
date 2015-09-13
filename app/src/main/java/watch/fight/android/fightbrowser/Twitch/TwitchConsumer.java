@@ -18,11 +18,11 @@ import java.net.URL;
  * Created by josh on 9/12/15.
  */
 public class TwitchConsumer extends AsyncTask<Void, Void, String> {
+    private static final String TAG = TwitchConsumer.TAG;
     private String mUrl;
     private TwitchHttpLoader.IHttpResponse mCallback;
 
     public TwitchConsumer(String url, TwitchHttpLoader.IHttpResponse callback) {
-        Log.d("TwitchConsumer", "ReceivedRequestToConsume");
         mUrl = url;
         mCallback = callback;
     }
@@ -31,15 +31,15 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         try {
             URL urlConnection = new URL(mUrl);
-            Log.d("TwitchConsumer", "Requested Url from: " + mUrl);
+            Log.d(TAG, "Requested Url from: " + mUrl);
             HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
             connection.setDoInput(true);
             connection.connect();
             int response = connection.getResponseCode();
             InputStream input = connection.getInputStream();
             String contentAsString = readIt(input);
-            Log.v("TwitchConsumer", "Received Response code from Twitch: " + response);
-            Log.d("TwitchConsumer", "Calling callback: " + mCallback.toString());
+            Log.v(TAG, "Received Response code from Twitch: " + response);
+            Log.d(TAG, "Calling callback: " + mCallback.toString());
             mCallback.onReceivedResponse(contentAsString);
             return input.toString();
         } catch (Exception e) {
@@ -53,6 +53,7 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
         super.onPostExecute(result);
     }
 
+    // TODO : Should probably use a handy dandy http library instead of doing this. Will Refactor
     // Reads an InputStream and converts it to a String.
     public String readIt(InputStream stream) throws IOException, UnsupportedEncodingException {
         BufferedReader r = new BufferedReader(new InputStreamReader(stream));

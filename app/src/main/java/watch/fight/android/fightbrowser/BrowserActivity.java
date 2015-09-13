@@ -13,11 +13,13 @@ import android.view.View;
 public class BrowserActivity extends AppCompatActivity {
     private void initPaging() {
         // Create Fragments
-        BrowserFragment twitchBrowser = new BrowserFragment();
+        BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
+        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street Fighter");
 
         // Setup FragmentManager
         BrowserPagerAdapter browserAdapter = new BrowserPagerAdapter(getSupportFragmentManager());
         browserAdapter.addFragment(twitchBrowser);
+        browserAdapter.addFragment(gameSpecificBrowser);
 
         Log.e("BrowserActivity", browserAdapter.toString());
 

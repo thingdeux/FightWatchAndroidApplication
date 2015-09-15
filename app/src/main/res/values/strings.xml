@@ -1,9 +1,26 @@
 <resources>
     <string name="app_name">FGC Companion</string>
+    <string name="browser_activity_name">Streams</string>
     <string name="action_settings">Preferences</string>
     <string name="twitch_stream_image_description">Twitch Stream Image</string>
     <string name="twitch_watch_button">Watch</string>
     <string name="twitch_Chat_button">Chat</string>
     <string name="twitch_loading_message_title">Please Wait</string>
     <string name="twitch_loading_message_subtitle">Loading Featured Twitch Streams</string>
+
+
+
+    <string name="menu_dashboard_name">Dashboard</string>
+    <string name="menu_events_name">Events</string>
+    <string name="menu_news_name">News</string>
+    <string name="menu_stream_name">Streams</string>
+    <string name="menu_preferences_name">Preferences</string>
+
+    <string-array name="main_menu_options">
+        <item>Dashboard</item>
+        <item>Events</item>
+        <item>News</item>
+        <item>Streams</item>
+        <item>Preferences</item>
+    </string-array>
 </resources>

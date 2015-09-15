@@ -3,8 +3,8 @@ package watch.fight.android.fightbrowser;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
@@ -12,18 +12,20 @@ public class BrowserActivity extends AppCompatActivity {
     private void initPaging() {
         // Create Fragments
         BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
-        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street");
-        BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Mortal");
-        BrowserFragment gameSpecificBrowser3 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Smash");
-        BrowserFragment gameSpecificBrowser4 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Tekken");
+        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street%20Fighter");
+        BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Mortal%20Kombat");
+        BrowserFragment gameSpecificBrowser3 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Smash%20Bro");
+        BrowserFragment gameSpecificBrowser4 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Killer%20Instinct");
+        BrowserFragment gameSpecificBrowser5 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Marvel");
 
         // Setup FragmentManager
         BrowserPagerAdapter browserAdapter = new BrowserPagerAdapter(getSupportFragmentManager());
-        browserAdapter.addFragment(twitchBrowser);
         browserAdapter.addFragment(gameSpecificBrowser);
         browserAdapter.addFragment(gameSpecificBrowser2);
         browserAdapter.addFragment(gameSpecificBrowser3);
         browserAdapter.addFragment(gameSpecificBrowser4);
+        browserAdapter.addFragment(gameSpecificBrowser5);
+        browserAdapter.addFragment(twitchBrowser);
 
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.browser_viewPager);
@@ -35,12 +37,16 @@ public class BrowserActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.browser_activity);
+//        MainMenuSpinner.Setup(getApplicationContext(), findViewById(android.R.id.content));
         initPaging();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_browser, menu);
+        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_browser, menu);
+        inflater.inflate(R.menu.menu_dashboard, menu);
+
         return true;
     }
 

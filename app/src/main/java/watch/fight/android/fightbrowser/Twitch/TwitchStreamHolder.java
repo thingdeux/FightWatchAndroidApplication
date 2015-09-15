@@ -17,8 +17,6 @@ public class TwitchStreamHolder {
     private TwitchFeaturedStream[] mFeaturedStreams;
     private TwitchStreamInfo[] mStreams;
 
-    // TODO : Need to Refactor StreamHolder to allow for multiple datasets
-
     public static TwitchStreamHolder getInstance(UUID fragmentId) {
         if (mStreamHolder.get(fragmentId) == null) {
             TwitchStreamHolder tsh = new TwitchStreamHolder();

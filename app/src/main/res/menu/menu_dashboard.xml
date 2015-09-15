@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_news"
+          android:title="@string/menu_news_name"
+          android:orderInCategory="80"
+          android:icon="@drawable/ic_news_rss"
+          app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/menu_events"
+          android:title="@string/menu_events_name"
+          android:orderInCategory="100"
+          android:icon="@drawable/ic_events"
+          app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/menu_streams"
+          android:title="@string/menu_stream_name"
+          android:orderInCategory="120"
+          android:icon="@drawable/ic_twitch_stream"
+          app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/menu_preferences"
+          android:title="@string/menu_preferences_name"
+          android:icon="@drawable/ic_settings"
+          android:orderInCategory="140"
+          app:showAsAction="ifRoom|withText"/>
+
+</menu>

@@ -113,6 +113,7 @@ public class BrowserFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // TODO : Query Twitch Again if it's been more than .... 2 mins from last call.
+        // TODO : Save UUID onResume and state changes
         Log.v(TAG, "onResume Called");
 //        if (!haveStreamsLoaded) {
 //            setUILoading();

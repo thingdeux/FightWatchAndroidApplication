@@ -1,10 +1,10 @@
-package watch.fight.android.fightbrowser.Twitch.models;
+package watch.fight.android.fightbrowser.StreamBrowser.Twitch.models;
 
 import com.google.gson.annotations.Expose;
 
 import java.math.BigInteger;
 
-import watch.fight.android.fightbrowser.Twitch.TwitchPreviewImageInfo;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.TwitchPreviewImageInfo;
 
 /**
  * Created by josh on 9/11/15.

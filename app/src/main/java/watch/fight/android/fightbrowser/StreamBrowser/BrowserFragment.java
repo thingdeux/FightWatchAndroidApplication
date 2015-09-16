@@ -3,6 +3,7 @@ package watch.fight.android.fightbrowser.StreamBrowser;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +16,10 @@ import com.google.gson.GsonBuilder;
 import java.util.UUID;
 
 import watch.fight.android.fightbrowser.R;
-import watch.fight.android.fightbrowser.Twitch.TwitchHttpLoader;
-import watch.fight.android.fightbrowser.Twitch.models.TwitchStream;
-import watch.fight.android.fightbrowser.Twitch.TwitchStreamHolder;
-import watch.fight.android.fightbrowser.Twitch.TwitchStreamListAdapter;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.TwitchHttpLoader;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStream;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.TwitchStreamHolder;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.TwitchStreamListAdapter;
 
 /**
  * Created by josh on 9/12/15.
@@ -70,6 +71,7 @@ public class BrowserFragment extends Fragment {
         mLoadingTextView = (View) v.findViewById(R.id.twitch_loading_container);
         mRecylerView = (RecyclerView) v.findViewById(R.id.browser_recycler_view);
         mLayoutManager = new GridLayoutManager(this.getActivity(), RECYCLER_VIEW_GRID_MAX);
+//        mLayoutManager = new LinearLayoutManager(this.getActivity());
         mAdapter = new TwitchStreamListAdapter(mFragmentID);
         mRecylerView.setAdapter(mAdapter);
         mRecylerView.setLayoutManager(mLayoutManager);

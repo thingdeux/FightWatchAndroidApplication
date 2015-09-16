@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser.Twitch;
+package watch.fight.android.fightbrowser.StreamBrowser.Twitch;
 
 import android.os.AsyncTask;
 import android.util.Log;

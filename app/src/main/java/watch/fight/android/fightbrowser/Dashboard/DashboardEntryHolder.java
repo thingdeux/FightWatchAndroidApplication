@@ -31,6 +31,14 @@ public class DashboardEntryHolder {
         return mDashboardEntries;
     }
 
+    public DashboardEntry getDashboardEntry(int position) {
+        return mDashboardEntries.get(position);
+    }
+
+    public void setmDashboardEntry(int position, DashboardEntry entry) {
+        mDashboardEntries.set(position, entry);
+    }
+
     public void setDashboardEntries(ArrayList<DashboardEntry> dashboardEntries) {
         mDashboardEntries = dashboardEntries;
     }

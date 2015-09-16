@@ -1,12 +1,12 @@
-package watch.fight.android.fightbrowser.Twitch;
+package watch.fight.android.fightbrowser.StreamBrowser.Twitch;
 
 import android.util.Log;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-import watch.fight.android.fightbrowser.Twitch.models.TwitchFeaturedStream;
-import watch.fight.android.fightbrowser.Twitch.models.TwitchStreamInfo;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchFeaturedStream;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStreamInfo;
 
 /**
  * Created by josh on 9/12/15.

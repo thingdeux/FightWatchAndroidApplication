@@ -1,6 +1,4 @@
-package watch.fight.android.fightbrowser.Twitch;
-
-import android.util.Log;
+package watch.fight.android.fightbrowser.StreamBrowser.Twitch;
 
 /**
  * Created by josh on 9/12/15.

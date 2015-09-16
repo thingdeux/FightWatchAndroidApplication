@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser.Twitch.models;
+package watch.fight.android.fightbrowser.StreamBrowser.Twitch.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

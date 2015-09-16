@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="180dp"
-        card_view:cardCornerRadius="5dp"
+        card_view:cardCornerRadius="3dp"
         card_view:elevation="4dp">
 
         <FrameLayout

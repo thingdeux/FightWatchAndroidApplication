@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser.Twitch;
+package watch.fight.android.fightbrowser.StreamBrowser.Twitch;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.UUID;
 
 import watch.fight.android.fightbrowser.R;
-import watch.fight.android.fightbrowser.Twitch.models.TwitchStreamInfo;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStreamInfo;
 
 /**
  * Created by josh on 9/11/15.

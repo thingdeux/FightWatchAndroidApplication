@@ -13,12 +13,14 @@ import watch.fight.android.fightbrowser.R;
  */
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ViewHolder> {
     private DashboardEntryHolder mEntryHolder;
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mTextView;
+        public TextView mHeader;
 
         public ViewHolder(View v) {
             super(v);
-            mTextView = (TextView) v.findViewById(R.id.dashboard_item_title);
+            mHeader = (TextView) v.findViewById(R.id.dashboard_item_title);
         }
     }
 
@@ -39,10 +41,13 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // Pull from dataset and replace contents of the viewholder here
+        DashboardEntry de = mEntryHolder.getDashboardEntry(position);
+        holder.mHeader.setText(de.getHeader());
+
     }
 
     // Dataset count here
     @Override
-    public int getItemCount() { return 0; }
+    public int getItemCount() { return mEntryHolder.getDashboardEntries().size(); }
 
 }

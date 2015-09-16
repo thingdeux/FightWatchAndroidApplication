@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser;
+package watch.fight.android.fightbrowser.StreamBrowser;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.UUID;
 
+import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Twitch.TwitchHttpLoader;
 import watch.fight.android.fightbrowser.Twitch.models.TwitchStream;
 import watch.fight.android.fightbrowser.Twitch.TwitchStreamHolder;
@@ -69,7 +70,6 @@ public class BrowserFragment extends Fragment {
         mLoadingTextView = (View) v.findViewById(R.id.twitch_loading_container);
         mRecylerView = (RecyclerView) v.findViewById(R.id.browser_recycler_view);
         mLayoutManager = new GridLayoutManager(this.getActivity(), RECYCLER_VIEW_GRID_MAX);
-
         mAdapter = new TwitchStreamListAdapter(mFragmentID);
         mRecylerView.setAdapter(mAdapter);
         mRecylerView.setLayoutManager(mLayoutManager);
@@ -92,7 +92,7 @@ public class BrowserFragment extends Fragment {
                         break;
                     case BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE:
                         if (gameName != null) {
-                            loadTwitchStream("https://api.twitch.tv/kraken/search/streams?q=" + gameName + "&limit=30", fragment_type);
+                            loadTwitchStream("https://api.twitch.tv/kraken/search/streams?q=" + gameName.replace(" ", "%20") + "&limit=30", fragment_type);
                         } else {
                             throw new IllegalArgumentException("Game name required for a game specific fragment");
                         }

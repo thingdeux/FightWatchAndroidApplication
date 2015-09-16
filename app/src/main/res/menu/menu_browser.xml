@@ -3,9 +3,14 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".BrowserActivity">
 
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
+    <item android:id="@+id/action_refresh"
+          android:title="@string/browser_action_refresh"
+          android:orderInCategory="80"
+          app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/action_filter"
+          android:title="@string/browser_action_filter"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          app:showAsAction="ifRoom|withText"/>
 
 </menu>

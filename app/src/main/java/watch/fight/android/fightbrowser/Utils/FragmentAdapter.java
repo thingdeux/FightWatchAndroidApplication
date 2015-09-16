@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser;
+package watch.fight.android.fightbrowser.Utils;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by josh on 9/12/15.
+ * Created by josh on 9/15/15.
  */
-public class BrowserPagerAdapter extends FragmentPagerAdapter {
-    private final List<Fragment> mFragments = new ArrayList<Fragment>();
+public class FragmentAdapter extends android.support.v4.app.FragmentPagerAdapter {
+    private final List<Fragment> mFragments = new ArrayList<>();
 
-    public BrowserPagerAdapter(FragmentManager manager) {
+    public FragmentAdapter(FragmentManager manager) {
         super(manager);
     }
 
@@ -31,4 +31,5 @@ public class BrowserPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         return mFragments.get(position);
     }
+
 }

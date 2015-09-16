@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser;
+package watch.fight.android.fightbrowser.StreamBrowser;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -7,26 +7,28 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.FragmentAdapter;
+
 
 public class BrowserActivity extends AppCompatActivity {
-    private void initPaging() {
+    private void initStreams() {
         // Create Fragments
         BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
-        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street%20Fighter");
-        BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Mortal%20Kombat");
-        BrowserFragment gameSpecificBrowser3 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Smash%20Bro");
-        BrowserFragment gameSpecificBrowser4 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Killer%20Instinct");
-        BrowserFragment gameSpecificBrowser5 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Marvel");
+        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street Fighter");
+        BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Mortal Kombat");
+        BrowserFragment gameSpecificBrowser3 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Smash Bro");
+        BrowserFragment gameSpecificBrowser4 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Killer Instinct");
+        BrowserFragment gameSpecificBrowser5 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Ultimate Marvel");
 
         // Setup FragmentManager
-        BrowserPagerAdapter browserAdapter = new BrowserPagerAdapter(getSupportFragmentManager());
+        FragmentAdapter browserAdapter = new FragmentAdapter(getSupportFragmentManager());
         browserAdapter.addFragment(gameSpecificBrowser);
         browserAdapter.addFragment(gameSpecificBrowser2);
         browserAdapter.addFragment(gameSpecificBrowser3);
         browserAdapter.addFragment(gameSpecificBrowser4);
         browserAdapter.addFragment(gameSpecificBrowser5);
         browserAdapter.addFragment(twitchBrowser);
-
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.browser_viewPager);
         viewPager.setAdapter(browserAdapter);
@@ -37,15 +39,13 @@ public class BrowserActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
         setContentView(R.layout.browser_activity);
-//        MainMenuSpinner.Setup(getApplicationContext(), findViewById(android.R.id.content));
-        initPaging();
+        initStreams();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_browser, menu);
-        inflater.inflate(R.menu.menu_dashboard, menu);
+        inflater.inflate(R.menu.menu_browser, menu);
 
         return true;
     }
@@ -57,9 +57,12 @@ public class BrowserActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_filter:
+                return true;
+            case R.id.action_refresh:
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);

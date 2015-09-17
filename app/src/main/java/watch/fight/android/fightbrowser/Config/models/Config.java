@@ -8,6 +8,7 @@ import java.util.Date;
 
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
+import watch.fight.android.fightbrowser.Utils.DateParser;
 
 /**
  * Created by josh on 9/16/15.
@@ -41,7 +42,8 @@ public class Config {
         return mEvents;
     }
 
-    public String getLastUpdated() {
-        return mLastUpdated;
+    public Date getLastUpdated() {
+        return DateParser.getDateFromStr(mLastUpdated);
     }
+
 }

@@ -3,8 +3,10 @@ package watch.fight.android.fightbrowser.Events.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
+
+import watch.fight.android.fightbrowser.Utils.DateParser;
 
 /**
  * Created by josh on 9/16/15.
@@ -25,9 +27,13 @@ public class Event {
 
     private List<ChallongeBracket> mBrackets;
 
-    private List<ChallongeBracket> getBrackets() {
+    public List<ChallongeBracket> getBrackets() {
         // Try to acquire the brackets from the fgccompanion server else use challonge search api
         return null;
+    }
+
+    public Date getDate() {
+        return DateParser.getDateFromStr(mDate);
     }
 
 }

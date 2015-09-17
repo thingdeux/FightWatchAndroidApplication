@@ -33,9 +33,9 @@ public class DashboardActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             DashboardFragment dashboardFragment = new DashboardFragment();
 //        dashboardFragment.setArguments(getIntent().getExtras());
-            JSONObject dashboardEntries = getTestJson(R.raw.test_config);
-            Gson g = new Gson();
-            Config c = g.fromJson(dashboardEntries.toString(), Config.class);
+//            JSONObject dashboardEntries = getTestJson(R.raw.test_config);
+//            Gson g = new Gson();
+//            Config c = g.fromJson(dashboardEntries.toString(), Config.class);
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.dashboard_main_fragment, dashboardFragment).commit();

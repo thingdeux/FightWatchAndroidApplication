@@ -21,7 +21,7 @@ public class Event {
 
     @Expose
     @SerializedName("date")
-    private Date mDate;
+    private String mDate;
 
     private List<ChallongeBracket> mBrackets;
 

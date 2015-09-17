@@ -1,0 +1,41 @@
+{
+  "games": [
+    {
+      "name": "Ultra Street Fighter IV",
+      "known_streamers": [
+        "TeamSp00ky",
+        "Maximillian"
+      ]
+
+    }, {
+      "name": "Ultimate Marvel vs Capcom 3",
+      "known_streamers": [
+        "IFCYipes"
+      ]
+    }
+  ],
+  "rss_feeds": [
+    {
+      "id": 12313,
+      "name": "Eventhubs",
+      "rss_url": "http://rss.eventhubs.com",
+      "website_url": "http://www.eventhubs.com"
+    }, {
+      "id": 356969,
+      "name": "Shoryuken",
+      "website_url": "http://www.eventhubs.com"
+    }
+  ],
+  "events":  [
+    {
+      "id": 444,
+      "event_name": "SoCal Regionals",
+      "date": "2015-08-05T08:40:51.620Z"
+    }, {
+      "id": 34555,
+      "event_name": "Evo (Year)",
+      "date": "2015-06-05T08:40:51.620Z"
+    }
+  ],
+  "updated": "2015-08-05T08:40:51.620Z"
+}

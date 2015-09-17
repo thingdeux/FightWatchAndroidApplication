@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser.InformationFeeds;
+package watch.fight.android.fightbrowser.InformationFeeds.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,11 +17,11 @@ public class Feed {
 
     @Expose
     @SerializedName("rss_url")
-    private long mRSSUrl;
+    private String mRSSUrl;
 
     @Expose
     @SerializedName("website_url")
-    private long mWebUrl;
+    private String mWebUrl;
 
     public long getId() {
         return id;
@@ -31,11 +31,11 @@ public class Feed {
         return mName;
     }
 
-    public long getRSSUrl() {
+    public String getRSSUrl() {
         return mRSSUrl;
     }
 
-    public long getWebUrl() {
+    public String getWebUrl() {
         return mWebUrl;
     }
 }

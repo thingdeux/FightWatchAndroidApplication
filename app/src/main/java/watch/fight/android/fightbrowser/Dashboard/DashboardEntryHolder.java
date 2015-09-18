@@ -5,7 +5,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import watch.fight.android.fightbrowser.Config.models.Config;
 
 /**
  * Created by josh on 9/15/15.

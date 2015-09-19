@@ -73,9 +73,14 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
         TwitchStreamInfo stream = mStreamHolder.getStream(position);
         // Lop off the game name if it's greater than 12 Characters and replace with ...
         String gameTitle = stream.getGame();
-        if (gameTitle.length() >= 12) {
-            gameTitle = gameTitle.substring(0, 11) + "...";
+        if (gameTitle != null) {
+            if (gameTitle.length() >= 12) {
+                gameTitle = gameTitle.substring(0, 11) + "...";
+            }
+        } else {
+            gameTitle = " ??";
         }
+
 
         holder.mTextViewStreamInfo.setText("Playing " + gameTitle +
                 " for " + stream.getViewers() + " viewers");
@@ -98,7 +103,11 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
 
     @Override
     public int getItemCount() {
-        return mStreamHolder.getStreams().length;
+        if (mStreamHolder != null && mStreamHolder.getStreams() != null) {
+            return mStreamHolder.getStreams().length;
+        } else {
+            return 0;
+        }
     }
 
     private boolean isTwitchAppInstalled(String packagename, Context context) {

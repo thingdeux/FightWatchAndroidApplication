@@ -12,6 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import watch.fight.android.fightbrowser.Utils.NetworkUtils;
+
 /**
  * Created by josh on 9/12/15.
  */
@@ -35,7 +37,7 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
             connection.connect();
             int response = connection.getResponseCode();
             InputStream input = connection.getInputStream();
-            String contentAsString = readIt(input);
+            String contentAsString = NetworkUtils.InputStreamToString(input);
             Log.v(TAG, "Received Response code from Twitch: " + response);
             Log.d(TAG, "Calling callback: " + mCallback.toString());
             mCallback.onReceivedResponse(contentAsString);
@@ -49,18 +51,6 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-    }
-
-    // TODO : Should probably use a handy dandy http library instead of doing this. Will Refactor
-    // Reads an InputStream and converts it to a String.
-    public String readIt(InputStream stream) throws IOException, UnsupportedEncodingException {
-        BufferedReader r = new BufferedReader(new InputStreamReader(stream));
-        StringBuilder total = new StringBuilder();
-        String line;
-        while ((line = r.readLine()) != null) {
-            total.append(line);
-        }
-        return total.toString();
     }
 
 }

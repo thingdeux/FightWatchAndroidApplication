@@ -36,30 +36,29 @@ public class ConfigFetcher {
                                  .appendPath("conf")
                                  .build()
                                  .toString();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
         try {
             URL urlConnection = new URL(urlStr);
-            Log.v(TAG, "Requested Url from: " + urlStr);
             HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
             connection.connect();
 //            int responseCode = connection.getResponseCode();
             InputStream input = connection.getInputStream();
             String response = NetworkUtils.InputStreamToString(input);
-
-            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-
-            // TODO : Once API Server in place Turn this back on
-//            Config config = gson.fromJson(response, Config.class);
-            String s = JsonFromRaw.getStringObj(context, R.raw.test_config);
-            return gson.fromJson(s, Config.class);
+            return gson.fromJson(response, Config.class);
         } catch (MalformedURLException mue) {
             // TODO : Implement last config from DB on fail.
             Log.e(TAG, "MalformedUrlException getting config " + mue);
         } catch (IOException ioe) {
-            // TODO : Implement last config from DB on fail.
             Log.e(TAG, "IOException getting config " + ioe);
         }
         return null;
+    }
+
+    public static Config getTestConfig(Context context) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String s = JsonFromRaw.getStringObj(context, R.raw.test_config);
+        return gson.fromJson(s, Config.class);
     }
 
 }

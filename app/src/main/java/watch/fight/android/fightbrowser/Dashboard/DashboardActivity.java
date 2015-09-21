@@ -1,45 +1,40 @@
 package watch.fight.android.fightbrowser.Dashboard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
-import watch.fight.android.fightbrowser.Utils.JsonFromRaw;
 
 /**
  * Created by josh on 9/14/15.
  */
-public class DashboardActivity extends AppCompatActivity implements Handler.Callback {
+public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = DashboardActivity.class.getSimpleName();
     private static final int GET_CONFIG_FROM_API = 0;
-    private Handler mMessageHandler;
 
     private class FetchConfig extends AsyncTask<Void, Void, Config> {
+        private Context mContext;
+        public FetchConfig(Context c) {
+            mContext = c;
+        }
+
         protected Config doInBackground(Void... response) {
             // Call API Server - convert to Config Object return Config instance
-            // TODO : REMOVE THIS! Never pass context in async task potential leaks.
-            return ConfigFetcher.getConfigFromServer(getParent());
+            return ConfigFetcher.getTestConfig(mContext);
         }
 
         protected void onPostExecute(Config config) {
-            Log.d(TAG, "Got Config: " + config);
+
         }
     }
 
@@ -51,16 +46,10 @@ public class DashboardActivity extends AppCompatActivity implements Handler.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-        mMessageHandler = new Handler(this);
-
         if (savedInstanceState == null) {
             DashboardFragment dashboardFragment = new DashboardFragment();
 
-//        dashboardFragment.setArguments(getIntent().getExtras());
-//            JSONObject dashboardEntries = getTestJson(R.raw.test_config);
-//            Gson g = new Gson();
-//            Config c = g.fromJson(dashboardEntries.toString(), Config.class);
-
+            new FetchConfig(this).execute();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.dashboard_main_fragment, dashboardFragment).commit();
         }
@@ -77,7 +66,6 @@ public class DashboardActivity extends AppCompatActivity implements Handler.Call
     @Override
     protected void onPause() {
         super.onPause();
-        mMessageHandler.removeMessages(GET_CONFIG_FROM_API);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,26 +96,18 @@ public class DashboardActivity extends AppCompatActivity implements Handler.Call
                 return true;
         }
 
-
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
-
-
-    @Override
-    public boolean handleMessage(Message msg) {
-        switch (msg.what) {
-            case GET_CONFIG_FROM_API:
-                break;
-            default:
-                return false;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean handleMessage(Message msg) {
+//        switch (msg.what) {
+//            case GET_CONFIG_FROM_API:
+//                break;
+//            default:
+//                return false;
+//        }
+//        return true;
+//    }
 
 }

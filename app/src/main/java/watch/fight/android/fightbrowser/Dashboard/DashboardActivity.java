@@ -10,10 +10,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.DateParser;
+import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**
  * Created by josh on 9/14/15.
@@ -29,12 +35,30 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         protected Config doInBackground(Void... response) {
+            // TODO: If on first start and DB is empty - App will ship with last updated fixtures
+            // The "fixtures" will set the app to the latest state.
             // Call API Server - convert to Config Object return Config instance
-            return ConfigFetcher.getTestConfig(mContext);
+            GregorianCalendar date = DateParser.epochToGregorian(SharedPreferences.getConfigLastUpdated(mContext));
+            date.add(Calendar.HOUR, 24);
+            GregorianCalendar today = new GregorianCalendar();
+
+
+            // If today > LastConfigUpdate + 24 hours -- Only check for new config once a day
+            if (today.after(date)) {
+                Config config = ConfigFetcher.getTestConfig(mContext);
+                if (config != null) {
+                    SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());
+                }
+                return config;
+            }
+            return null;
         }
 
         protected void onPostExecute(Config config) {
-
+            if (config != null) {
+                Log.v(TAG, "Received new config data");
+            }
+            // Can be null if config isn't old enough to check for new data
         }
     }
 
@@ -46,15 +70,14 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
+        new FetchConfig(this).execute();
+
         if (savedInstanceState == null) {
             DashboardFragment dashboardFragment = new DashboardFragment();
 
-            new FetchConfig(this).execute();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.dashboard_main_fragment, dashboardFragment).commit();
         }
-
-
 
     }
 

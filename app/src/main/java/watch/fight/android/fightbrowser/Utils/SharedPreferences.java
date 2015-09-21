@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser.Config;
+package watch.fight.android.fightbrowser.Utils;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
@@ -17,15 +17,29 @@ public class SharedPreferences {
 
     public static void setFavoriteStreams(Context context, Set<String> favorites) { setStringSet(context, FAVORITE_STREAMS, favorites); }
     public static void setBlockedStreams(Context context, Set<String> blocked) { setStringSet(context, BLOCKED_STREAMS, blocked); }
-    public static void setConfigLastUpdated(Context context, String lastUpdated) { setString(context, CONFIG_LAST_UPDATED, lastUpdated); }
-    public static void setFeedsLastUpdated(Context context, String lastUpdated) { setString(context, FEEDS_LAST_UPDATED, lastUpdated); }
-    public static void setTwitchStreamsLastUpdated(Context context, String lastUpdated) { setString(context, TWITCH_STREAMS_LAST_UPDATED, lastUpdated); }
+    public static void setConfigLastUpdated(Context context, long lastUpdated) { setLong(context, CONFIG_LAST_UPDATED, lastUpdated); }
+    public static void setFeedsLastUpdated(Context context, long lastUpdated) { setLong(context, FEEDS_LAST_UPDATED, lastUpdated); }
+    public static void setTwitchStreamsLastUpdated(Context context, long lastUpdated) { setLong(context, TWITCH_STREAMS_LAST_UPDATED, lastUpdated);
+    }
 
     public static Set<String> getFavoriteStreams(Context context)  { return getStringSet(context, FAVORITE_STREAMS); }
     public static Set<String> getBlockedStreams(Context context) { return getStringSet(context, BLOCKED_STREAMS); }
-    public static String getConfigLastUpdated(Context context) { return getString(context, CONFIG_LAST_UPDATED); }
-    public static String getFeedsLastUpdated(Context context) { return getString(context, FEEDS_LAST_UPDATED); }
-    public static String getTwitchStreamsLastUpdated(Context context) { return getString(context, TWITCH_STREAMS_LAST_UPDATED); }
+    public static long getConfigLastUpdated(Context context) { return getLong(context, CONFIG_LAST_UPDATED); }
+    public static long getFeedsLastUpdated(Context context) { return getLong(context, FEEDS_LAST_UPDATED); }
+    public static long getTwitchStreamsLastUpdated(Context context) { return getLong(context, TWITCH_STREAMS_LAST_UPDATED); }
+
+
+    private static long getLong(Context context, String name) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(name, -1);
+    }
+
+    private static void setLong(Context context, String name, long value) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(name, value)
+                .apply();
+    }
 
 
     private static String getString(Context context, String name) {

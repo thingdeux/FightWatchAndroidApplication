@@ -22,6 +22,7 @@ import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStream;
 import watch.fight.android.fightbrowser.Utils.JsonFromRaw;
 import watch.fight.android.fightbrowser.Utils.NetworkUtils;
+import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**
  * Created by josh on 9/20/15.
@@ -45,7 +46,8 @@ public class ConfigFetcher {
 //            int responseCode = connection.getResponseCode();
             InputStream input = connection.getInputStream();
             String response = NetworkUtils.InputStreamToString(input);
-            return gson.fromJson(response, Config.class);
+            Config config = gson.fromJson(response, Config.class);
+            return config;
         } catch (MalformedURLException mue) {
             // TODO : Implement last config from DB on fail.
             Log.e(TAG, "MalformedUrlException getting config " + mue);

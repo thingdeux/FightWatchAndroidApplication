@@ -5,8 +5,11 @@ import android.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by josh on 9/17/15.
@@ -24,5 +27,15 @@ public class DateParser {
             }
         }
         return null;
+    }
+
+    public static Date epochToDate(long epochTime) {
+        return new Date(epochTime);
+    }
+
+    public static GregorianCalendar epochToGregorian(long epochTime) {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(epochTime);
+        return cal;
     }
 }

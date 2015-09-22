@@ -54,8 +54,7 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
         // Create a new View
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.twitch_list_item, parent, false);
 
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     // Replace the contents of a view (called by layout manager

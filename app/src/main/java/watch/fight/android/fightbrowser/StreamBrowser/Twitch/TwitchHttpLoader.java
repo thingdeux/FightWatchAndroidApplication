@@ -8,7 +8,7 @@ public class TwitchHttpLoader {
     private IHttpResponse listener;
 
     public interface IHttpResponse {
-        public void onReceivedResponse(String result);
+        void onReceivedResponse(String result);
     }
 
     public TwitchHttpLoader() {

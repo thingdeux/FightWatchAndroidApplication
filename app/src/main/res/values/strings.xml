@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">FGC Companion</string>
 
-    <string name="browser_activity_name">Streams</string>
+    <string name="events_activity_name">FGC Events</string>
+    <string name="config_activity_name">Configuration</string>
+    <string name="browser_activity_name">Stream Browser</string>
+    <string name="information_feeds_activity_name">Information</string>
+
     <string name="twitch_stream_image_description">Twitch Stream Image</string>
     <string name="twitch_watch_button">Watch</string>
     <string name="twitch_Chat_button">Chat</string>

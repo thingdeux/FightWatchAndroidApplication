@@ -13,7 +13,7 @@ import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStream
  */
 public class TwitchStreamHolder {
 //    private static TwitchStreamHolder mStreamHolder = null;
-    private static HashMap<UUID, TwitchStreamHolder> mStreamHolder = new HashMap<UUID, TwitchStreamHolder>();
+    private static HashMap<UUID, TwitchStreamHolder> mStreamHolder = new HashMap<>();
     private TwitchFeaturedStream[] mFeaturedStreams;
     private TwitchStreamInfo[] mStreams;
 

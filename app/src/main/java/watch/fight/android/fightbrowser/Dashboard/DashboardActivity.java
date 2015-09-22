@@ -19,6 +19,7 @@ import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.DateParser;
+import watch.fight.android.fightbrowser.Utils.NetworkUtils;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**
@@ -35,6 +36,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         protected Config doInBackground(Void... response) {
+            NetworkUtils.parseRssFeed("http://www.npr.org/rss/rss.php?id=100");
             // TODO: If on first start and DB is empty - App will ship with last updated fixtures
             // The "fixtures" will set the app to the latest state.
             // Call API Server - convert to Config Object return Config instance

@@ -11,18 +11,33 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".StreamBrowser.BrowserActivity"
-            android:label="@string/browser_activity_name">
-
-        </activity>
-
-        <activity
             android:name=".Dashboard.DashboardActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".StreamBrowser.BrowserActivity"
+            android:label="@string/browser_activity_name">
+
+        </activity>
+
+        <activity
+            android:name=".Config.ConfigActivity"
+            android:label="@string/config_activity_name" >
+        </activity>
+
+        <activity
+            android:name=".Events.EventsActivity"
+            android:label="@string/events_activity_name" >
+        </activity>
+
+        <activity
+            android:name=".InformationFeeds.InformationFeedsActivity"
+            android:label="@string/information_feeds_activity_name" >
         </activity>
     </application>
 

@@ -10,12 +10,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
+import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.DateParser;
@@ -36,7 +38,10 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         protected Config doInBackground(Void... response) {
-            NetworkUtils.parseRssFeed("http://www.npr.org/rss/rss.php?id=100");
+            ArrayList<Story> feeds = NetworkUtils.parseRss("http://www.eventhubs.com/feeds/latest/");
+            for (Story s : feeds) {
+                Log.v(TAG, s.getTitle());
+            }
             // TODO: If on first start and DB is empty - App will ship with last updated fixtures
             // The "fixtures" will set the app to the latest state.
             // Call API Server - convert to Config Object return Config instance

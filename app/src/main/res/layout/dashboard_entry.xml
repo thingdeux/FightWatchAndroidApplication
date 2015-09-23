@@ -24,7 +24,7 @@
                 <ImageButton android:id="@+id/dashboard_entry_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                             android:src="@mipmap/ic_stream_icon"/>
+                             android:src="@mipmap/ic_eventhubs"/>
 
                 <TextView android:id="@+id/dashboard_entry_title"
                           android:layout_width="wrap_content"
@@ -32,7 +32,8 @@
                           android:layout_centerHorizontal="true"
                           android:layout_toRightOf="@id/dashboard_entry_icon"
                           android:layout_toEndOf="@id/dashboard_entry_icon"
-                          android:paddingLeft="4dp"
+                          android:padding="5dp"
+                          android:paddingTop="10dp"
                           tools:text="Item Title"
                     />
 

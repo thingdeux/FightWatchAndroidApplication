@@ -1,31 +1,19 @@
 package watch.fight.android.fightbrowser.Utils;
 
-import android.net.Uri;
 import android.util.Log;
 
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSItem;
 import org.mcsoxford.rss.RSSReader;
 import org.mcsoxford.rss.RSSReaderException;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 
 /**
@@ -48,27 +36,6 @@ public class NetworkUtils {
         }
         return null;
     }
-
-//    public static String parseRssFeed(String rssURL) {
-//        try {
-//            URL url = new URL(rssURL);
-//            SAXParserFactory spf = SAXParserFactory.newInstance();
-//            SAXParser sp = spf.newSAXParser();
-//            XMLReader xr = sp.getXMLReader();
-//            xr.parse(new InputSource(url.openStream()));
-//            Log.v(TAG, "Xr Parser Response:" + xr.toString());
-//
-//        } catch (ParserConfigurationException pce) {
-//            return null;
-//        } catch (SAXException saxe) {
-//            return null;
-//        } catch (MalformedURLException mue) {
-//            Log.e(TAG, "Malformed URL for RSS Parser: " + rssURL);
-//        } catch (IOException ioe) {
-//            Log.e(TAG, "IO Exception Error " + "for URL (" + rssURL + "): " + ioe);
-//        }
-//        return null;
-//    }
 
     public static ArrayList<Story> parseRss(String rssUrl) {
         try {

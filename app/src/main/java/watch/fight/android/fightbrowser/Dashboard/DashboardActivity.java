@@ -10,18 +10,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
-import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.DateParser;
-import watch.fight.android.fightbrowser.Utils.NetworkUtils;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**
@@ -29,7 +25,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  */
 public class DashboardActivity extends AppCompatActivity {
     private static final String TAG = DashboardActivity.class.getSimpleName();
-    private static final int GET_CONFIG_FROM_API = 0;
+    private static final int CONFIG_CHECK_FREQUENCY_IN_HOURS = 24;
 
     private class FetchConfig extends AsyncTask<Void, Void, Config> {
         private Context mContext;
@@ -38,15 +34,11 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         protected Config doInBackground(Void... response) {
-            ArrayList<Story> feeds = NetworkUtils.parseRss("http://www.eventhubs.com/feeds/latest/");
-            for (Story s : feeds) {
-                Log.v(TAG, s.getTitle());
-            }
             // TODO: If on first start and DB is empty - App will ship with last updated fixtures
             // The "fixtures" will set the app to the latest state.
             // Call API Server - convert to Config Object return Config instance
             GregorianCalendar date = DateParser.epochToGregorian(SharedPreferences.getConfigLastUpdated(mContext));
-            date.add(Calendar.HOUR, 24);
+            date.add(Calendar.HOUR, CONFIG_CHECK_FREQUENCY_IN_HOURS);
             GregorianCalendar today = new GregorianCalendar();
 
 
@@ -108,11 +100,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
 
         switch (id) {
             case R.id.action_streams:
@@ -128,16 +116,5 @@ public class DashboardActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-//    @Override
-//    public boolean handleMessage(Message msg) {
-//        switch (msg.what) {
-//            case GET_CONFIG_FROM_API:
-//                break;
-//            default:
-//                return false;
-//        }
-//        return true;
-//    }
 
 }

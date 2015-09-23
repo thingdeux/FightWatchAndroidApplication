@@ -23,6 +23,10 @@ public class Feed {
     @SerializedName("website_url")
     private String mWebUrl;
 
+    @Expose
+    @SerializedName("feed_image_url")
+    private String mFeedImageUrl;
+
     public long getId() {
         return id;
     }
@@ -38,4 +42,11 @@ public class Feed {
     public String getWebUrl() {
         return mWebUrl;
     }
+
+    public String getFeedImageUrl() {
+        return mFeedImageUrl;
+    }
+
+    // TODO : Image Download and store in long term cache
+
 }

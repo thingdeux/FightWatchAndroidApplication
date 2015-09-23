@@ -19,11 +19,13 @@
       "id": 12313,
       "name": "Eventhubs",
       "rss_url": "http://www.eventhubs.com/feeds/latest/",
-      "website_url": "http://www.eventhubs.com"
+      "website_url": "http://www.eventhubs.com",
+      "feed_image_url": "https://pbs.twimg.com/profile_images/2462244142/9x7t6axcyshhiyjnkhlx.png"
     }, {
       "id": 356969,
       "name": "Shoryuken",
-      "website_url": "http://www.eventhubs.com"
+      "website_url": "http://www.eventhubs.com",
+      "feed_image_url": "https://pbs.twimg.com/profile_images/2462244142/9x7t6axcyshhiyjnkhlx.png"
     }
   ],
   "events":  [

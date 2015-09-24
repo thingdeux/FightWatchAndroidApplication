@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.R;
@@ -24,12 +23,14 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
     private ArrayList<Story> mStories;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mHeader;
+        public TextView mStoryHeader;
+        public TextView mStoryTitle;
         public Uri mLinkUri;
 
         public ViewHolder(View v) {
             super(v);
-            mHeader = (TextView) v.findViewById(R.id.dashboard_entry_title);
+            mStoryTitle = (TextView) v.findViewById(R.id.dashboard_entry_title);
+            mStoryHeader = (TextView) v.findViewById(R.id.dashboard_entry_header);
         }
 
         @Override
@@ -52,7 +53,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.mHeader.setText(mStories.get(position).getTitle());
+//        holder.mStoryHeader.setText(mStories.get(position).getAuthor());
+        holder.mStoryHeader.setText("Street Fighter");
+        holder.mStoryTitle.setText(mStories.get(position).getTitle());
         holder.mLinkUri = mStories.get(position).getUrl();
     }
 

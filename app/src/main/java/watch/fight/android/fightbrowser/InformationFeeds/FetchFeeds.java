@@ -55,7 +55,7 @@ public class FetchFeeds {
                 if (today.after(date)) {
                     Log.v("FetchStories", "Fetching new feeds");
                     Stack<String> feedNames = new Stack<>();
-                    feedNames.add("http://www.polygon.com/rss/index.xml");
+//                    feedNames.add("http://www.polygon.com/rss/index.xml");
                     feedNames.add("http://www.eventhubs.com/feeds/latest/");
                     feedNames.add("http://rss.cnn.com/rss/cnn_topstories.rss");
 

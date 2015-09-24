@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
 //    private DashboardEntryHolder mEntryHolder;
     private ArrayList<Story> mStories;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mStoryHeader;
         public TextView mStoryTitle;
         public Uri mLinkUri;
@@ -33,12 +34,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
             mStoryHeader = (TextView) v.findViewById(R.id.dashboard_entry_header);
         }
 
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(mLinkUri);
-            Log.v("DashboardAdapter", "" + mLinkUri);
-        }
     }
 
     public DashboardAdapter(ArrayList<Story> feeds) {
@@ -58,9 +53,6 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
         holder.mStoryTitle.setText(mStories.get(position).getTitle());
         holder.mLinkUri = mStories.get(position).getUrl();
     }
-
-//    @Override
-//    public int getItemCount() { return mEntryHolder.getDashboardEntries().size(); }
 
     @Override
     public int getItemCount() { return mStories.size(); }

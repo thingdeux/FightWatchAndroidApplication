@@ -26,8 +26,9 @@
 
                 <ImageButton android:id="@+id/dashboard_entry_icon"
                              android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:src="@mipmap/ic_eventhubs"/>
+                             android:layout_height="match_parent"
+                             android:src="@mipmap/ic_eventhubs"
+                             android:background="@android:color/transparent"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

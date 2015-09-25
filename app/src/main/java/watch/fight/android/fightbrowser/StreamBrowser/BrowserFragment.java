@@ -68,7 +68,7 @@ public class BrowserFragment extends Fragment {
         Log.v(TAG, "onCreateView Called");
         View v = inflater.inflate(R.layout.fragment_twitch_browser, container, false);
 
-        mLoadingTextView = (View) v.findViewById(R.id.twitch_loading_container);
+        mLoadingTextView = v.findViewById(R.id.twitch_loading_container);
         mRecylerView = (RecyclerView) v.findViewById(R.id.browser_recycler_view);
         mLayoutManager = new GridLayoutManager(this.getActivity(), RECYCLER_VIEW_GRID_MAX);
 //        mLayoutManager = new LinearLayoutManager(this.getActivity());

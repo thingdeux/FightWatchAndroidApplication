@@ -35,9 +35,8 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        new FetchFeeds.FetchStories(this.getActivity(), mAdapter).execute();
+        new DashboardBuilder().execute(new DashboardBuilder.DashboardBuilderValues(getActivity(), mAdapter));
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class DashboardFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.dashboard_recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mAdapter = new DashboardAdapter(new ArrayList<Story>());
+        mAdapter = new DashboardAdapter(new DashboardEntry[1]);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 

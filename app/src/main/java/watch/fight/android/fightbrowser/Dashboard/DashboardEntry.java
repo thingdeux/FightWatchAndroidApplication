@@ -10,15 +10,14 @@ import java.util.List;
  * Created by josh on 9/15/15.
  */
 public class DashboardEntry {
-    private static int RSS_FEED_TYPE = 0;
-    private static int TWITCH_STREAM_COUNT = 1;
-    private static int EVENT_TYPE = 1;
+    public static int RSS_FEED_TYPE = 0;
+    public static int TWITCH_STREAM_COUNT = 1;
+    public static int EVENT_TYPE = 1;
 
     private String mHeader;
     private String mContent;
     private int mType;
     private Uri mFeedHeaderImage;
-//    private ArrayList<String>
 
 
     public String getHeader() {
@@ -43,5 +42,13 @@ public class DashboardEntry {
 
     public void setType(int type) {
         mType = type;
+    }
+
+    public Uri getFeedHeaderImage() {
+        return mFeedHeaderImage;
+    }
+
+    public void setFeedHeaderImage(Uri feedHeaderImage) {
+        mFeedHeaderImage = feedHeaderImage;
     }
 }

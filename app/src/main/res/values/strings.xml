@@ -15,6 +15,7 @@
     <string name="browser_action_refresh">Refresh</string>
     <string name="browser_action_filter">Filter</string>
 
+    <string name="dashboard_stories_header_name">Latest Stories</string>
     <string name="dashboard_read_more_button_name">Read More</string>
     <string name="dashboard_share_button_name">Share</string>
     <string name="dashboard_header">Dashboard</string>

@@ -1,15 +1,12 @@
 package watch.fight.android.fightbrowser.Dashboard;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,24 +17,23 @@ import watch.fight.android.fightbrowser.R;
  * Created by josh on 9/15/15.
  */
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ViewHolder> {
-//    private DashboardEntryHolder mEntryHolder;
-    private ArrayList<Story> mStories;
+    private DashboardEntry[] mEntries;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView mStoryHeader;
-        public TextView mStoryTitle;
+        public TextView mEntryHeader;
+        public TextView mEntryContent;
         public Uri mLinkUri;
 
         public ViewHolder(View v) {
             super(v);
-            mStoryTitle = (TextView) v.findViewById(R.id.dashboard_entry_title);
-            mStoryHeader = (TextView) v.findViewById(R.id.dashboard_entry_header);
+            mEntryContent = (TextView) v.findViewById(R.id.dashboard_entry_content);
+            mEntryHeader = (TextView) v.findViewById(R.id.dashboard_entry_header);
         }
 
     }
 
-    public DashboardAdapter(ArrayList<Story> feeds) {
-        mStories = feeds;
+    public DashboardAdapter(DashboardEntry[] entries) {
+        mEntries = entries;
     }
 
     @Override
@@ -48,18 +44,23 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-//        holder.mStoryHeader.setText(mStories.get(position).getAuthor());
-        holder.mStoryHeader.setText("Street Fighter");
-        holder.mStoryTitle.setText(mStories.get(position).getTitle());
-        holder.mLinkUri = mStories.get(position).getUrl();
+        if(mEntries[position] != null) {
+            holder.mEntryHeader.setText(mEntries[position].getHeader());
+            holder.mEntryContent.setText(mEntries[position].getContent());
+        }
+
+//        holder.mStoryTitle.setText(mStories.get(position).getTitle());
+//        holder.mLinkUri = mStories.get(position).getUrl();
     }
 
     @Override
-    public int getItemCount() { return mStories.size(); }
+    public int getItemCount() { return mEntries.length; }
 
-    public void setStories(@NonNull ArrayList<Story> stories) {
-        mStories = stories;
+    public void getContextS() {
     }
 
+    public void setEntries(@NonNull DashboardEntry[] entries) {
+        mEntries = entries;
+    }
 
 }

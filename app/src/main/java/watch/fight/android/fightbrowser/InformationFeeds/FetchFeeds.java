@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
@@ -71,8 +72,9 @@ public class FetchFeeds {
         protected void onPostExecute(ArrayList<Story> stories) {
             if (stories != null) {
                 SharedPreferences.setFeedsLastUpdated(mContext, System.currentTimeMillis());
-                mAdapter.setStories(stories);
-                mAdapter.notifyDataSetChanged();
+                // TODO : Will only be using this with Information Feeds Adapter
+//                mAdapter.setStories(stories);
+//                mAdapter.notifyDataSetChanged();
             }
         }
 
@@ -86,7 +88,27 @@ public class FetchFeeds {
             }
             Log.e("ProcessFeed", "Received error on " + url);
         }
+
     }
 
+    public static HashMap<String, Story> FetchLatestStories(Context context) {
+        HashMap<String, Story> feeds = new HashMap<>();
+        feeds.put("EventHubs", getLatestStory("http://www.eventhubs.com/feeds/latest/"));
+        feeds.put("CNNTester", getLatestStory("http://rss.cnn.com/rss/cnn_topstories.rss"));
 
+        return feeds;
+    }
+
+    protected static Story getLatestStory(String url) {
+        // TODO : Will check the DB First and if it hasn't been updated in a while kickoff an update task while returning what it found.
+        // So that the next request will be fresh.
+        Log.v("ProcessFeed", "Fetching feed for: " + url);
+        ArrayList<Story> stories = NetworkUtils.parseRss(url);
+        if (stories != null) {
+            return stories.get(0);
+        } else {
+            Log.e("ProcessFeed", "Received error on " + url);
+            return null;
+        }
+    }
 }

@@ -38,19 +38,17 @@
                     <TextView android:id="@+id/dashboard_entry_header"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:layout_centerHorizontal="true"
-                              android:padding="5dp"
-                              android:paddingTop="10dp"
-                              style="?android:titleTextStyle"
-                              tools:text="Item Title" />
-
-                    <TextView android:id="@+id/dashboard_entry_title"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_centerHorizontal="true"
                               android:padding="5dp"
                               android:paddingTop="10dp"
                               style="?android:textAppearanceListItem"
+                              tools:text="Item Title" />
+
+                    <TextView android:id="@+id/dashboard_entry_content"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:padding="5dp"
+                              android:paddingTop="10dp"
+                              style="?android:titleTextStyle"
                               tools:text="Item Content" />
 
                     <View

@@ -23,8 +23,9 @@
       "feed_image_url": "https://pbs.twimg.com/profile_images/2462244142/9x7t6axcyshhiyjnkhlx.png"
     }, {
       "id": 356969,
-      "name": "Shoryuken",
-      "website_url": "http://www.eventhubs.com",
+      "name": "r/Kappa",
+      "rss_url": "https://www.reddit.com/r/kappa/.rss",
+      "website_url": "http://www.reddit.com/r/kappa",
       "feed_image_url": "https://pbs.twimg.com/profile_images/2462244142/9x7t6axcyshhiyjnkhlx.png"
     }
   ],

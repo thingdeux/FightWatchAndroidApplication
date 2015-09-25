@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
@@ -51,12 +50,25 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         if (latestStories != null) {
             StringBuilder sb = new StringBuilder(latestStories.size());
             DashboardEntry entry = new DashboardEntry();
+            boolean isFirstItem = true;
 
             for (HashMap.Entry<String, Story> story : latestStories.entrySet()) {
-                sb.append(story.getKey() + "\t" +
-                    StringUtils.limitCharacters(story.getValue().getTitle(), 35, true) +
-                    System.getProperty("line.separator"));
+                if (story.getValue() != null) {
+                    String lineText = "";
+                    if (!isFirstItem) {
+                        lineText += StringUtils.multipleLineBreaks(2);
+                    } else {
+                        isFirstItem = false;
+                    }
+
+                     lineText += "(" + story.getKey() + ")" + " - " +
+                            StringUtils.limitCharacters(story.getValue().getTitle(), 45, true);
+
+                    sb.append(lineText);
+                }
             }
+
+            // System.getProperty("line.separator") + System.getProperty("line.separator")
 
             entry.setType(DashboardEntry.RSS_FEED_TYPE);
             entry.setHeader(mContext.getResources().getText(R.string.dashboard_stories_header_name).toString());

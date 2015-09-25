@@ -92,9 +92,13 @@ public class FetchFeeds {
     }
 
     public static HashMap<String, Story> FetchLatestStories(Context context) {
+        // TODO : Pull the streams from the latest config, not to be built manually.
         HashMap<String, Story> feeds = new HashMap<>();
         feeds.put("EventHubs", getLatestStory("http://www.eventhubs.com/feeds/latest/"));
-        feeds.put("CNNTester", getLatestStory("http://rss.cnn.com/rss/cnn_topstories.rss"));
+        feeds.put("INTENTIONALERROR", getLatestStory("http://www.eventhubs.com/feeds/"));
+
+        // Kappa Feed is coming back with /Too many requests .... only sometimes.
+        feeds.put("r/Kappa", getLatestStory("https://www.reddit.com/r/kappa/.rss"));
 
         return feeds;
     }
@@ -105,6 +109,7 @@ public class FetchFeeds {
         Log.v("ProcessFeed", "Fetching feed for: " + url);
         ArrayList<Story> stories = NetworkUtils.parseRss(url);
         if (stories != null) {
+            Log.d("FeedCounts", url + " -> " + stories.size());
             return stories.get(0);
         } else {
             Log.e("ProcessFeed", "Received error on " + url);

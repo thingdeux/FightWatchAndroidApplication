@@ -44,7 +44,7 @@ public class DashboardFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.dashboard_recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mAdapter = new DashboardAdapter(new DashboardEntry[1]);
+        mAdapter = new DashboardAdapter(new DashboardEntry[0]);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 

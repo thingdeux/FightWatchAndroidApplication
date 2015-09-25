@@ -54,8 +54,8 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
 
             for (HashMap.Entry<String, Story> story : latestStories.entrySet()) {
                 sb.append(story.getKey() + "\t" +
-                        StringUtils.limitCharacters(story.getValue().getTitle(), 45, true) +
-                        System.getProperty("line.separator"));
+                    StringUtils.limitCharacters(story.getValue().getTitle(), 35, true) +
+                    System.getProperty("line.separator"));
             }
 
             entry.setType(DashboardEntry.RSS_FEED_TYPE);

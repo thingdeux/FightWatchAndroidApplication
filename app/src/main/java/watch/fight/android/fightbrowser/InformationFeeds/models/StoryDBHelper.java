@@ -13,6 +13,8 @@ public class StoryDBHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = StoryTable.NAME + ".db";
     private static final String TEXT_TYPE = " TEXT";
+    private static final String SQL_INDEX_SITE_NAME = "CREATE INDEX " + StoryTable.Cols.SITE_NAME +
+            "_index " + "ON " + StoryTable.NAME + "(" + StoryTable.Cols.SITE_NAME + ")";
 
     private static final String SQL_CREATE_FEED_TABLE =
             "CREATE TABLE " + StoryTable.NAME + " (" +
@@ -22,7 +24,7 @@ public class StoryDBHelper extends SQLiteOpenHelper {
                     StoryTable.Cols.DESCRIPTION + TEXT_TYPE + "," +
                     StoryTable.Cols.URL + TEXT_TYPE + "," +
                     StoryTable.Cols.AUTHOR + TEXT_TYPE + "," +
-                    StoryTable.Cols.PUBLISHED_DATE + TEXT_TYPE +
+                    StoryTable.Cols.PUBLISHED_DATE + " INTEGER" + "," +
                     StoryTable.Cols.LAST_UPDATED + TEXT_TYPE +
                     " )";
 
@@ -35,6 +37,7 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_FEED_TABLE);
+        db.execSQL(SQL_INDEX_SITE_NAME);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

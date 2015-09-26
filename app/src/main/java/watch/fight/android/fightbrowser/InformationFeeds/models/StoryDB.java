@@ -9,6 +9,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Utils.DateParser;
+
 import static watch.fight.android.fightbrowser.InformationFeeds.models.StoryDBSchema.*;
 
 /**
@@ -31,6 +33,24 @@ public class StoryDB {
         mDatabase = new StoryDBHelper(mContext).getWritableDatabase();
     }
 
+    public Story getStory(int id) {
+        StoryCursorWrapper cursor = queryStories(
+                StoryTable.Cols._ID + " = ?",
+                new String[]{"" + id}
+        );
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getStory();
+        } finally {
+            cursor.close();
+        }
+    }
+
     public List<Story> getAllStories() {
         List<Story> stories = new ArrayList<>();
 
@@ -49,22 +69,24 @@ public class StoryDB {
         return stories;
     }
 
-    public Story getStory(int id) {
-        StoryCursorWrapper cursor = queryStories(
-                StoryTable.Cols._ID + " = ?",
-                new String[]{"" + id}
-        );
+    public List<Story> getTopStoryForEachSite() {
+        List<Story> stories = new ArrayList<>();
+        StoryCursorWrapper cursor = queryStoriesWithGroupAndOrder(
+                null,
+                null,
+                StoryTable.Cols.SITE_NAME,
+                StoryTable.Cols.PUBLISHED_DATE);
 
         try {
-            if (cursor.getCount() == 0) {
-                return null;
-            }
-
             cursor.moveToFirst();
-            return cursor.getStory();
+            while (!cursor.isAfterLast()) {
+                stories.add(cursor.getStory());
+                cursor.moveToNext();
+            }
         } finally {
             cursor.close();
         }
+        return stories;
     }
 
     public void addStory(Story story) {
@@ -132,6 +154,21 @@ public class StoryDB {
         return new StoryCursorWrapper(cursor);
     }
 
+    private StoryCursorWrapper queryStoriesWithGroupAndOrder(String whereClause, String[] whereArgs,
+                                                             String groupBy, String orderBy) {
+        Cursor cursor = mDatabase.query(
+                StoryTable.NAME,
+                null, // Columns -null selects all columns
+                whereClause,
+                whereArgs,
+                groupBy, //GroupBy
+                null, // having
+                orderBy // orderBy
+        );
+
+        return new StoryCursorWrapper(cursor);
+    }
+
     private static ContentValues getContentValues(Story story) {
         ContentValues values = new ContentValues();
         values.put(StoryTable.Cols.SITE_NAME, story.getSiteName());
@@ -139,8 +176,9 @@ public class StoryDB {
         values.put(StoryTable.Cols.DESCRIPTION, story.getDescription());
         values.put(StoryTable.Cols.URL, story.getUrl().toString());
         values.put(StoryTable.Cols.AUTHOR, story.getAuthor());
-        values.put(StoryTable.Cols.PUBLISHED_DATE, story.getPublishedDate().toString());
+        values.put(StoryTable.Cols.PUBLISHED_DATE, DateParser.dateToEpoch(story.getPublishedDate()));
         values.put(StoryTable.Cols.LAST_UPDATED, story.getLastUpdated());
+
 
         return values;
     }

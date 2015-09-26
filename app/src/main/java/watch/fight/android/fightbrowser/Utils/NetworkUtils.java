@@ -37,7 +37,7 @@ public class NetworkUtils {
         return null;
     }
 
-    public static ArrayList<Story> parseRss(String rssUrl) {
+    public static ArrayList<Story> parseRss(String siteName, String rssUrl) {
         try {
             RSSReader reader = new RSSReader();
             RSSFeed rss_feed = reader.load(rssUrl);
@@ -47,6 +47,7 @@ public class NetworkUtils {
             if (rss_items != null) {
                 for (int i = 0; i < rss_items.size(); i++) {
                     Story s = new Story();
+                    s.setSiteName(siteName);
                     s.setTitle(rss_items.get(i).getTitle());
                     s.setDescription(rss_items.get(i).getDescription());
                     s.setUrl(rss_items.get(i).getLink());

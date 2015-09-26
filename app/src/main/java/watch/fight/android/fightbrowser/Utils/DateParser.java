@@ -33,6 +33,14 @@ public class DateParser {
         return new Date(epochTime);
     }
 
+    public static Long dateToEpoch(Date date) {
+        if (date != null) {
+            return date.getTime();
+        } else {
+            return null;
+        }
+    }
+
     public static GregorianCalendar epochToGregorian(long epochTime) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTimeInMillis(epochTime);

@@ -15,6 +15,7 @@ import java.util.GregorianCalendar;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
+import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
@@ -68,15 +69,13 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
         new FetchConfig(this).execute();
+        new FetchFeeds.FetchStories(this).execute();
 
         if (savedInstanceState == null) {
             DashboardFragment dashboardFragment = new DashboardFragment();

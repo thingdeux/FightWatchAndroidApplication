@@ -19,9 +19,8 @@ public class StoryCursorWrapper extends CursorWrapper {
         String description = getString(getColumnIndex(StoryTable.Cols.DESCRIPTION));
         String url = getString(getColumnIndex(StoryTable.Cols.URL));
         String author = getString(getColumnIndex(StoryTable.Cols.AUTHOR));
-        String published_date = getString(getColumnIndex(StoryTable.Cols.PUBLISHED_DATE));
+        Long published_date = getLong(getColumnIndex(StoryTable.Cols.PUBLISHED_DATE));
         String last_updated = getString(getColumnIndex(StoryTable.Cols.LAST_UPDATED));
-
 
         Story story = new Story();
         story.setSiteName(siteName);
@@ -29,7 +28,7 @@ public class StoryCursorWrapper extends CursorWrapper {
         story.setDescription(description);
         story.setUrl(Uri.parse(url));
         story.setAuthor(author);
-        story.setPublishedDate(DateParser.getDateFromStr(published_date));
+        story.setPublishedDate(DateParser.epochToDate(published_date));
         story.setLastUpdated(last_updated);
 
         return story;

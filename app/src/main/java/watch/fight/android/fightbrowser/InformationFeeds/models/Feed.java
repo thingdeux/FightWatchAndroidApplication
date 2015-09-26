@@ -27,6 +27,8 @@ public class Feed {
     @SerializedName("feed_image_url")
     private String mFeedImageUrl;
 
+    private String mLastUpdated;
+
     public long getId() {
         return id;
     }
@@ -45,6 +47,34 @@ public class Feed {
 
     public String getFeedImageUrl() {
         return mFeedImageUrl;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public void setRSSUrl(String RSSUrl) {
+        mRSSUrl = RSSUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        mWebUrl = webUrl;
+    }
+
+    public void setFeedImageUrl(String feedImageUrl) {
+        mFeedImageUrl = feedImageUrl;
+    }
+
+    public String getLastUpdated() {
+        return mLastUpdated;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        mLastUpdated = lastUpdated;
     }
 
     // TODO : Image Download and store in long term cache

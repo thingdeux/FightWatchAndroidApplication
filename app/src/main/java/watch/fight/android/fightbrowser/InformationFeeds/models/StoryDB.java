@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -71,11 +72,7 @@ public class StoryDB {
 
     public List<Story> getTopStoryForEachSite() {
         List<Story> stories = new ArrayList<>();
-        StoryCursorWrapper cursor = queryStoriesWithGroupAndOrder(
-                null,
-                null,
-                StoryTable.Cols.SITE_NAME,
-                StoryTable.Cols.PUBLISHED_DATE);
+        StoryCursorWrapper cursor = TopStoriesQuery();
 
         try {
             cursor.moveToFirst();
@@ -179,7 +176,17 @@ public class StoryDB {
         values.put(StoryTable.Cols.PUBLISHED_DATE, DateParser.dateToEpoch(story.getPublishedDate()));
         values.put(StoryTable.Cols.LAST_UPDATED, story.getLastUpdated());
 
-
         return values;
     }
+
+
+//    private static String LATEST_STORY_INNER = "SELECT * FROM " + StoryTable.NAME +
+//            " ORDER BY " + StoryTable.Cols.PUBLISHED_DATE + " DESC";
+//    private static String LATEST_STORY_QUERY = "SELECT * FROM (" + LATEST_STORY_INNER + ") as temp GROUP BY " + StoryTable.Cols.SITE_NAME;
+
+    private StoryCursorWrapper TopStoriesQuery() {
+        Cursor cursor = mDatabase.rawQuery("SELECT *, MAX(" + StoryTable.Cols.PUBLISHED_DATE + ") " + "FROM stories GROUP BY storysitename", null);
+        return new StoryCursorWrapper(cursor);
+    }
 }
+

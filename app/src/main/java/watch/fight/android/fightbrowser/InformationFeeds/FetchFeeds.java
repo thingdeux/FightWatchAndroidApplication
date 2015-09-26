@@ -66,10 +66,6 @@ public class FetchFeeds {
                 }
                 return stories;
             }
-//            Log.i("JJDEBUG", "THE STORIES!");
-//            for (Story s : StoryDB.getInstance(mContext.getApplicationContext()).getAllStories()) {
-//                Log.i("Story", s.getSiteName() + " (" + s.getPublishedDate() + ") -> " + s.getTitle());
-//            }
             return null;
         }
 
@@ -101,15 +97,25 @@ public class FetchFeeds {
     public static HashMap<String, Story> FetchLatestStories(Context context) {
         HashMap<String, Story> feedMapper = new HashMap<>();
         List<Feed> feeds = FeedDB.getInstance(context.getApplicationContext()).getAllFeeds();
+        List<Story> stories = StoryDB.getInstance(context.getApplicationContext()).getTopStoryForEachSite();
 
-        if (feeds != null) {
-            for (int i = 0; i < feeds.size(); i++) {
-                feedMapper.put(feeds.get(i).getName(),
-                        getLatestStory(feeds.get(i).getName(), feeds.get(i).getRSSUrl()));
+        if (stories != null) {
+            for (int i = 0; i < stories.size(); i++) {
+                feedMapper.put(stories.get(i).getSiteName(), stories.get(i));
             }
         }
+
+//        if (feeds != null) {
+//            for (int i = 0; i < feeds.size(); i++) {
+//                feedMapper.put(feeds.get(i).getName(),
+//                        getLatestStory(feeds.get(i).getName(), feeds.get(i).getRSSUrl()));
+//            }
+//        }
+
         // TODO :  Kappa Feed is coming back with /Too many requests .... only sometimes.
 //        feedMapper.put("INTENTIONALERROR", getLatestStory("http://www.eventhubs.com/feeds/"));
+
+
         return feedMapper;
     }
 

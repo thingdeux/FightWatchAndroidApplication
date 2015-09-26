@@ -3,6 +3,7 @@ package watch.fight.android.fightbrowser.InformationFeeds;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,7 +73,8 @@ public class FetchFeeds {
         protected void onPostExecute(ArrayList<Story> stories) {
             if (stories != null) {
                 SharedPreferences.setFeedsLastUpdated(mContext, System.currentTimeMillis());
-
+                Toast t = Toast.makeText(mContext, "Fetched New Stuff!", Toast.LENGTH_SHORT);
+                t.show();
                 // TODO : Will only be using this with Information Feeds Adapter
 //                mAdapter.setStories(stories);
 //                mAdapter.notifyDataSetChanged();

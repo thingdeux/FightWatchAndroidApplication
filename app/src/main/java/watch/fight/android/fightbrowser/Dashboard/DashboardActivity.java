@@ -15,6 +15,8 @@ import java.util.GregorianCalendar;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
+import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
+import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.DateParser;
@@ -41,12 +43,17 @@ public class DashboardActivity extends AppCompatActivity {
             date.add(Calendar.HOUR, CONFIG_CHECK_FREQUENCY_IN_HOURS);
             GregorianCalendar today = new GregorianCalendar();
 
-
             // If today > LastConfigUpdate + 24 hours -- Only check for new config once a day
             if (today.after(date)) {
                 Config config = ConfigFetcher.getTestConfig(mContext);
                 if (config != null) {
                     SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());
+
+                    if (config.getFeeds() != null) {
+                        FeedDB.getInstance(mContext).deleteAllFeeds();
+                        Log.i(TAG, "Attempting to insert " + config.getFeeds().size() + " feeds into DB");
+                        FeedDB.getInstance(mContext).addFeeds(config.getFeeds());
+                    }
                 }
                 return config;
             }

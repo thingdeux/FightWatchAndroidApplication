@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Stack;
 
 import watch.fight.android.fightbrowser.Dashboard.DashboardAdapter;
+import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
+import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDB;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.Utils.DateParser;
 import watch.fight.android.fightbrowser.Utils.NetworkUtils;
@@ -92,15 +94,19 @@ public class FetchFeeds {
     }
 
     public static HashMap<String, Story> FetchLatestStories(Context context) {
-        // TODO : Pull the streams from the latest config, not to be built manually.
-        HashMap<String, Story> feeds = new HashMap<>();
-        feeds.put("EventHubs", getLatestStory("http://www.eventhubs.com/feeds/latest/"));
-        feeds.put("INTENTIONALERROR", getLatestStory("http://www.eventhubs.com/feeds/"));
+        HashMap<String, Story> feedMapper = new HashMap<>();
+        List<Feed> feeds = FeedDB.getInstance(context.getApplicationContext()).getAllFeeds();
 
-        // Kappa Feed is coming back with /Too many requests .... only sometimes.
-        feeds.put("r/Kappa", getLatestStory("https://www.reddit.com/r/kappa/.rss"));
+        if (feeds != null) {
+            for (int i = 0; i < feeds.size(); i++) {
+                feedMapper.put(feeds.get(i).getName(), getLatestStory(feeds.get(i).getRSSUrl()));
+            }
+        }
+        // TODO :  Kappa Feed is coming back with /Too many requests .... only sometimes.
 
-        return feeds;
+//        feedMapper.put("INTENTIONALERROR", getLatestStory("http://www.eventhubs.com/feeds/"));
+
+        return feedMapper;
     }
 
     protected static Story getLatestStory(String url) {

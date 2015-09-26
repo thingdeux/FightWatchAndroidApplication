@@ -12,7 +12,7 @@ public class FeedCursorWrapper extends CursorWrapper {
     public FeedCursorWrapper(Cursor cursor) { super(cursor); }
 
     public Feed getFeed() {
-        int id = getInt(getColumnIndex(FeedTable.Cols._ID));
+        int id = getInt(getColumnIndex(FeedTable.Cols.ID));
         String name = getString(getColumnIndex(FeedTable.Cols.NAME));
         String imageUrl = getString(getColumnIndex(FeedTable.Cols.IMAGE_URL));
         String lastUpdated = getString(getColumnIndex(FeedTable.Cols.LAST_UPDATED));

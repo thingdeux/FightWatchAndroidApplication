@@ -1,5 +1,6 @@
 package watch.fight.android.fightbrowser.InformationFeeds.models;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -52,7 +53,7 @@ public class FeedDB {
     public Feed getFeed(int id) {
         FeedCursorWrapper cursor = queryFeeds(
                 FeedTable.Cols._ID + " = ?",
-                new String[] {"" + id}
+                new String[]{"" + id}
         );
 
         try {
@@ -72,6 +73,21 @@ public class FeedDB {
         mDatabase.insert(FeedTable.NAME, null, values);
     }
 
+    public void addFeeds(List<Feed> feeds) {
+        if (feeds != null && feeds.size() > 0) {
+            mDatabase.beginTransaction();
+            for (int i = 0; i < feeds.size(); i++) {
+                ContentValues values = getContentValues(feeds.get(i));
+                mDatabase.insert(FeedTable.NAME, null, values);
+            }
+            mDatabase.setTransactionSuccessful();
+            mDatabase.endTransaction();
+        } else {
+            Log.e("addFeeds", "Error - Attemping to add 0 or null feeds to DB");
+        }
+
+    }
+
     public void updateFeed(Feed feed) {
         String id = "" + feed.getId();
         ContentValues values = getContentValues(feed);
@@ -86,10 +102,15 @@ public class FeedDB {
         deleteFeeds(FeedTable.Cols._ID + " = ?", new String[]{"" + id});
     }
 
+    public void deleteAllFeeds() {
+        Log.v("DeletedFeed", "Deleting All Feeds!");
+        mDatabase.delete(FeedTable.NAME, null, null);
+    }
+
     public void deleteFeeds(String whereClause, String[] whereArgs) {
         int isDeleted = mDatabase.delete(FeedTable.NAME, whereClause, whereArgs);
         if (isDeleted != 1) {
-            Log.e("deleteFeeds", "Unabled to delete feeds -> " + whereArgs.toString());
+            Log.e("deleteFeeds", "Unable to delete feeds -> " + whereArgs.toString());
         }
     }
 

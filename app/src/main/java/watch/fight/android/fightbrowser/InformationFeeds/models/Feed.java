@@ -78,5 +78,10 @@ public class Feed {
     }
 
     // TODO : Image Download and store in long term cache
-
+    @Override
+    public String toString() {
+        return "ID: " + getId() +
+                " Name: " + getName() +
+                " RssUrl: " + getRSSUrl();
+    }
 }

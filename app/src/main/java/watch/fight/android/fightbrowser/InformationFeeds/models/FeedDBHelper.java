@@ -11,12 +11,13 @@ import static watch.fight.android.fightbrowser.InformationFeeds.models.FeedDBSch
  */
 public class FeedDBHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = ".db";
+    public static final String DATABASE_NAME = FeedTable.NAME + ".db";
     private static final String TEXT_TYPE = " TEXT";
 
     private static final String SQL_CREATE_FEED_TABLE =
             "CREATE TABLE " + FeedTable.NAME + " (" +
                     FeedTable.Cols._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    FeedTable.Cols.ID + " INTEGER " + "," +
                     FeedTable.Cols.NAME + TEXT_TYPE + "," +
                     FeedTable.Cols.IMAGE_URL + TEXT_TYPE + "," +
                     FeedTable.Cols.PARENT_URL + TEXT_TYPE + "," +

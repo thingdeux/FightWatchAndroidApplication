@@ -23,7 +23,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  * Created by josh on 9/22/15.
  */
 public class FetchFeeds {
-    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = -1;
+    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = -1;  // TODO : Don't forget to change this to something reasonable
 
     public static class FetchStories extends AsyncTask<Void, Void, ArrayList<Story>> {
         private Context mContext;
@@ -36,13 +36,7 @@ public class FetchFeeds {
             mAdapter = adapter;
         }
 
-//        protected FetchStories(List<Story> stories, String url) {
-//            mIsSubTasker = true;
-//            mUrl = url;
-//        }
-
         protected ArrayList<Story> doInBackground(Void... response) {
-//            List<Story> syncFeeds = Collections.synchronizedList(new ArrayList<Story>());
             ArrayList<Story> feeds = new ArrayList<Story>();
 
             if (!mIsSubTasker) {
@@ -87,8 +81,10 @@ public class FetchFeeds {
             ArrayList<Story> stories = NetworkUtils.parseRss(url);
             if (stories != null) {
                 feeds.addAll(stories);
+            } else {
+                Log.e("ProcessFeed", "Received error on " + url);
             }
-            Log.e("ProcessFeed", "Received error on " + url);
+
         }
 
     }
@@ -103,9 +99,7 @@ public class FetchFeeds {
             }
         }
         // TODO :  Kappa Feed is coming back with /Too many requests .... only sometimes.
-
 //        feedMapper.put("INTENTIONALERROR", getLatestStory("http://www.eventhubs.com/feeds/"));
-
         return feedMapper;
     }
 

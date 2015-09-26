@@ -48,16 +48,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
             holder.mEntryHeader.setText(mEntries[position].getHeader());
             holder.mEntryContent.setText(mEntries[position].getContent());
         }
-
-//        holder.mStoryTitle.setText(mStories.get(position).getTitle());
-//        holder.mLinkUri = mStories.get(position).getUrl();
     }
 
     @Override
     public int getItemCount() { return mEntries.length; }
-
-    public void getContextS() {
-    }
 
     public void setEntries(@NonNull DashboardEntry[] entries) {
         mEntries = entries;

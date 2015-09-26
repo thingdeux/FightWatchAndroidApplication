@@ -8,49 +8,67 @@ import java.util.Date;
  * Created by josh on 9/22/15.
  */
 public class Story {
-    public String Title;
-    public String Description;
-    public Uri Url;
-    public String Author;
-    public Date PublishedDate;
+    private String mSiteName;
+    private String mTitle;
+    private String mDescription;
+    private Uri mUrl;
+    private String mAuthor;
+    private Date mPublishedDate;
+    private String mLastUpdated;
 
     public String getTitle() {
-        return Title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        mTitle = title;
     }
 
     public String getDescription() {
-        return Description;
+        return mDescription;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        mDescription = description;
     }
 
     public String getAuthor() {
-        return Author;
+        return mAuthor;
     }
 
     public void setAuthor(String author) {
-        Author = author;
+        mAuthor = author;
     }
 
     public Uri getUrl() {
-        return Url;
+        return mUrl;
     }
 
     public void setUrl(Uri url) {
-        Url = url;
+        mUrl = url;
     }
 
     public Date getPublishedDate() {
-        return PublishedDate;
+        return mPublishedDate;
     }
 
     public void setPublishedDate(Date publishedDate) {
-        PublishedDate = publishedDate;
+        mPublishedDate = publishedDate;
+    }
+
+    public String getLastUpdated() {
+        return mLastUpdated;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        mLastUpdated = lastUpdated;
+    }
+
+    public String getSiteName() {
+        return mSiteName;
+    }
+
+    public void setSiteName(String siteName) {
+        mSiteName = siteName;
     }
 }

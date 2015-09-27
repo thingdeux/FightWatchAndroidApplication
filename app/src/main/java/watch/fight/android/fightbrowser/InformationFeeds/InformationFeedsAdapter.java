@@ -17,6 +17,7 @@ import java.util.List;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.InformationFeeds.models.StoryDB;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.DateParser;
 
 /**
  * Created by josh on 9/25/15.
@@ -28,6 +29,7 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mStorySiteName;
         public TextView mStoryTitle;
+        public TextView mStoryPublishedDate;
         public Uri mLinkUri;
         public Button mReadMoreButton;
         public Button mShareButton;
@@ -36,6 +38,7 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
             super(v);
             mStoryTitle = (TextView) v.findViewById(R.id.feed_title);
             mStorySiteName = (TextView) v.findViewById(R.id.feed_site_name);
+            mStoryPublishedDate = (TextView) v.findViewById(R.id.feed_published_date);
             mReadMoreButton = (Button) v.findViewById(R.id.feed_read_more_button);
             mShareButton = (Button) v.findViewById(R.id.feed_share_button);
         }
@@ -62,6 +65,8 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
         holder.mStorySiteName.setText(story.getSiteName());
         holder.mStoryTitle.setText(story.getTitle());
         holder.mLinkUri = story.getUrl();
+        holder.mStoryPublishedDate.setText(DateParser.dateToSimpleDateStr(story.getPublishedDate()))
+        ;
 
         holder.mReadMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override

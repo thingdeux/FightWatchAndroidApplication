@@ -35,13 +35,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView android:id="@+id/feed_site_name"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:padding="5dp"
-                              android:paddingTop="10dp"
-                              style="?android:textAppearanceListItem"
-                              tools:text="Item Title" />
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:paddingTop="10dp">
+
+                        <TextView android:id="@+id/feed_site_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?android:textAppearanceListItem"
+                            android:layout_weight=".8"
+                            tools:text="Item Title" />
+
+                        <TextView android:id="@+id/feed_published_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".2"
+                            style="?android:textAppearanceSmall"
+                            tools:text="Published Date" />
+
+                    </LinearLayout>
+
+
 
                     <TextView android:id="@+id/feed_title"
                               android:layout_width="wrap_content"

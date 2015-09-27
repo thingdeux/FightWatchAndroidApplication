@@ -56,7 +56,7 @@ public class StoryDB {
         List<Story> stories = new ArrayList<>();
 
         // Pass no where clause or args, will return everything.
-        StoryCursorWrapper cursor = queryStories(null, null);
+        StoryCursorWrapper cursor = queryStoriesWithOrder(null, null, "DESC");
 
         try {
             cursor.moveToFirst();
@@ -148,6 +148,21 @@ public class StoryDB {
 
         return new StoryCursorWrapper(cursor);
     }
+
+    private StoryCursorWrapper queryStoriesWithOrder(String whereClause, String[] whereArgs, String DescOrASC) {
+        Cursor cursor = mDatabase.query(
+                StoryTable.NAME,
+                null, // Columns -null selects all columns
+                whereClause,
+                whereArgs,
+                null, //GroupBy
+                null, // having
+                StoryTable.Cols.PUBLISHED_DATE + " " + DescOrASC // orderBy
+        );
+
+        return new StoryCursorWrapper(cursor);
+    }
+
 
     private StoryCursorWrapper queryStoriesBySite(String siteName) {
         Cursor cursor = mDatabase.query(

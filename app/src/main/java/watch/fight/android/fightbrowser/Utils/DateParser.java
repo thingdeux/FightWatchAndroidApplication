@@ -17,6 +17,7 @@ import java.util.TimeZone;
 public class DateParser {
     // Should return the clients locale
     public static DateFormat m_ISO8601Local = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+    public static DateFormat simpleDate = new SimpleDateFormat("ccc dd h:mm a", Locale.getDefault());
 
     public static Date getDateFromStr(String dateString) {
         if (dateString != null) {
@@ -45,5 +46,12 @@ public class DateParser {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTimeInMillis(epochTime);
         return cal;
+    }
+
+    public static String dateToSimpleDateStr(Date date) {
+        if (date != null) {
+            return simpleDate.format(date).toString();
+        }
+        return null;
     }
 }

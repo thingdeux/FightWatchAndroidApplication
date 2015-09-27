@@ -16,7 +16,7 @@
     <string name="browser_action_filter">Filter</string>
 
     <string name="dashboard_stories_header_name">Latest Stories</string>
-    <string name="dashboard_read_more_button_name">Read More</string>
+    <string name="dashboard_check_news_button_name">See Latest FGC News</string>
     <string name="dashboard_share_button_name">Share</string>
     <string name="dashboard_header">Dashboard</string>
     <string name="menu_dashboard_name">Dashboard</string>
@@ -24,6 +24,8 @@
     <string name="menu_news_name">News</string>
     <string name="menu_stream_name">Streams</string>
     <string name="menu_preferences_name">Preferences</string>
+
+    <string name="read_more_button_name">Read More</string>
 
     <string-array name="main_menu_options">
         <item>Dashboard</item>

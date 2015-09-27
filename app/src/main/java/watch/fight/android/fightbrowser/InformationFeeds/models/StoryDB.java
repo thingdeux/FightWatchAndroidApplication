@@ -116,7 +116,14 @@ public class StoryDB {
         mDatabase.delete(StoryTable.NAME, null, null);
     }
 
-    public void deleteStories(String whereClause, String[] whereArgs) {
+    public void deleteStoriesBySiteName(String siteName) {
+        if (siteName != null && !siteName.isEmpty()) {
+            deleteStories(StoryTable.Cols.SITE_NAME + " = ?",
+                          new String[] { siteName });
+        }
+    }
+
+    private void deleteStories(String whereClause, String[] whereArgs) {
         int isDeleted = mDatabase.delete(StoryTable.NAME, whereClause, whereArgs);
         if (isDeleted != 1) {
             Log.e("deleteStories", "Unable to delete stories -> " + whereArgs.toString());

@@ -24,9 +24,10 @@
                 android:orientation="horizontal">
 
 
-                <ImageButton android:id="@+id/dashboard_entry_icon"
+                <ImageButton android:id="@+id/feed_icon"
                              android:layout_width="wrap_content"
                              android:layout_height="match_parent"
+                             android:src="@mipmap/ic_eventhubs"
                              android:background="@android:color/transparent"/>
 
                 <LinearLayout
@@ -34,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView android:id="@+id/dashboard_entry_header"
+                    <TextView android:id="@+id/feed_site_name"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:padding="5dp"
@@ -42,7 +43,7 @@
                               style="?android:textAppearanceListItem"
                               tools:text="Item Title" />
 
-                    <TextView android:id="@+id/dashboard_entry_content"
+                    <TextView android:id="@+id/feed_title"
                               android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:padding="5dp"
@@ -63,18 +64,18 @@
                         android:layout_height="wrap_content"
                         >
 
-                        <Button android:id="@+id/dashboard_read_more_button"
+                        <Button android:id="@+id/feed_read_more_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="?android:attr/borderlessButtonStyle"
-                                android:text="@string/dashboard_check_news_button_name"
+                                android:text="@string/read_more_button_name"
                             />
 
-                        <Button android:id="@+id/dashboard_share_button"
+                        <Button android:id="@+id/feed_share_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/dashboard_read_more_button"
-                                android:layout_toEndOf="@id/dashboard_read_more_button"
+                                android:layout_toRightOf="@id/feed_read_more_button"
+                                android:layout_toEndOf="@id/feed_read_more_button"
                                 style="?android:attr/borderlessButtonStyle"
                                 android:text="@string/dashboard_share_button_name"
                             />

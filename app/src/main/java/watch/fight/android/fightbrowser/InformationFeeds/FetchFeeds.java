@@ -25,7 +25,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  * Created by josh on 9/22/15.
  */
 public class FetchFeeds {
-    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 30;  // TODO : Don't forget to change this to something reasonable
+    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 15;
 
     public static class FetchStories extends AsyncTask<Void, Void, ArrayList<Story>> {
         private Context mContext;
@@ -45,7 +45,6 @@ public class FetchFeeds {
         protected ArrayList<Story> doInBackground(Void... response) {
             ArrayList<Story> stories = new ArrayList<>();
 
-
             GregorianCalendar today = new GregorianCalendar();
             GregorianCalendar date = DateParser.epochToGregorian(SharedPreferences.getFeedsLastUpdated(mContext));
             date.add(Calendar.MINUTE, ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS);
@@ -58,8 +57,6 @@ public class FetchFeeds {
                 List<Feed> feeds = FeedDB.getInstance(mContext.getApplicationContext()).getAllFeeds();
 
                 if (feeds != null) {
-                    // Will Do Delete per story in processFeed
-                    StoryDB.getInstance(mContext.getApplicationContext()).deleteAllStories();  // TODO : Just for Debug Purposes, remove this
                     for (int i = 0; i < feeds.size(); i++) {
                         processFeed(feeds.get(i).getName(),
                                 feeds.get(i).getRSSUrl());
@@ -73,21 +70,24 @@ public class FetchFeeds {
         protected void onPostExecute(ArrayList<Story> stories) {
             if (stories != null) {
                 SharedPreferences.setFeedsLastUpdated(mContext, System.currentTimeMillis());
-                Toast t = Toast.makeText(mContext, "Fetched New Stuff!", Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(mContext, "Fetched New Feeds!", Toast.LENGTH_SHORT);
                 t.show();
-                // TODO : Will only be using this with Information Feeds Adapter
-//                mAdapter.setStories(stories);
-//                mAdapter.notifyDataSetChanged();
+                if (mAdapter != null) {
+                    // Notify the recyclerview adapter if one has been passed in.
+                    mAdapter.notifyDataSetChanged();
+                }
             }
         }
 
         protected void processFeed(String siteName, String url) {
-            // TODO : Write Feed updates to DB and simply notify adapter that the dataset has changed.
-            // Adapter will poll DB for the content.
             Log.v("ProcessFeed", "Fetching feed for: " + url);
             ArrayList<Story> stories = NetworkUtils.parseRss(siteName, url);
             if (stories != null) {
-                StoryDB.getInstance(mContext.getApplicationContext()).addStories(stories);
+                StoryDB DB = StoryDB.getInstance(mContext.getApplicationContext());
+                // Delete all stories from the given site and add the new updates
+                // will only delete if the feed has been succesfully gathered
+                DB.deleteStoriesBySiteName(siteName);
+                DB.addStories(stories);
             } else {
                 Log.e("ProcessFeed", "Received error on " + url);
             }

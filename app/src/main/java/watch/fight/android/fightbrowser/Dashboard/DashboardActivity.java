@@ -20,6 +20,7 @@ import java.util.GregorianCalendar;
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
+import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
@@ -117,6 +118,7 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(this, BrowserActivity.class));
                 return true;
             case R.id.action_news:
+                startActivity(new Intent(this, InformationFeedsActivity.class));
                 return true;
             case R.id.action_preferences:
                 return true;

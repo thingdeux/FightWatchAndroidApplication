@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import watch.fight.android.fightbrowser.Dashboard.DashboardAdapter;
-import watch.fight.android.fightbrowser.Dashboard.DashboardBuilder;
-import watch.fight.android.fightbrowser.Dashboard.DashboardEntry;
-import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.R;
 
 /**
@@ -25,7 +23,6 @@ public class InformationFeedsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        new DashboardBuilder().execute(new DashboardBuilder.DashboardBuilderValues(getActivity(), mAdapter));
     }
 
     @Override
@@ -40,4 +37,17 @@ public class InformationFeedsFragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                Log.d("informationFeeds", "Received Refresh");
+                new FetchFeeds.FetchStories(this.getActivity(), mAdapter, true).execute();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+

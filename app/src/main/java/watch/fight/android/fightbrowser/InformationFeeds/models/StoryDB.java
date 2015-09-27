@@ -119,14 +119,19 @@ public class StoryDB {
     public void deleteStoriesBySiteName(String siteName) {
         if (siteName != null && !siteName.isEmpty()) {
             deleteStories(StoryTable.Cols.SITE_NAME + " = ?",
-                          new String[] { siteName });
+                    new String[]{siteName});
         }
     }
 
     private void deleteStories(String whereClause, String[] whereArgs) {
+        Log.i("deleteStories", "Received delete for -> ");
+        for (int i = 0; i< whereArgs.length; i++) {
+            Log.i("deleteStories", whereArgs[i]);
+        }
+
         int isDeleted = mDatabase.delete(StoryTable.NAME, whereClause, whereArgs);
         if (isDeleted != 1) {
-            Log.e("deleteStories", "Unable to delete stories -> " + whereArgs.toString());
+            Log.e("deleteStories", "Unable to delete stories -> " + whereArgs);
         }
     }
 

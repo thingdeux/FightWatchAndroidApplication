@@ -12,6 +12,8 @@
     <string name="twitch_loading_message_title">Please Wait</string>
     <string name="twitch_loading_message_subtitle">Loading Twitch Streams</string>
 
+    <string name="information_menu_refresh_name">Refresh</string>
+
     <string name="browser_action_refresh">Refresh</string>
     <string name="browser_action_filter">Filter</string>
 

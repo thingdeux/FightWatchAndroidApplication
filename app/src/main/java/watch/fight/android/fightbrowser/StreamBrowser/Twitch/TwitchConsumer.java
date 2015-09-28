@@ -38,8 +38,7 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
             int response = connection.getResponseCode();
             InputStream input = connection.getInputStream();
             String contentAsString = NetworkUtils.InputStreamToString(input);
-            Log.v(TAG, "Received Response code from Twitch: " + response);
-            Log.d(TAG, "Calling callback: " + mCallback.toString());
+//            Log.v(TAG, "Received Response code from Twitch: " + response);
             mCallback.onReceivedResponse(contentAsString);
             return input.toString();
         } catch (Exception e) {

@@ -124,14 +124,11 @@ public class StoryDB {
     }
 
     private void deleteStories(String whereClause, String[] whereArgs) {
-        Log.i("deleteStories", "Received delete for -> ");
-        for (int i = 0; i< whereArgs.length; i++) {
-            Log.i("deleteStories", whereArgs[i]);
-        }
-
         int isDeleted = mDatabase.delete(StoryTable.NAME, whereClause, whereArgs);
-        if (isDeleted != 1) {
+        if (whereClause == null && isDeleted != 1) {
             Log.e("deleteStories", "Unable to delete stories -> " + whereArgs);
+        } else {
+            Log.i("deleteStories", "Deleted: " + isDeleted + " stories");
         }
     }
 

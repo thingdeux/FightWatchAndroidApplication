@@ -63,4 +63,21 @@ public class NetworkUtils {
         }
         return null;
     }
+
+    public static ArrayList<Story> getStoriesFromFeed(List<RSSItem> rss_items) {
+        ArrayList<Story> feeds = new ArrayList<>();
+        if (rss_items != null) {
+            for (int i = 0; i < rss_items.size(); i++) {
+                Story s = new Story();
+//                s.setSiteName(siteName);
+                s.setTitle(rss_items.get(i).getTitle());
+                s.setDescription(rss_items.get(i).getDescription());
+                s.setUrl(rss_items.get(i).getLink());
+                s.setPublishedDate(rss_items.get(i).getPubDate());
+                // TODO : Add get author
+                feeds.add(s);
+            }
+        }
+        return feeds;
+    }
 }

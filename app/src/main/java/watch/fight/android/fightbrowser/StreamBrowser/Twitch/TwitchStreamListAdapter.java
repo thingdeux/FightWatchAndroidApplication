@@ -19,6 +19,7 @@ import java.util.UUID;
 
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStreamInfo;
+import watch.fight.android.fightbrowser.Utils.IntentUtils;
 
 /**
  * Created by josh on 9/11/15.
@@ -32,6 +33,7 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
         public TextView mTextViewStreamChannelName;
         public ImageView mImageView;
         public String mStreamUrl;
+        public String mStreamWebUrl;
         public Context mContext;
 
         public ViewHolder(View v) {
@@ -88,6 +90,7 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
 
         // Set Click Listener to get twitch url
         holder.mStreamUrl = "twitch://open?stream=" + mStreamHolder.getStream(position).getChannel().getName();
+        holder.mStreamWebUrl = mStreamHolder.getStream(position).getChannel().getUrl();
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +98,15 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
                 Log.v("TwitchStreamList", "Opening Stream " + holder.mStreamUrl);
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(holder.mStreamUrl));
-                v.getContext().startActivity(i);
+                if (IntentUtils.isIntentSupported(v.getContext(), i)) {
+                    v.getContext().startActivity(i);
+                } else {
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW);
+                    webIntent.setData(Uri.parse(holder.mStreamWebUrl));
+                    v.getContext().startActivity(webIntent);
+                }
+
+
             }
         });
     }

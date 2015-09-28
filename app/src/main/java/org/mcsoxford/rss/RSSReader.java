@@ -16,6 +16,8 @@
 
 package org.mcsoxford.rss;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,6 +28,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 

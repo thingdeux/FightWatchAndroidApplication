@@ -8,6 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.mcsoxford.rss.RSSFeed;
+import org.mcsoxford.rss.RSSItem;
+import org.mcsoxford.rss.RSSLoader;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -30,7 +34,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  */
 public class FetchFeeds {
     public static final String TAG = FetchFeeds.class.getSimpleName();
-    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 15;
+    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 0;
 
     public static class FetchStories extends AsyncTask<Void, Void, Boolean> {
         private Context mContext;
@@ -84,6 +88,7 @@ public class FetchFeeds {
             // of time has passed (in case the app goes to sleep or does something else, don't want it to reset the clock)
             if (today.after(date) || mIsForcedRefresh) {
                 updateStories();
+//                new ASyncRSSFeedLoader(this).updateStoriesAsync();
                 SharedPreferences.setFeedsLastUpdatedToNow(mContext);
                 return true;
             }
@@ -111,6 +116,11 @@ public class FetchFeeds {
             }
         }
 
+//        public void enoughFeedsRetrieved(List<RSSFeed> feeds) {
+//            Log.i("IFeedRetrieval", "Received Feeds!");
+//            loadProcessedFeedsIntoDB(feeds);
+//        }
+
         private void updateStories() {
             Log.v("FetchStories", "Fetching new feeds");
             List<Feed> feeds = FeedDB.getInstance(mContext.getApplicationContext()).getAllFeeds();
@@ -122,6 +132,27 @@ public class FetchFeeds {
                 }
             }
         }
+
+//        protected void loadProcessedFeedsIntoDB(List<RSSFeed> feeds) {
+//            if (feeds != null) {
+//                for (int i = 0; i < feeds.size(); i++) {
+//                    if (feeds.get(i) != null) {
+//                        StoryDB DB = StoryDB.getInstance(mContext.getApplicationContext());
+//                        // Delete all stories from the given site and add the new updates
+//                        // will only delete if the feed has been succesfully gathered
+////                        DB.deleteStoriesBySiteName(siteName);
+//                        List<RSSItem> items = feeds.get(i).getItems();
+//                        if (items != null) {
+//                            DB.addStories(NetworkUtils.getStoriesFromFeed(items));
+//                        }
+//
+//                    } else {
+//                        Log.e("ProcessFeed", "Received error loadingProcessedFeedsIntoDb");
+//                    }
+//                }
+//
+//            }
+//        }
 
         protected void processFeed(String siteName, String url) {
             Log.v("ProcessFeed", "Fetching feed for: " + url);
@@ -135,7 +166,6 @@ public class FetchFeeds {
             } else {
                 Log.e("ProcessFeed", "Received error on " + url);
             }
-
         }
 
     }

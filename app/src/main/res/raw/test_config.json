@@ -28,12 +28,6 @@
       "website_url": "http://www.reddit.com/r/kappa",
       "feed_image_url": "https://pbs.twimg.com/profile_images/2462244142/9x7t6axcyshhiyjnkhlx.png"
     }, {
-      "id": 3344,
-      "name": "Shoryuken",
-      "rss_url": "http://www.shoryuken.com/feed",
-      "website_url": "http://shoryuken.com",
-      "feed_image_url": "https://pbs.twimg.com/profile_images/2462244142/9x7t6axcyshhiyjnkhlx.png"
-    }, {
       "id": 5,
       "name": "r/smashbros",
       "rss_url": "https://www.reddit.com/r/smashbros/.rss",

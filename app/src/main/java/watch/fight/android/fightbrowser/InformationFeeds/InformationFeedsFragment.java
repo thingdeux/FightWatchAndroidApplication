@@ -25,7 +25,8 @@ public class InformationFeedsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        setUILoading();
+        setUILoading();
+        new FetchFeeds.FetchStories(this, this.getActivity()).execute();
     }
 
     @Override
@@ -46,7 +47,8 @@ public class InformationFeedsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                new FetchFeeds.FetchStories(this.getActivity(), mAdapter, true).execute();
+                setUILoading();
+                new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, true).execute();
                 return true;
         }
         return super.onOptionsItemSelected(item);

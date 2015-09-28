@@ -36,16 +36,19 @@ public class FetchFeeds {
         private Context mContext;
         private DashboardFragment mDashboardFragment;
         private DashboardActivity mDashboardActivity;
+        private InformationFeedsFragment mInformationFeedsFragment;
+        private InformationFeedsActivity mInformationFeedsActivity;
         private RecyclerView.Adapter mAdapter;
         private boolean mIsSubTasker = false;
         private String mUrl;
         private boolean mIsForcedRefresh = false;
 
         // Allows for passing in of a recyclerview adapter which will notify the recyclerviews adapter on finish.
-        public FetchStories(Context c, final RecyclerView.Adapter adapter, boolean isForcedRefresh) {
+        public FetchStories(Context c, final RecyclerView.Adapter adapter, InformationFeedsFragment fragment, boolean isForcedRefresh) {
             mContext = c;
             mAdapter = adapter;
             mIsForcedRefresh = isForcedRefresh;
+            mInformationFeedsFragment = fragment;
         }
 
         public FetchStories(final DashboardFragment fragment, final FragmentActivity activity) {
@@ -54,6 +57,15 @@ public class FetchFeeds {
             DashboardActivity da = (DashboardActivity) activity;
             if (da != null) {
                 mDashboardActivity = da;
+            }
+        }
+
+        public FetchStories(final InformationFeedsFragment fragment, final FragmentActivity activity) {
+            mContext = activity;
+            mInformationFeedsFragment = fragment;
+            InformationFeedsActivity ifa = (InformationFeedsActivity) activity;
+            if (ifa != null) {
+                mInformationFeedsActivity = ifa;
             }
         }
 
@@ -87,6 +99,10 @@ public class FetchFeeds {
             if (mAdapter != null) {
                 // Notify the recyclerview adapter if one has been passed in.
                 mAdapter.notifyDataSetChanged();
+            }
+
+            if (mInformationFeedsFragment != null) {
+                mInformationFeedsFragment.setUIReady();
             }
 
             if (didUpdate) {

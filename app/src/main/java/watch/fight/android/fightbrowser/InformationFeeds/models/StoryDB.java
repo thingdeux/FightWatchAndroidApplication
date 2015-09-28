@@ -199,6 +199,7 @@ public class StoryDB {
         values.put(StoryTable.Cols.AUTHOR, story.getAuthor());
         values.put(StoryTable.Cols.PUBLISHED_DATE, DateParser.dateToEpoch(story.getPublishedDate()));
         values.put(StoryTable.Cols.LAST_UPDATED, story.getLastUpdated());
+        values.put(StoryTable.Cols.THUMBNAIL, story.getThumbnail());
 
         return values;
     }

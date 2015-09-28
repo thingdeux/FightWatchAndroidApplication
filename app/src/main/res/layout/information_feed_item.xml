@@ -24,16 +24,16 @@
                 android:orientation="horizontal">
 
 
-                <ImageButton android:id="@+id/feed_icon"
+                <ImageView android:id="@+id/feed_icon"
                              android:layout_width="wrap_content"
                              android:layout_height="match_parent"
-                             android:src="@mipmap/ic_eventhubs"
                              android:background="@android:color/transparent"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <LinearLayout
                         android:layout_width="fill_parent"

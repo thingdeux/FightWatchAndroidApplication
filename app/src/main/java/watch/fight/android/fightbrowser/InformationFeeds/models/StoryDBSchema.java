@@ -19,6 +19,7 @@ public final class StoryDBSchema {
             public static final String AUTHOR = "storyauthor";
             public static final String PUBLISHED_DATE = "storypublisheddate";
             public static final String LAST_UPDATED = "storylastupdated";
+            public static final String THUMBNAIL = "storythumbnail";
         }
 
     }

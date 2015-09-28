@@ -10,7 +10,7 @@ import static watch.fight.android.fightbrowser.InformationFeeds.models.StoryDBSc
  * Created by josh on 9/26/15.
  */
 public class StoryDBHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = StoryTable.NAME + ".db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String SQL_INDEX_SITE_NAME = "CREATE INDEX " + StoryTable.Cols.SITE_NAME +
@@ -25,7 +25,8 @@ public class StoryDBHelper extends SQLiteOpenHelper {
                     StoryTable.Cols.URL + TEXT_TYPE + "," +
                     StoryTable.Cols.AUTHOR + TEXT_TYPE + "," +
                     StoryTable.Cols.PUBLISHED_DATE + " INTEGER" + "," +
-                    StoryTable.Cols.LAST_UPDATED + TEXT_TYPE +
+                    StoryTable.Cols.LAST_UPDATED + TEXT_TYPE + "," +
+                    StoryTable.Cols.THUMBNAIL + TEXT_TYPE +
                     " )";
 
     private static final String SQL_DROP_FEEDS_TABLE = "DROP TABLE IF EXISTS " + StoryTable.NAME;

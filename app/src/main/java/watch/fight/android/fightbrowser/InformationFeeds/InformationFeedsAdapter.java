@@ -3,15 +3,16 @@ package watch.fight.android.fightbrowser.InformationFeeds;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
@@ -30,6 +31,7 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
         public TextView mStorySiteName;
         public TextView mStoryTitle;
         public TextView mStoryPublishedDate;
+        public ImageView mPreviewImage;
         public Uri mLinkUri;
         public Button mReadMoreButton;
         public Button mShareButton;
@@ -41,6 +43,7 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
             mStoryPublishedDate = (TextView) v.findViewById(R.id.feed_published_date);
             mReadMoreButton = (Button) v.findViewById(R.id.feed_read_more_button);
             mShareButton = (Button) v.findViewById(R.id.feed_share_button);
+            mPreviewImage = (ImageView) v.findViewById(R.id.feed_icon);
         }
 
     }
@@ -61,12 +64,12 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
         final Story story = mStories.get(position);
         final Uri storyUrl = story.getUrl();
         final String storyTitle = story.getTitle();
+        final String mThumbnail = story.getThumbnail();
 
         holder.mStorySiteName.setText(story.getSiteName());
         holder.mStoryTitle.setText(story.getTitle());
         holder.mLinkUri = story.getUrl();
-        holder.mStoryPublishedDate.setText(DateParser.dateToSimpleDateStr(story.getPublishedDate()))
-        ;
+        holder.mStoryPublishedDate.setText(DateParser.dateToSimpleDateStr(story.getPublishedDate()));
 
         holder.mReadMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +94,13 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
                 }
             }
         });
+
+        Picasso.with(this.mContext).load(mThumbnail)
+                .resize(200, 200)
+                .placeholder(R.mipmap.fist_icon)
+                .centerCrop()
+                .into(holder.mPreviewImage);
+
     }
 
     @Override

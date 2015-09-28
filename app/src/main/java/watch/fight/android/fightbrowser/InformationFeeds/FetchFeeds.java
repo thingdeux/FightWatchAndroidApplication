@@ -34,7 +34,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  */
 public class FetchFeeds {
     public static final String TAG = FetchFeeds.class.getSimpleName();
-    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 0;
+    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 15;
 
     public static class FetchStories extends AsyncTask<Void, Void, Boolean> {
         private Context mContext;
@@ -127,8 +127,7 @@ public class FetchFeeds {
 
             if (feeds != null) {
                 for (int i = 0; i < feeds.size(); i++) {
-                    processFeed(feeds.get(i).getName(),
-                            feeds.get(i).getRSSUrl());
+                    processFeed(feeds.get(i), feeds.get(i).getRSSUrl());
                 }
             }
         }
@@ -154,14 +153,14 @@ public class FetchFeeds {
 //            }
 //        }
 
-        protected void processFeed(String siteName, String url) {
+        protected void processFeed(Feed site, String url) {
             Log.v("ProcessFeed", "Fetching feed for: " + url);
-            ArrayList<Story> stories = NetworkUtils.parseRss(siteName, url);
+            ArrayList<Story> stories = NetworkUtils.parseRss(site, url);
             if (stories != null) {
                 StoryDB DB = StoryDB.getInstance(mContext.getApplicationContext());
                 // Delete all stories from the given site and add the new updates
                 // will only delete if the feed has been succesfully gathered
-                DB.deleteStoriesBySiteName(siteName);
+                DB.deleteStoriesBySiteName(site.getName());
                 DB.addStories(stories);
             } else {
                 Log.e("ProcessFeed", "Received error on " + url);
@@ -183,16 +182,16 @@ public class FetchFeeds {
         return feedMapper;
     }
 
-    protected static Story getLatestStory(String siteName, String url) {
-        // TODO : Will check the DB First and if it hasn't been updated in a while kickoff an update task while returning what it found.
-        // So that the next request will be fresh.
-        Log.i("ProcessFeed", "Fetching feed for: " + url);
-        ArrayList<Story> stories = NetworkUtils.parseRss(siteName, url);
-        if (stories != null) {
-            return stories.get(0);
-        } else {
-            Log.e("ProcessFeed", "Received error on " + url);
-            return null;
-        }
-    }
+//    protected static Story getLatestStory(String siteName, String url) {
+//        // TODO : Will check the DB First and if it hasn't been updated in a while kickoff an update task while returning what it found.
+//        // So that the next request will be fresh.
+//        Log.i("ProcessFeed", "Fetching feed for: " + url);
+//        ArrayList<Story> stories = NetworkUtils.parseRss(siteName, url);
+//        if (stories != null) {
+//            return stories.get(0);
+//        } else {
+//            Log.e("ProcessFeed", "Received error on " + url);
+//            return null;
+//        }
+//    }
 }

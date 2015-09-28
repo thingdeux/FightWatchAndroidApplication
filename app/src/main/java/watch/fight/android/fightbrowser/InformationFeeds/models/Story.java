@@ -15,6 +15,7 @@ public class Story {
     private String mAuthor;
     private Date mPublishedDate;
     private String mLastUpdated;
+    private String mThumbnail;
 
     public String getTitle() {
         return mTitle;
@@ -70,5 +71,13 @@ public class Story {
 
     public void setSiteName(String siteName) {
         mSiteName = siteName;
+    }
+
+    public String getThumbnail() {
+        return mThumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        mThumbnail = thumbnail;
     }
 }

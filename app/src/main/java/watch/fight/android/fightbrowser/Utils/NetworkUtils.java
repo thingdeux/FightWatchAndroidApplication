@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 
 /**
@@ -37,7 +38,7 @@ public class NetworkUtils {
         return null;
     }
 
-    public static ArrayList<Story> parseRss(String siteName, String rssUrl) {
+    public static ArrayList<Story> parseRss(Feed site, String rssUrl) {
         try {
             RSSReader reader = new RSSReader();
             RSSFeed rss_feed = reader.load(rssUrl);
@@ -46,12 +47,19 @@ public class NetworkUtils {
 
             if (rss_items != null) {
                 for (int i = 0; i < rss_items.size(); i++) {
+                    RSSItem item = rss_items.get(i);
+
                     Story s = new Story();
-                    s.setSiteName(siteName);
-                    s.setTitle(rss_items.get(i).getTitle());
-                    s.setDescription(rss_items.get(i).getDescription());
-                    s.setUrl(rss_items.get(i).getLink());
-                    s.setPublishedDate(rss_items.get(i).getPubDate());
+                    s.setSiteName(site.getName());
+                    s.setTitle(item.getTitle());
+                    s.setDescription(item.getDescription());
+                    s.setUrl(item.getLink());
+                    s.setPublishedDate(item.getPubDate());
+                    if (item.getThumbnails() != null && item.getThumbnails().size() > 0) {
+                        s.setThumbnail(item.getThumbnails().get(0).toString());
+                    } else {
+                        s.setThumbnail(site.getFeedImageUrl());
+                    }
                     // TODO : Add get author
                     feeds.add(s);
                 }

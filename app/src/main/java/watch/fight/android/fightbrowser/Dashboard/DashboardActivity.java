@@ -59,7 +59,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                     if (config.getFeeds() != null) {
                         FeedDB.getInstance(mContext).deleteAllFeeds();
-                        Log.i(TAG, "Attempting to insert " + config.getFeeds().size() + " feeds into DB");
                         FeedDB.getInstance(mContext).addFeeds(config.getFeeds());
                     }
                 }
@@ -80,10 +79,9 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
-        setContentView(R.layout.dashboard_activity);
-
         new FetchConfig(this).execute();
-        new FetchFeeds.FetchStories(this).execute();
+
+        setContentView(R.layout.dashboard_activity);
 
         if (savedInstanceState == null) {
             DashboardFragment dashboardFragment = new DashboardFragment();

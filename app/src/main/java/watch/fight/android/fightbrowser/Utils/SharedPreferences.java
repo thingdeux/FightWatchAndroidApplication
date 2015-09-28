@@ -19,6 +19,8 @@ public class SharedPreferences {
     public static void setBlockedStreams(Context context, Set<String> blocked) { setStringSet(context, BLOCKED_STREAMS, blocked); }
     public static void setConfigLastUpdated(Context context, long lastUpdated) { setLong(context, CONFIG_LAST_UPDATED, lastUpdated); }
     public static void setFeedsLastUpdated(Context context, long lastUpdated) { setLong(context, FEEDS_LAST_UPDATED, lastUpdated); }
+    public static void setFeedsLastUpdatedToNow(Context context) { setLong(context, FEEDS_LAST_UPDATED, System.currentTimeMillis()); }
+
     public static void setTwitchStreamsLastUpdated(Context context, long lastUpdated) { setLong(context, TWITCH_STREAMS_LAST_UPDATED, lastUpdated);
     }
 

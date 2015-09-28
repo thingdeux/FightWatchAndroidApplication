@@ -11,6 +11,7 @@
     <string name="twitch_Chat_button">Chat</string>
     <string name="twitch_loading_message_title">Please Wait</string>
     <string name="twitch_loading_message_subtitle">Loading Twitch Streams</string>
+    <string name="loading_message_subtitle">Loading Content</string>
 
     <string name="information_menu_refresh_name">Refresh</string>
 

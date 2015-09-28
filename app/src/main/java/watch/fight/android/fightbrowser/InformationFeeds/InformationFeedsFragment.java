@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import watch.fight.android.fightbrowser.R;
 
@@ -18,11 +19,13 @@ import watch.fight.android.fightbrowser.R;
 public class InformationFeedsFragment extends Fragment {
     private String TAG = InformationFeedsFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
+    private RelativeLayout mLoadingOverlay;
     InformationFeedsAdapter mAdapter;
 
     @Override
     public void onResume() {
         super.onResume();
+//        setUILoading();
     }
 
     @Override
@@ -31,6 +34,7 @@ public class InformationFeedsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_information_feeds, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.information_feeds_recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mLoadingOverlay = (RelativeLayout) v.findViewById(R.id.loading_container);
         mAdapter = new InformationFeedsAdapter(this.getActivity());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -42,12 +46,24 @@ public class InformationFeedsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                Log.d("informationFeeds", "Received Refresh");
                 new FetchFeeds.FetchStories(this.getActivity(), mAdapter, true).execute();
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setUILoading() {
+        if (mRecyclerView != null) {
+            mRecyclerView.setVisibility(View.INVISIBLE);
+            mLoadingOverlay.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setUIReady() {
+        if (mRecyclerView != null) {
+            mLoadingOverlay.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 }
 

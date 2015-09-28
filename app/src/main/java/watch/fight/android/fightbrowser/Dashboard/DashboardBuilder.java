@@ -2,6 +2,8 @@ package watch.fight.android.fightbrowser.Dashboard;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Looper;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -19,28 +21,32 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
      Gather top-level information from twitch streams / rss feeds / events and turn it into
      DashboardEntry items for the adapter.
     */
-    private DashboardAdapter mAdapter;
+    private DashboardFragment mDashboardFragment;
     private Context mContext;
 
     protected DashboardEntry[] doInBackground(DashboardBuilderValues... dbValues) {
+        Log.i("ThreadCheck", "DashboardBuild on thread: " + Thread.currentThread());
         if (dbValues[0] != null) {
-            mAdapter = dbValues[0].mAdapter;
-            mContext = dbValues[0].mContext;
+            mDashboardFragment = dbValues[0].mDashboardFragment;
+
+            if (mDashboardFragment != null) {
+                mContext = dbValues[0].mContext;
 //            dashboards.add(buildStoryModule(mContext));
 //            dashboards.add(buildEventsModule());
 //            dashboards.add(buildStreamModule());
-            DashboardEntry[] de = {buildStoryModule(mContext)};
-            Log.v("DashboardBuilder", "Created dashboard entries");
-            return de;
-        } else {
-            return null;
+                DashboardEntry[] de = {buildStoryModule(mContext)};
+                Log.v("DashboardBuilder", "Created dashboard entries");
+                return de;
+            }
         }
-
+        return null;
     }
 
     protected void onPostExecute(DashboardEntry[] entries) {
-        mAdapter.setEntries(entries);
-        mAdapter.notifyDataSetChanged();
+        Log.i("DashboardBuilder", "PostExecute DashboardBuild");
+        mDashboardFragment.mAdapter.setEntries(entries);
+        mDashboardFragment.mAdapter.notifyDataSetChanged();
+        mDashboardFragment.setUIReady();
     }
 
     private DashboardEntry buildStoryModule(Context context) {
@@ -91,12 +97,13 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
     }
 
     public static class DashboardBuilderValues {
-        private DashboardAdapter mAdapter;
+        private DashboardFragment mDashboardFragment;
+        private RecyclerView.Adapter mAdapter;
         private Context mContext;
 
-        DashboardBuilderValues(Context c, DashboardAdapter da) {
+        public DashboardBuilderValues(Context c, DashboardFragment dashboardFragment) {
             this.mContext = c;
-            this.mAdapter = da;
+            this.mDashboardFragment = dashboardFragment;
         }
     }
 

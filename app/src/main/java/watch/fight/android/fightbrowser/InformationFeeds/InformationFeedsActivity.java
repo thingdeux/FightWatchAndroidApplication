@@ -2,11 +2,9 @@ package watch.fight.android.fightbrowser.InformationFeeds;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import watch.fight.android.fightbrowser.R;
 
@@ -19,7 +17,7 @@ public class InformationFeedsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard_activity);
+        setContentView(R.layout.information_feed_activity);
 
         new FetchFeeds.FetchStories(this).execute();
 
@@ -27,7 +25,7 @@ public class InformationFeedsActivity extends AppCompatActivity {
             InformationFeedsFragment informationFeedsFragment = new InformationFeedsFragment();
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.dashboard_main_fragment, informationFeedsFragment).commit();
+                    .add(R.id.information_feed_main_fragment, informationFeedsFragment).commit();
         }
 
     }
@@ -54,9 +52,12 @@ public class InformationFeedsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                Toast.makeText(this, "Not yet Implemented", Toast.LENGTH_LONG).show();
-//                getSupportFragmentManager().findFragmentById(
-//                        R.id.information_feed_main_fragment).onOptionsItemSelected(item);
+                InformationFeedsFragment feedsFragment = (InformationFeedsFragment) getSupportFragmentManager().findFragmentById(
+                        R.id.information_feed_main_fragment);
+
+                if (feedsFragment != null) {
+                    feedsFragment.onOptionsItemSelected(item);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

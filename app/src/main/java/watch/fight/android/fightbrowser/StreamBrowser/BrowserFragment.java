@@ -130,7 +130,7 @@ public class BrowserFragment extends Fragment {
         mTwitchLoader.setCustomObjectListener(new TwitchHttpLoader.IHttpResponse() {
             @Override
             public void onReceivedResponse(String result) {
-                Log.d(TAG, "Received Twitch Response: " + result);
+//                Log.d(TAG, "Received Twitch Response: " + result);
                 // Receive the response from the Twitch API, populate the recyclerviewadapter
                 Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 TwitchStream ts = gson.fromJson(result, TwitchStream.class);

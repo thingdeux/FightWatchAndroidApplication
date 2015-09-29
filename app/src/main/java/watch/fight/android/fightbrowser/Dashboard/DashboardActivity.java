@@ -54,6 +54,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             // If today > LastConfigUpdate + 24 hours -- Only check for new config once a day
             if (today.after(date)) {
+                // TODO : Actually make API call here instead of just getting test config.
                 Config config = ConfigFetcher.getTestConfig(mContext);
                 if (config != null) {
                     SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());

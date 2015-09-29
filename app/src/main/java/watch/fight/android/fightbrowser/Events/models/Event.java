@@ -25,6 +25,12 @@ public class Event {
     @SerializedName("date")
     private String mDate;
 
+    @Expose
+    @SerializedName("streams")
+    private List<String> mStream;
+
+    @Expose
+    @SerializedName("brackets")
     private List<ChallongeBracket> mBrackets;
 
     public List<ChallongeBracket> getBrackets() {
@@ -36,4 +42,35 @@ public class Event {
         return DateParser.getDateFromStr(mDate);
     }
 
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long id) {
+        mId = id;
+    }
+
+    public String getEventName() {
+        return mEventName;
+    }
+
+    public void setEventName(String eventName) {
+        mEventName = eventName;
+    }
+
+    public void setDate(String date) {
+        mDate = date;
+    }
+
+    public void setBrackets(List<ChallongeBracket> brackets) {
+        mBrackets = brackets;
+    }
+
+    public List<String> getStream() {
+        return mStream;
+    }
+
+    public void setStream(List<String> stream) {
+        mStream = stream;
+    }
 }

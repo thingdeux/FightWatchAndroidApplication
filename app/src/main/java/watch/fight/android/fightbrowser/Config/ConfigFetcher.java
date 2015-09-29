@@ -37,8 +37,9 @@ public class ConfigFetcher {
         try {
             URL urlConnection = new URL(urlStr);
             HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
+            // TODO : Actually make this call when the API is ready!
             connection.connect();
-//            int responseCode = connection.getResponseCode();
+            int responseCode = connection.getResponseCode();
             InputStream input = connection.getInputStream();
             String response = NetworkUtils.InputStreamToString(input);
             return gson.fromJson(response, Config.class);

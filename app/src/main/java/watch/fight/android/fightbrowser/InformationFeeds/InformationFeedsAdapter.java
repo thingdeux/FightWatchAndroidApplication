@@ -90,7 +90,7 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
                     intent.putExtra(Intent.EXTRA_SUBJECT, storyTitle);
                     intent.putExtra(Intent.EXTRA_TEXT, storyUrl.toString());
                     intent.setType("text/plain");
-                    v.getContext().startActivity(Intent.createChooser(intent, "Share Story With ..."));
+                    v.getContext().startActivity(Intent.createChooser(intent, v.getResources().getText(R.string.intent_text_share_feed)));
                 }
             }
         });

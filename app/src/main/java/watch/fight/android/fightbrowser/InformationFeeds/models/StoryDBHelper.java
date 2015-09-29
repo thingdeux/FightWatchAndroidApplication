@@ -3,6 +3,7 @@ package watch.fight.android.fightbrowser.InformationFeeds.models;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import static watch.fight.android.fightbrowser.InformationFeeds.models.StoryDBSchema.*;
 

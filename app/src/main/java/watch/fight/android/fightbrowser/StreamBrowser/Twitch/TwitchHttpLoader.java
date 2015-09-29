@@ -4,7 +4,6 @@ package watch.fight.android.fightbrowser.StreamBrowser.Twitch;
  * Created by josh on 9/12/15.
  */
 public class TwitchHttpLoader {
-
     private IHttpResponse listener;
 
     public interface IHttpResponse {

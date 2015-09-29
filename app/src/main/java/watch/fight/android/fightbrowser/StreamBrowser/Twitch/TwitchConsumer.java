@@ -37,10 +37,7 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
             connection.connect();
             int response = connection.getResponseCode();
             InputStream input = connection.getInputStream();
-            String contentAsString = NetworkUtils.InputStreamToString(input);
-//            Log.v(TAG, "Received Response code from Twitch: " + response);
-            mCallback.onReceivedResponse(contentAsString);
-            return input.toString();
+            return NetworkUtils.InputStreamToString(input);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,6 +47,8 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
+//        Log.v(TAG, "Received Response code from Twitch: " + result);
+        mCallback.onReceivedResponse(result);
     }
 
 }

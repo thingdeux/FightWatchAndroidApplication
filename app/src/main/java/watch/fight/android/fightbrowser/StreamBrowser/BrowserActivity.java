@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.LinePageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
 
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.FragmentAdapter;
@@ -17,7 +22,7 @@ public class BrowserActivity extends AppCompatActivity {
         BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
         BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street Fighter");
         BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Mortal Kombat");
-        BrowserFragment gameSpecificBrowser3 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Smash Bro");
+        BrowserFragment gameSpecificBrowser3 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Smash Brothers");
         BrowserFragment gameSpecificBrowser4 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Killer Instinct");
         BrowserFragment gameSpecificBrowser5 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Ultimate Marvel");
 
@@ -32,6 +37,13 @@ public class BrowserActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.browser_viewPager);
         viewPager.setAdapter(browserAdapter);
+
+        LinePageIndicator lineIndicator = (LinePageIndicator) findViewById(R.id.browser_viewPager_indicator);
+        lineIndicator.setViewPager(viewPager);
+
+//        final float density = getResources().getDisplayMetrics().density;
+//        lineIndicator.setStrokeWidth(4 * density);
+//        lineIndicator.setLineWidth(30 * density);
 
     }
 
@@ -59,8 +71,10 @@ public class BrowserActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_filter:
+                Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_refresh:
+                Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
                 return true;
 
         }

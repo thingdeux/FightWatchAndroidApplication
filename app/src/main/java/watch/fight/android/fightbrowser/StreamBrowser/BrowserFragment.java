@@ -3,12 +3,12 @@ package watch.fight.android.fightbrowser.StreamBrowser;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,6 +33,7 @@ public class BrowserFragment extends Fragment {
     private View mLoadingTextView;
     private TwitchHttpLoader mTwitchLoader;
     private UUID mFragmentID = UUID.randomUUID();
+    private TextView mRecylerViewTitle;
 
     private static final String TAG = BrowserFragment.class.getSimpleName();
 
@@ -66,12 +67,13 @@ public class BrowserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreateView Called");
-        View v = inflater.inflate(R.layout.fragment_twitch_browser, container, false);
+        View v = inflater.inflate(R.layout.browser_fragment, container, false);
 
         mLoadingTextView = v.findViewById(R.id.twitch_loading_container);
         mRecylerView = (RecyclerView) v.findViewById(R.id.browser_recycler_view);
         mLayoutManager = new GridLayoutManager(this.getActivity(), RECYCLER_VIEW_GRID_MAX);
-//        mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mRecylerViewTitle = (TextView) v.findViewById(R.id.browser_recycler_view_title);
+
         mAdapter = new TwitchStreamListAdapter(mFragmentID);
         mRecylerView.setAdapter(mAdapter);
         mRecylerView.setLayoutManager(mLayoutManager);
@@ -87,13 +89,16 @@ public class BrowserFragment extends Fragment {
             if (fragment_type > 0) {
                 switch (fragment_type) {
                     case BROWSER_FRAGMENT_FEATURED_TYPE:
+                        mRecylerViewTitle.setText("Featured");
                         loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30", fragment_type);
                         break;
                     case BROWSER_FRAGMENT_POPULAR_TYPE:
+                        mRecylerViewTitle.setText("Popular");
                         loadTwitchStream("https://api.twitch.tv/kraken/streams/featured", fragment_type);
                         break;
                     case BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE:
                         if (gameName != null) {
+                            mRecylerViewTitle.setText(gameName);
                             loadTwitchStream("https://api.twitch.tv/kraken/search/streams?q=" + gameName.replace(" ", "%20") + "&limit=30", fragment_type);
                         } else {
                             throw new IllegalArgumentException("Game name required for a game specific fragment");
@@ -125,13 +130,12 @@ public class BrowserFragment extends Fragment {
 
     public void loadTwitchStream(String url, final int fragmentType) {
         // TODO : Catch no response and set Error UI State
-        // TODO : Catch No Results and set Empty Streams UI State
         mTwitchLoader = new TwitchHttpLoader();
         mTwitchLoader.setCustomObjectListener(new TwitchHttpLoader.IHttpResponse() {
             @Override
             public void onReceivedResponse(String result) {
-//                Log.d(TAG, "Received Twitch Response: " + result);
                 // Receive the response from the Twitch API, populate the recyclerviewadapter
+                // TODO : Catch No Results and set Empty Streams UI State
                 Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 TwitchStream ts = gson.fromJson(result, TwitchStream.class);
 
@@ -146,13 +150,13 @@ public class BrowserFragment extends Fragment {
                         break;
                 }
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.notifyDataSetChanged();
-                        setUIReady();
-                    }
-                });
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.notifyDataSetChanged();
+                    setUIReady();
+                }
+            });
             }
         });
 

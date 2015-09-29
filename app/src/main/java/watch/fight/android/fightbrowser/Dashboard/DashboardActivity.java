@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
@@ -122,8 +123,10 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(this, InformationFeedsActivity.class));
                 return true;
             case R.id.action_preferences:
+                Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_events:
+                Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
                 return true;
         }
 

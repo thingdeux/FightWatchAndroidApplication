@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,7 @@ public class InformationFeedsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_information_feeds, container, false);
+        View v = inflater.inflate(R.layout.information_feeds_fragment, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.information_feeds_recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
         mLoadingOverlay = (RelativeLayout) v.findViewById(R.id.loading_container);

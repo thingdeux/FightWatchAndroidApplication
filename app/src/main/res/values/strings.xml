@@ -6,12 +6,17 @@
     <string name="browser_activity_name">Stream Browser</string>
     <string name="information_feeds_activity_name">Information</string>
 
+    <string name="intent_text_share_feed">Share Story With...</string>
+    <string name="intent_text_open_stream">Open Stream With...</string>
+
+
     <string name="twitch_stream_image_description">Twitch Stream Image</string>
     <string name="twitch_watch_button">Watch</string>
     <string name="twitch_Chat_button">Chat</string>
     <string name="twitch_loading_message_title">Please Wait</string>
     <string name="twitch_loading_message_subtitle">Loading Twitch Streams</string>
     <string name="loading_message_subtitle">Loading Content</string>
+
 
     <string name="information_menu_refresh_name">Refresh</string>
 

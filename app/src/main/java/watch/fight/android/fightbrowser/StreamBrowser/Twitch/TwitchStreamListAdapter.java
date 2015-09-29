@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.UUID;
 
 import watch.fight.android.fightbrowser.R;
@@ -42,7 +44,7 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
             mTextViewStreamChannelName = (TextView) v.findViewById(R.id.twitch_stream_broadcaster_name);
             mTextViewStreamInfo = (TextView) v.findViewById(R.id.twitch_stream_title);
             mImageView = (ImageView) v.findViewById(R.id.twitch_stream_header);
-            mCardView = (View) v.findViewById(R.id.card_view);
+            mCardView = v.findViewById(R.id.card_view);
         }
     }
 
@@ -54,7 +56,7 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
     @Override
     public TwitchStreamListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a new View
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.twitch_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.browser_list_item, parent, false);
 
         return new ViewHolder(v);
     }
@@ -99,11 +101,13 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(holder.mStreamUrl));
                 if (IntentUtils.isIntentSupported(v.getContext(), i)) {
-                    v.getContext().startActivity(i);
+                    v.getContext().startActivity(Intent.createChooser(i,
+                            v.getResources().getText(R.string.intent_text_open_stream)));
                 } else {
                     Intent webIntent = new Intent(Intent.ACTION_VIEW);
                     webIntent.setData(Uri.parse(holder.mStreamWebUrl));
-                    v.getContext().startActivity(webIntent);
+                    v.getContext().startActivity(Intent.createChooser(webIntent,
+                            v.getResources().getText(R.string.intent_text_open_stream)));
                 }
 
 

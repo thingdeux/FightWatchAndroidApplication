@@ -39,16 +39,21 @@
   "events":  [
     {
       "id": 444,
-      "event_name": "SoCal Regionals",
+      "name": "SoCal Regionals",
+      "website": "http://www.socalregionals.com/",
+      "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/SoCalRegionals.png",
       "stream": ["http://twitch.tv/teamsp00ky"],
       "brackets": [{
         "bracket_name": "USF4 Top 16",
         "bracket_url": "http://challonge.com/evo2015usf4top16"
       }],
-      "date": 1443592312000
+      "end_date": 1443592312000,
+      "start_date": 1443592312000
     }, {
       "id": 34555,
-      "event_name": "Evo 2015",
+      "name": "Evo 2015",
+      "website": "http://evo.shoryuken.com/",
+      "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/evo.png",
       "streams": ["http://twitch.tv/srkevo1", "http://twitch.tv/srkevo2"],
       "brackets": [
         {
@@ -60,7 +65,9 @@
         }
 
       ],
-      "date": 1443592312000
+      "end_date": 1443592312000,
+      "start_date": 1443592312000
+
     }
   ],
   "updated": 1443592312000

@@ -21,10 +21,13 @@ public class EventDBHelper extends SQLiteOpenHelper{
                     EventTable.Cols._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     EventTable.Cols.ID + " INTEGER" + "," +
                     EventTable.Cols.NAME + TEXT_TYPE + "," +
-                    EventTable.Cols.EVENT_DATE + " INTEGER"  +
+                    EventTable.Cols.WEBSITE + TEXT_TYPE + "," +
+                    EventTable.Cols.HEADER_IMAGE_URL + TEXT_TYPE + "," +
+                    EventTable.Cols.START_DATE + " INTEGER"  + "," +
+                    EventTable.Cols.END_DATE + " INTEGER"  +
                     " )";
 
-    private static final String SQL_DROP_FEEDS_TABLE = "DROP TABLE IF EXISTS " + EventTable.NAME;
+    private static final String SQL_DROP_EVENTS_TABLE = "DROP TABLE IF EXISTS " + EventTable.NAME;
 
 
     public EventDBHelper(Context context) {
@@ -38,7 +41,7 @@ public class EventDBHelper extends SQLiteOpenHelper{
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // For now blow the table out and recreate on upgrade
-        db.execSQL(SQL_DROP_FEEDS_TABLE);
+        db.execSQL(SQL_DROP_EVENTS_TABLE);
         onCreate(db);
     }
 

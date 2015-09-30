@@ -1,40 +1,48 @@
 <resources>
     <string name="app_name">FGC Companion</string>
-
+    <!--Activity Names-->
     <string name="events_activity_name">FGC Events</string>
     <string name="config_activity_name">Configuration</string>
     <string name="browser_activity_name">Stream Browser</string>
     <string name="information_feeds_activity_name">Information</string>
 
+    <!--Intent Chooser Text-->
     <string name="intent_text_share_feed">Share Story With...</string>
     <string name="intent_text_open_stream">Open Stream With...</string>
 
-    <string name="dashboard_event_button_text">Browse Upcoming Events</string>
-
     <string name="twitch_stream_image_description">Twitch Stream Image</string>
-    <string name="twitch_watch_button">Watch</string>
-    <string name="twitch_Chat_button">Chat</string>
     <string name="twitch_loading_message_title">Please Wait</string>
     <string name="twitch_loading_message_subtitle">Loading Twitch Streams</string>
-    <string name="loading_message_subtitle">Loading Content</string>
 
+    <!--Headers-->
+    <string name="dashboard_stories_header_name">Latest Stories</string>
+    <string name="dashboard_header">Dashboard</string>
 
-    <string name="information_menu_refresh_name">Refresh</string>
-
+    <!--Action Menu Options-->
     <string name="browser_action_refresh">Refresh</string>
     <string name="browser_action_filter">Filter</string>
 
-    <string name="dashboard_stories_header_name">Latest Stories</string>
-    <string name="dashboard_check_news_button_name">See Latest FGC News</string>
-    <string name="dashboard_share_button_name">Share</string>
-    <string name="dashboard_header">Dashboard</string>
+    <!--Menu Options -->
+    <string name="information_menu_refresh_name">Refresh</string>
     <string name="menu_dashboard_name">Dashboard</string>
     <string name="menu_events_name">Events</string>
     <string name="menu_news_name">News</string>
     <string name="menu_stream_name">Streams</string>
     <string name="menu_preferences_name">Preferences</string>
 
+    <!--Button Names -->
+    <string name="twitch_watch_button">Watch</string>
+    <string name="twitch_Chat_button">Chat</string>
+    <string name="dashboard_check_news_button_name">See Latest FGC News</string>
+    <string name="dashboard_share_button_name">Share</string>
+    <string name="dashboard_event_button_text">Browse Upcoming Events</string>
     <string name="read_more_button_name">Read More</string>
+    <string name="events_brackets_button_name">Brackets</string>
+    <string name="events_website_button_name">Event Website</string>
+
+
+    <!--Misc-->
+    <string name="loading_message_subtitle">Loading Content</string>
 
     <string-array name="main_menu_options">
         <item>Dashboard</item>

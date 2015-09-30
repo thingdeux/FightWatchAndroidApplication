@@ -62,7 +62,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
                     Intent intent = new Intent();
                     switch (mEntries[position].getType()) {
                         case DashboardEntry.EVENT_TYPE:
-                            Toast.makeText(v.getContext(), "Not Yet Implemented", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(v.getContext(), "Not Yet Implemented", Toast.LENGTH_SHORT).show();
                             intent.setClass(v.getContext(), EventsActivity.class);
                             holder.mReadMore.setText(R.string.dashboard_event_button_text);
                             break;
@@ -76,7 +76,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
                     }
 
                     // TODO : Remove as I implement the activities
-                    if (mEntries[position].getType() != DashboardEntry.TWITCH_STREAM_COUNT && mEntries[position].getType() != DashboardEntry.EVENT_TYPE) {
+                    if (mEntries[position].getType() != DashboardEntry.TWITCH_STREAM_COUNT) {
                         v.getContext().startActivity(intent);
                     }
                 }

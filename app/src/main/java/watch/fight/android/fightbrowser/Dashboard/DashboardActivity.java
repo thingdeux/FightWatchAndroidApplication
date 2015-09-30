@@ -13,22 +13,17 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.CoreProtocolPNames;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
+import watch.fight.android.fightbrowser.Events.EventsActivity;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.Events.models.EventDB;
-import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
-import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
@@ -76,7 +71,7 @@ public class DashboardActivity extends AppCompatActivity {
                         List<Event> events = EventDB.getInstance(mContext).getAllEvents();
                         for (int i=0; i < events.size(); i++) {
                             Event e = events.get(i);
-                            Log.i(TAG, "Event: " + e.getId() + " name: " + e.getEventName() + " date: " + e.getDateObj().toString());
+                            Log.i(TAG, "Event: " + e.getId() + " name: " + e.getEventName() + " date: " + e.getStartDateObj().toString());
                         }
                     }
                 }
@@ -143,7 +138,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_events:
-                Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, EventsActivity.class));
                 return true;
         }
 

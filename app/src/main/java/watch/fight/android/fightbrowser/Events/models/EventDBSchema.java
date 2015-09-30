@@ -14,7 +14,10 @@ public class EventDBSchema {
         public static abstract class Cols implements BaseColumns {
             public static final String ID = "eventid";
             public static final String NAME = "eventname";
-            public static final String EVENT_DATE = "eventdate";
+            public static final String START_DATE = "eventstartdate";
+            public static final String END_DATE = "eventenddate";
+            public static final String HEADER_IMAGE_URL = "eventheaderimageurl";
+            public static final String WEBSITE = "eventwebsite";
         }
 
     }

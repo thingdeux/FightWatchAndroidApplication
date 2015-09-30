@@ -3,8 +3,6 @@ package watch.fight.android.fightbrowser.Events.models;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import watch.fight.android.fightbrowser.Utils.DateParser;
-
 import static watch.fight.android.fightbrowser.Events.models.EventDBSchema.*;
 
 /**
@@ -16,12 +14,19 @@ public class EventCursorWrapper extends CursorWrapper {
     public Event getEvent() {
         Long id = getLong(getColumnIndex(EventTable.Cols.ID));
         String name = getString(getColumnIndex(EventTable.Cols.NAME));
-        Long date = getLong(getColumnIndex(EventTable.Cols.EVENT_DATE));
+        String headerUrl = getString(getColumnIndex(EventTable.Cols.HEADER_IMAGE_URL));
+        String website = getString(getColumnIndex(EventTable.Cols.WEBSITE));
+        Long startDate = getLong(getColumnIndex(EventTable.Cols.START_DATE));
+        Long endDate = getLong(getColumnIndex(EventTable.Cols.END_DATE));
 
         Event event = new Event();
         event.setId(id);
-        event.setDate(date);
+        event.setStartDate(startDate);
+        event.setEndDate(endDate);
         event.setEventName(name);
+        event.setHeaderImageUrl(headerUrl);
+        event.setWebsite(website);
+
         return event;
     }
 }

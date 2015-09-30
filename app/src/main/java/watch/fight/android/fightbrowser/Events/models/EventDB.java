@@ -124,7 +124,10 @@ public class EventDB {
         ContentValues values = new ContentValues();
         values.put(EventTable.Cols.ID, event.getId());
         values.put(EventTable.Cols.NAME, event.getEventName());
-        values.put(EventTable.Cols.EVENT_DATE, event.getDateObj().toString());
+        values.put(EventTable.Cols.HEADER_IMAGE_URL, event.getHeaderImageUrl());
+        values.put(EventTable.Cols.START_DATE, event.getStartDate());
+        values.put(EventTable.Cols.END_DATE, event.getEndDate());
+        values.put(EventTable.Cols.WEBSITE, event.getWebsite());
 
         return values;
     }

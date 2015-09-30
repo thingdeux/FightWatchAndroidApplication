@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsFragment;
 import watch.fight.android.fightbrowser.R;
 
@@ -17,13 +16,13 @@ public class EventsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.information_feed_activity);
+        setContentView(R.layout.events_activity);
 
         if (savedInstanceState == null) {
-            InformationFeedsFragment informationFeedsFragment = new InformationFeedsFragment();
+            EventsFragment eventsFragment = new EventsFragment();
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.information_feed_main_fragment, informationFeedsFragment).commit();
+                    .add(R.id.events_fragment, eventsFragment).commit();
         }
 
     }
@@ -38,26 +37,26 @@ public class EventsActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_information_feeds, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_refresh:
-                InformationFeedsFragment feedsFragment = (InformationFeedsFragment) getSupportFragmentManager().findFragmentById(
-                        R.id.information_feed_main_fragment);
-
-                if (feedsFragment != null) {
-                    feedsFragment.onOptionsItemSelected(item);
-                }
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_information_feeds, menu);
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_refresh:
+//                InformationFeedsFragment feedsFragment = (InformationFeedsFragment) getSupportFragmentManager().findFragmentById(
+//                        R.id.information_feed_main_fragment);
+//
+//                if (feedsFragment != null) {
+//                    feedsFragment.onOptionsItemSelected(item);
+//                }
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

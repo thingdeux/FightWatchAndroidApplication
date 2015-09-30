@@ -2,7 +2,6 @@ package watch.fight.android.fightbrowser.Dashboard;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -110,7 +109,7 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
                 }
                 // TODO : Query that only shows the next 3 events >= todays date - for now return all
                 sb.append(StringUtils.limitCharacters(events.get(i).getEventName(), 45, true) +
-                        "  (" + events.get(i).getDateObj().toString() + ")");
+                        "  (" + events.get(i).getStartDateObj().toString() + ")");
             }
             dashboardEntry.setContent(sb.toString());
             return dashboardEntry;

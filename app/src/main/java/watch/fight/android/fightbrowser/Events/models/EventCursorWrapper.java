@@ -20,8 +20,7 @@ public class EventCursorWrapper extends CursorWrapper {
 
         Event event = new Event();
         event.setId(id);
-        // TODO FIX This - Store the field as long from the API and long in the model
-        event.setDate(DateParser.epochToDate(date).toString());
+        event.setDate(date);
         event.setEventName(name);
         return event;
     }

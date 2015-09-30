@@ -45,7 +45,7 @@
         "bracket_name": "USF4 Top 16",
         "bracket_url": "http://challonge.com/evo2015usf4top16"
       }],
-      "date": "2015-08-05T08:40:51.620Z"
+      "date": 1443588822
     }, {
       "id": 34555,
       "event_name": "Evo (Year)",
@@ -60,8 +60,8 @@
         }
 
       ],
-      "date": "2015-06-05T08:40:51.620Z"
+      "date": 1443588822
     }
   ],
-  "updated": "2015-08-05T08:40:51.620Z"
+  "updated": 1443588822
 }

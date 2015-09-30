@@ -190,6 +190,11 @@ public class StoryDB {
         return new StoryCursorWrapper(cursor);
     }
 
+    private StoryCursorWrapper TopStoriesQuery() {
+        Cursor cursor = mDatabase.rawQuery("SELECT *, MAX(" + StoryTable.Cols.PUBLISHED_DATE + ") " + "FROM stories GROUP BY storysitename", null);
+        return new StoryCursorWrapper(cursor);
+    }
+
     private static ContentValues getContentValues(Story story) {
         ContentValues values = new ContentValues();
         values.put(StoryTable.Cols.SITE_NAME, story.getSiteName());
@@ -204,14 +209,5 @@ public class StoryDB {
         return values;
     }
 
-
-//    private static String LATEST_STORY_INNER = "SELECT * FROM " + StoryTable.NAME +
-//            " ORDER BY " + StoryTable.Cols.PUBLISHED_DATE + " DESC";
-//    private static String LATEST_STORY_QUERY = "SELECT * FROM (" + LATEST_STORY_INNER + ") as temp GROUP BY " + StoryTable.Cols.SITE_NAME;
-
-    private StoryCursorWrapper TopStoriesQuery() {
-        Cursor cursor = mDatabase.rawQuery("SELECT *, MAX(" + StoryTable.Cols.PUBLISHED_DATE + ") " + "FROM stories GROUP BY storysitename", null);
-        return new StoryCursorWrapper(cursor);
-    }
 }
 

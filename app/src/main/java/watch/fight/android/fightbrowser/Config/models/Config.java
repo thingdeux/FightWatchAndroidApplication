@@ -28,7 +28,7 @@ public class Config {
 
     @Expose
     @SerializedName("updated")
-    private String mLastUpdated;
+    private Long mLastUpdated;
 
     public ArrayList<GameConfig> getGames() {
         return mGames;
@@ -42,8 +42,9 @@ public class Config {
         return mEvents;
     }
 
-    public Date getLastUpdated() {
-        return DateParser.getDateFromStr(mLastUpdated);
+    public Date getLastUpdatedDateObj() {
+        return DateParser.epochToDate(mLastUpdated);
     }
+    public Long getLastUpdated() { return mLastUpdated; }
 
 }

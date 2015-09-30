@@ -22,6 +22,7 @@ import java.util.GregorianCalendar;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
+import watch.fight.android.fightbrowser.Events.models.EventDB;
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
@@ -62,6 +63,10 @@ public class DashboardActivity extends AppCompatActivity {
                     if (config.getFeeds() != null) {
                         FeedDB.getInstance(mContext).deleteAllFeeds();
                         FeedDB.getInstance(mContext).addFeeds(config.getFeeds());
+                    }
+
+                    if (config.getEvents() != null) {
+                        EventDB.getInstance(mContext).deleteAllEvents();  // TODO : Will actually check for lastUpdated being > thn
                     }
                 }
                 return config;

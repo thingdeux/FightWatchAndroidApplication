@@ -23,7 +23,7 @@ public class Event {
 
     @Expose
     @SerializedName("date")
-    private String mDate;
+    private Long mDate;
 
     @Expose
     @SerializedName("streams")
@@ -38,9 +38,8 @@ public class Event {
         return null;
     }
 
-    public Date getDate() {
-        return DateParser.getDateFromStr(mDate);
-    }
+    public Date getDateObj() { return DateParser.epochToDate(mDate); }
+    public Long getDate() { return mDate; }
 
     public long getId() {
         return mId;
@@ -58,7 +57,7 @@ public class Event {
         mEventName = eventName;
     }
 
-    public void setDate(String date) {
+    public void setDate(Long date) {
         mDate = date;
     }
 

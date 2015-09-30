@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import watch.fight.android.fightbrowser.Events.EventsActivity;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.R;
@@ -54,12 +56,43 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
             holder.mEntryHeader.setText(mEntries[position].getHeader());
             holder.mEntryContent.setText(mEntries[position].getContent());
             holder.mReadMore.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext().getApplicationContext(), InformationFeedsActivity.class);
-                    v.getContext().startActivity(intent);
+                    Intent intent = new Intent();
+                    switch (mEntries[position].getType()) {
+                        case DashboardEntry.EVENT_TYPE:
+                            Toast.makeText(v.getContext(), "Not Yet Implemented", Toast.LENGTH_SHORT).show();
+                            intent.setClass(v.getContext(), EventsActivity.class);
+                            holder.mReadMore.setText(R.string.dashboard_event_button_text);
+                            break;
+                        case DashboardEntry.RSS_FEED_TYPE:
+                            intent.setClass(v.getContext(), InformationFeedsActivity.class);
+                            break;
+                        case DashboardEntry.TWITCH_STREAM_COUNT:
+                            Toast.makeText(v.getContext(), "Not Yet Implemented", Toast.LENGTH_SHORT).show();
+                            intent.setClass(v.getContext(), BrowserActivity.class);
+                            break;
+                    }
+
+                    // TODO : Remove as I implement the activities
+                    if (mEntries[position].getType() != DashboardEntry.TWITCH_STREAM_COUNT && mEntries[position].getType() != DashboardEntry.EVENT_TYPE) {
+                        v.getContext().startActivity(intent);
+                    }
                 }
             });
+
+            switch (mEntries[position].getType()) {
+                case DashboardEntry.EVENT_TYPE:
+                    holder.mReadMore.setText(R.string.dashboard_event_button_text);
+                    break;
+                case DashboardEntry.RSS_FEED_TYPE:
+                    holder.mReadMore.setText(R.string.dashboard_check_news_button_name);
+                    break;
+                case DashboardEntry.TWITCH_STREAM_COUNT:
+                    break;
+            }
+
         }
     }
 

@@ -2,15 +2,10 @@ package watch.fight.android.fightbrowser.InformationFeeds;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
-
-import org.mcsoxford.rss.RSSFeed;
-import org.mcsoxford.rss.RSSItem;
-import org.mcsoxford.rss.RSSLoader;
 
 import java.util.ArrayList;
 import java.util.Calendar;

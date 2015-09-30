@@ -58,27 +58,27 @@
                         android:background="@android:color/darker_gray"
                         android:layout_gravity="center_horizontal"/>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         >
 
                         <Button android:id="@+id/dashboard_read_more_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="?android:attr/borderlessButtonStyle"
-                                android:text="@string/dashboard_check_news_button_name"
                             />
 
-                        <Button android:id="@+id/dashboard_share_button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/dashboard_read_more_button"
-                                android:layout_toEndOf="@id/dashboard_read_more_button"
-                                style="?android:attr/borderlessButtonStyle"
-                                android:text="@string/dashboard_share_button_name"
-                            />
-                    </RelativeLayout>
+                        <!--<Button android:id="@+id/dashboard_share_button"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_toRightOf="@id/dashboard_read_more_button"-->
+                                <!--android:layout_toEndOf="@id/dashboard_read_more_button"-->
+                                <!--style="?android:attr/borderlessButtonStyle"-->
+                                <!--android:text="@string/dashboard_share_button_name"-->
+                            <!--/>-->
+                    </LinearLayout>
 
                 </LinearLayout>
 

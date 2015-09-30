@@ -10,9 +10,9 @@ import java.util.List;
  * Created by josh on 9/15/15.
  */
 public class DashboardEntry {
-    public static int RSS_FEED_TYPE = 0;
-    public static int TWITCH_STREAM_COUNT = 1;
-    public static int EVENT_TYPE = 1;
+    public static final int RSS_FEED_TYPE = 0;
+    public static final int TWITCH_STREAM_COUNT = 1;
+    public static final int EVENT_TYPE = 2;
 
     private String mHeader;
     private String mContent;

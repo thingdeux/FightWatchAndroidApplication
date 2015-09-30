@@ -21,7 +21,7 @@ public class EventDBHelper extends SQLiteOpenHelper{
                     EventTable.Cols._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     EventTable.Cols.ID + " INTEGER" + "," +
                     EventTable.Cols.NAME + TEXT_TYPE + "," +
-                    EventTable.Cols.EVENT_DATE + " INTEGER" + "," +
+                    EventTable.Cols.EVENT_DATE + " INTEGER"  +
                     " )";
 
     private static final String SQL_DROP_FEEDS_TABLE = "DROP TABLE IF EXISTS " + EventTable.NAME;

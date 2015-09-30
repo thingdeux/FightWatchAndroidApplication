@@ -39,16 +39,16 @@
   "events":  [
     {
       "id": 444,
-      "name": "SoCal Regionals",
+      "event_name": "SoCal Regionals",
       "stream": ["http://twitch.tv/teamsp00ky"],
       "brackets": [{
         "bracket_name": "USF4 Top 16",
         "bracket_url": "http://challonge.com/evo2015usf4top16"
       }],
-      "date": 1443588822
+      "date": 1443592312000
     }, {
       "id": 34555,
-      "event_name": "Evo (Year)",
+      "event_name": "Evo 2015",
       "streams": ["http://twitch.tv/srkevo1", "http://twitch.tv/srkevo2"],
       "brackets": [
         {
@@ -60,8 +60,8 @@
         }
 
       ],
-      "date": 1443588822
+      "date": 1443592312000
     }
   ],
-  "updated": 1443588822
+  "updated": 1443592312000
 }

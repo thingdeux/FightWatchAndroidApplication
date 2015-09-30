@@ -7,7 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.List;
 
+import watch.fight.android.fightbrowser.Events.models.Event;
+import watch.fight.android.fightbrowser.Events.models.EventDB;
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.R;
@@ -34,7 +37,10 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
 //            dashboards.add(buildStoryModule(mContext));
 //            dashboards.add(buildEventsModule());
 //            dashboards.add(buildStreamModule());
-                DashboardEntry[] de = {buildStoryModule(mContext)};
+                DashboardEntry[] de = {
+                        buildStoryModule(mContext),
+                        buildEventsModule(mContext)
+                };
                 Log.v("DashboardBuilder", "Created dashboard entries");
                 return de;
             }
@@ -86,9 +92,30 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         }
     }
 
-    private DashboardEntry buildEventsModule() {
+    private DashboardEntry buildEventsModule(Context context) {
         // Get Upcoming Events
-        return new DashboardEntry();
+        List<Event> events = EventDB.getInstance(context).getAllEvents();
+        if (events != null) {
+            DashboardEntry dashboardEntry = new DashboardEntry();
+            dashboardEntry.setType(DashboardEntry.EVENT_TYPE);
+            dashboardEntry.setHeader("Upcoming FGC Events");
+            StringBuilder sb = new StringBuilder(events.size());
+            boolean isFirstItem = true;
+
+            for (int i = 0; i < events.size(); i++) {
+                if (isFirstItem) {
+                    isFirstItem = false;
+                } else {
+                    sb.append(StringUtils.multipleLineBreaks(2));
+                }
+                // TODO : Query that only shows the next 3 events >= todays date - for now return all
+                sb.append(StringUtils.limitCharacters(events.get(i).getEventName(), 45, true) +
+                        "  (" + events.get(i).getDateObj().toString() + ")");
+            }
+            dashboardEntry.setContent(sb.toString());
+            return dashboardEntry;
+        }
+        return null;
     }
 
     private DashboardEntry buildStreamModule() {

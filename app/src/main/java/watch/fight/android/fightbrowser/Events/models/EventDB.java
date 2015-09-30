@@ -9,8 +9,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import watch.fight.android.fightbrowser.InformationFeeds.models.StoryDBHelper;
-
 import static watch.fight.android.fightbrowser.Events.models.EventDBSchema.*;
 
 /**
@@ -26,6 +24,11 @@ public class EventDB {
             sEventDB = new EventDB(context);
         }
         return sEventDB;
+    }
+
+    private EventDB(Context context) {
+        mContext = context.getApplicationContext();
+        mDatabase = new EventDBHelper(mContext).getWritableDatabase();
     }
 
     public Event getEvent(Long id) {
@@ -79,32 +82,27 @@ public class EventDB {
             mDatabase.setTransactionSuccessful();
             mDatabase.endTransaction();
         } else {
-            Log.e("addStories", "Error - Attemping to add 0 or null stories to DB");
+            Log.e("addEvents", "Error - Attemping to add 0 or null events to DB");
         }
 
     }
 
     public void deleteEvent(float id) {
-        Log.v("DeleteStory", "Deleting Event: " + id);
+        Log.v("DeleteEvent", "Deleting Event: " + id);
         deleteEvents(EventTable.Cols._ID + " = ?", new String[]{"" + id});
     }
 
-    private EventDB(Context context) {
-        mContext = context.getApplicationContext();
-        mDatabase = new StoryDBHelper(mContext).getWritableDatabase();
-    }
-
     public void deleteAllEvents() {
-        Log.v("deleteStories", "Deleting All Events!");
+        Log.v("deleteEvents", "Deleting All Events!");
         mDatabase.delete(EventTable.NAME, null, null);
     }
 
     private void deleteEvents(String whereClause, String[] whereArgs) {
         int isDeleted = mDatabase.delete(EventTable.NAME, whereClause, whereArgs);
         if (whereClause == null && isDeleted != 1) {
-            Log.e("deleteStories", "Unable to delete stories -> " + whereArgs);
+            Log.e("deleteEvents", "Unable to delete events -> " + whereArgs);
         } else {
-            Log.i("deleteStories", "Deleted: " + isDeleted + " stories");
+            Log.i("deleteEvents", "Deleted: " + isDeleted + " events");
         }
     }
 

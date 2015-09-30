@@ -17,11 +17,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
+import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.Events.models.EventDB;
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
@@ -67,6 +70,14 @@ public class DashboardActivity extends AppCompatActivity {
 
                     if (config.getEvents() != null) {
                         EventDB.getInstance(mContext).deleteAllEvents();  // TODO : Will actually check for lastUpdated being > thn
+                        EventDB.getInstance(mContext).addEvents(config.getEvents());
+
+                        Log.i(TAG, "Testing EventsDB");
+                        List<Event> events = EventDB.getInstance(mContext).getAllEvents();
+                        for (int i=0; i < events.size(); i++) {
+                            Event e = events.get(i);
+                            Log.i(TAG, "Event: " + e.getId() + " name: " + e.getEventName() + " date: " + e.getDateObj().toString());
+                        }
                     }
                 }
                 return config;

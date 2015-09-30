@@ -9,6 +9,7 @@
     <string name="intent_text_share_feed">Share Story With...</string>
     <string name="intent_text_open_stream">Open Stream With...</string>
 
+    <string name="dashboard_event_button_text">Browse Upcoming Events</string>
 
     <string name="twitch_stream_image_description">Twitch Stream Image</string>
     <string name="twitch_watch_button">Watch</string>

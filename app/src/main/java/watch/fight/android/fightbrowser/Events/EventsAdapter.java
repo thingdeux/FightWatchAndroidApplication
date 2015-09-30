@@ -1,6 +1,7 @@
 package watch.fight.android.fightbrowser.Events;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -65,9 +66,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         final Uri ImageHeader = event.getHeaderImageAsUri();
         final Date startDate = event.getStartDateObj();
         final Date endDate = event.getEndDateObj();
+        final Uri eventSite = event.getWebsiteAsUri();
 
         holder.mEventName.setText(event.getEventName());
-        holder.mEventDetails.setText("Some Flavor text about each event here");
+        if (event.getFlavorText() != null) {
+            holder.mEventDetails.setText(event.getFlavorText());
+        }
 
         holder.mEventDateRange.setText(
                 DateParser.dateToSimpleDateStr(startDate) + " - " +
@@ -84,7 +88,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         holder.mViewWebPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Not Yet Implemented", Toast.LENGTH_SHORT).show();
+                if (eventSite != null) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(eventSite);
+                    v.getContext().startActivity(intent);
+                }
             }
         });
 

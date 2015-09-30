@@ -128,6 +128,7 @@ public class EventDB {
         values.put(EventTable.Cols.START_DATE, event.getStartDate());
         values.put(EventTable.Cols.END_DATE, event.getEndDate());
         values.put(EventTable.Cols.WEBSITE, event.getWebsite());
+        values.put(EventTable.Cols.FLAVOR_TEXT, event.getFlavorText());
 
         return values;
     }

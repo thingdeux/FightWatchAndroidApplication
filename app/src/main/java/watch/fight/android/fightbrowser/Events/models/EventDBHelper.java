@@ -22,6 +22,7 @@ public class EventDBHelper extends SQLiteOpenHelper{
                     EventTable.Cols.ID + " INTEGER" + "," +
                     EventTable.Cols.NAME + TEXT_TYPE + "," +
                     EventTable.Cols.WEBSITE + TEXT_TYPE + "," +
+                    EventTable.Cols.FLAVOR_TEXT + TEXT_TYPE + "," +
                     EventTable.Cols.HEADER_IMAGE_URL + TEXT_TYPE + "," +
                     EventTable.Cols.START_DATE + " INTEGER"  + "," +
                     EventTable.Cols.END_DATE + " INTEGER"  +

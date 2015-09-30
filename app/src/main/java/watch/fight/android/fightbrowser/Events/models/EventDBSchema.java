@@ -18,6 +18,7 @@ public class EventDBSchema {
             public static final String END_DATE = "eventenddate";
             public static final String HEADER_IMAGE_URL = "eventheaderimageurl";
             public static final String WEBSITE = "eventwebsite";
+            public static final String FLAVOR_TEXT = "eventflavortext";
         }
 
     }

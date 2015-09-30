@@ -15,6 +15,7 @@ public class EventCursorWrapper extends CursorWrapper {
         Long id = getLong(getColumnIndex(EventTable.Cols.ID));
         String name = getString(getColumnIndex(EventTable.Cols.NAME));
         String headerUrl = getString(getColumnIndex(EventTable.Cols.HEADER_IMAGE_URL));
+        String flavorText = getString(getColumnIndex(EventTable.Cols.FLAVOR_TEXT));
         String website = getString(getColumnIndex(EventTable.Cols.WEBSITE));
         Long startDate = getLong(getColumnIndex(EventTable.Cols.START_DATE));
         Long endDate = getLong(getColumnIndex(EventTable.Cols.END_DATE));
@@ -26,6 +27,7 @@ public class EventCursorWrapper extends CursorWrapper {
         event.setEventName(name);
         event.setHeaderImageUrl(headerUrl);
         event.setWebsite(website);
+        event.setFlavorText(flavorText);
 
         return event;
     }

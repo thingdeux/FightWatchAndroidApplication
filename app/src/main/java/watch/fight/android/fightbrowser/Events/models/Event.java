@@ -40,6 +40,10 @@ public class Event {
     private String mHeaderImageUrl;
 
     @Expose
+    @SerializedName("flavor_text")
+    private String mFlavorText;
+
+    @Expose
     @SerializedName("streams")
     private List<String> mStream;
 
@@ -113,7 +117,23 @@ public class Event {
         return mWebsite;
     }
 
+    public Uri getWebsiteAsUri() {
+        if (mWebsite != null) {
+            return Uri.parse(mWebsite);
+        } else {
+            return null;
+        }
+    }
+
     public void setWebsite(String website) {
         mWebsite = website;
+    }
+
+    public String getFlavorText() {
+        return mFlavorText;
+    }
+
+    public void setFlavorText(String flavorText) {
+        mFlavorText = flavorText;
     }
 }

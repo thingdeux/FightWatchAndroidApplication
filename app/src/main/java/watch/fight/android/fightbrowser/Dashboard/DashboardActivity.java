@@ -66,13 +66,6 @@ public class DashboardActivity extends AppCompatActivity {
                     if (config.getEvents() != null) {
                         EventDB.getInstance(mContext).deleteAllEvents();  // TODO : Will actually check for lastUpdated being > thn
                         EventDB.getInstance(mContext).addEvents(config.getEvents());
-
-                        Log.i(TAG, "Testing EventsDB");
-                        List<Event> events = EventDB.getInstance(mContext).getAllEvents();
-                        for (int i=0; i < events.size(); i++) {
-                            Event e = events.get(i);
-                            Log.i(TAG, "Event: " + e.getId() + " name: " + e.getEventName() + " date: " + e.getStartDateObj().toString());
-                        }
                     }
                 }
                 return config;

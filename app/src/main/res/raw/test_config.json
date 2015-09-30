@@ -42,6 +42,7 @@
       "name": "SoCal Regionals",
       "website": "http://www.socalregionals.com/",
       "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/SoCalRegionals.png",
+      "flavor_text": "SoCal Regionals is the premiere tournament in Southern California. $15,000 in prize money this year means it's going to be one heck of a show!",
       "stream": ["http://twitch.tv/teamsp00ky"],
       "brackets": [{
         "bracket_name": "USF4 Top 16",
@@ -54,6 +55,7 @@
       "name": "Evo 2015",
       "website": "http://evo.shoryuken.com/",
       "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/evo.png",
+      "flavor_text": "What can be said about Evo other than that it's the most prolific fighting game tournament in the scene.  If a fighting game exists, chances are you'll find someone who plays it at a competitive level in Evo.",
       "streams": ["http://twitch.tv/srkevo1", "http://twitch.tv/srkevo2"],
       "brackets": [
         {

@@ -8,11 +8,22 @@
       ]
 
     }, {
-      "name": "Ultimate Marvel vs Capcom 3",
+      "name": "Ultimate Marvel vs. Capcom 3",
       "known_streamers": [
         "IFCYipes"
       ]
+    }, {
+      "name": "Super Smash Bros. Melee"
+    }, {
+      "name": "Mortal Kombat X",
+      "known_streamers": [
+        "yomi_gaming",
+        "zsonicfox"
+      ]
+    }, {
+
     }
+
   ],
   "rss_feeds": [
     {

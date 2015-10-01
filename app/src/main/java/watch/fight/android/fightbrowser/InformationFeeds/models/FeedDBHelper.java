@@ -4,17 +4,19 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import watch.fight.android.fightbrowser.Utils.DBSchema;
+
 import static watch.fight.android.fightbrowser.InformationFeeds.models.FeedDBSchema.*;
 
 /**
  * Created by josh on 9/25/15.
  */
 public class FeedDBHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = FeedTable.NAME + ".db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = DBSchema.DBName;
     private static final String TEXT_TYPE = " TEXT";
 
-    private static final String SQL_CREATE_FEED_TABLE =
+    public static final String SQL_CREATE_FEED_TABLE =
             "CREATE TABLE " + FeedTable.NAME + " (" +
                     FeedTable.Cols._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     FeedTable.Cols.ID + " INTEGER " + "," +
@@ -25,7 +27,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
                     FeedTable.Cols.LAST_UPDATED + TEXT_TYPE +
                     " )";
 
-    private static final String SQL_DROP_FEEDS_TABLE = "DROP TABLE IF EXISTS " + FeedTable.NAME;
+    public static final String SQL_DROP_FEEDS_TABLE = "DROP TABLE IF EXISTS " + FeedTable.NAME;
 
 
     public FeedDBHelper(Context context) {
@@ -33,7 +35,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_FEED_TABLE);
+        DBSchema.createAllTables(db);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

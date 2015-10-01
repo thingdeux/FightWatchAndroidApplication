@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import watch.fight.android.fightbrowser.Utils.DBSchema;
+
 import static watch.fight.android.fightbrowser.Events.models.EventDBSchema.*;
 
 /**
@@ -11,12 +13,12 @@ import static watch.fight.android.fightbrowser.Events.models.EventDBSchema.*;
  */
 public class EventDBHelper extends SQLiteOpenHelper{
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = EventTable.NAME + ".db";
+    public static final String DATABASE_NAME = DBSchema.DBName;
     private static final String TEXT_TYPE = " TEXT";
-    private static final String SQL_INDEX_EVENT_ID = "CREATE INDEX " + EventTable.Cols.ID +
+    public static final String SQL_INDEX_EVENT_ID = "CREATE INDEX " + EventTable.Cols.ID +
             "_index " + "ON " + EventTable.NAME + "(" + EventTable.Cols.ID + ")";
 
-    private static final String SQL_CREATE_FEED_TABLE =
+    public static final String SQL_CREATE_FEED_TABLE =
             "CREATE TABLE " + EventTable.NAME + " (" +
                     EventTable.Cols._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     EventTable.Cols.ID + " INTEGER" + "," +
@@ -28,7 +30,7 @@ public class EventDBHelper extends SQLiteOpenHelper{
                     EventTable.Cols.END_DATE + " INTEGER"  +
                     " )";
 
-    private static final String SQL_DROP_EVENTS_TABLE = "DROP TABLE IF EXISTS " + EventTable.NAME;
+    public static final String SQL_DROP_EVENTS_TABLE = "DROP TABLE IF EXISTS " + EventTable.NAME;
 
 
     public EventDBHelper(Context context) {
@@ -36,8 +38,7 @@ public class EventDBHelper extends SQLiteOpenHelper{
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_FEED_TABLE);
-        db.execSQL(SQL_INDEX_EVENT_ID);  // Setup Index on ID
+        DBSchema.createAllTables(db);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -150,7 +150,7 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         }
 
         DashboardEntry dashboardEntry = new DashboardEntry();
-        dashboardEntry.setHeader("FGC Stream Activity on Twitch");
+        dashboardEntry.setHeader("FGC Streams on Twitch");
         dashboardEntry.setType(DashboardEntry.TWITCH_STREAM_COUNT);
         StringBuilder sb = new StringBuilder(mSummaries.size() * 3);
         boolean isFirstItem = true;
@@ -163,8 +163,8 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
             }
             sb.append(mSummaries.get(i).getGameNameFromQuery());
             sb.append(StringUtils.multipleLineBreaks(1));
-            sb.append("   Live Streams " +  mSummaries.get(i).getChannels()
-                      + mSummaries.get(i).getViewers() + " Viewers");
+            sb.append("    " + mSummaries.get(i).getChannels() + " Live Streams " +
+                      "with " + mSummaries.get(i).getViewers() + " Viewers");
         }
         dashboardEntry.setContent(sb.toString());
         return dashboardEntry;

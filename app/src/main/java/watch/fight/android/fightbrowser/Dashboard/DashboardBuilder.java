@@ -163,7 +163,7 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
             }
             sb.append(mSummaries.get(i).getGameNameFromQuery());
             sb.append(StringUtils.multipleLineBreaks(1));
-            sb.append("Live Streams " +  mSummaries.get(i).getChannels()
+            sb.append("   Live Streams " +  mSummaries.get(i).getChannels()
                       + mSummaries.get(i).getViewers() + " Viewers");
         }
         dashboardEntry.setContent(sb.toString());

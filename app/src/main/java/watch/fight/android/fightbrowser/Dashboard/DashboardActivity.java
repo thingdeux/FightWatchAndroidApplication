@@ -92,7 +92,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
+        Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
         new FetchConfig(this).execute();
 
         setContentView(R.layout.dashboard_activity);

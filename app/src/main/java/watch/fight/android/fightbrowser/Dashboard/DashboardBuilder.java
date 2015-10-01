@@ -136,7 +136,11 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         mRequestQueue.add(createStreamSummaryRequest("Ultimate Marvel vs. Capcom 3", mSummaries));
 
 
+        // Wait 4 seconds or 3 summary responses
         while (mTimeAwaitingTwitchSummaryResponse < 4000) {
+            if (mSummaries.size() >= 3) {
+                break;
+            }
             Log.i(TAG, "Waiting for twitch calls to finish: " + mTimeAwaitingTwitchSummaryResponse);
             try {
                 Thread.sleep(100);
@@ -148,9 +152,19 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         DashboardEntry dashboardEntry = new DashboardEntry();
         dashboardEntry.setHeader("FGC Stream Activity on Twitch");
         dashboardEntry.setType(DashboardEntry.TWITCH_STREAM_COUNT);
-        StringBuilder sb = new StringBuilder(mSummaries.size());
+        StringBuilder sb = new StringBuilder(mSummaries.size() * 3);
+        boolean isFirstItem = true;
+
         for (int i = 0; i < mSummaries.size(); i++) {
-            sb.append(mSummaries.get(i).getChannels() + " Viewers: " + mSummaries.get(i).getViewers());
+            if (isFirstItem) {
+                isFirstItem = false;
+            } else {
+                sb.append(StringUtils.multipleLineBreaks(2));
+            }
+            sb.append(mSummaries.get(i).getGameNameFromQuery());
+            sb.append(StringUtils.multipleLineBreaks(1));
+            sb.append("Live Streams " +  mSummaries.get(i).getChannels()
+                      + mSummaries.get(i).getViewers() + " Viewers");
         }
         dashboardEntry.setContent(sb.toString());
         return dashboardEntry;

@@ -62,23 +62,17 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
                     Intent intent = new Intent();
                     switch (mEntries[position].getType()) {
                         case DashboardEntry.EVENT_TYPE:
-//                            Toast.makeText(v.getContext(), "Not Yet Implemented", Toast.LENGTH_SHORT).show();
                             intent.setClass(v.getContext(), EventsActivity.class);
-                            holder.mReadMore.setText(R.string.dashboard_event_button_text);
                             break;
                         case DashboardEntry.RSS_FEED_TYPE:
                             intent.setClass(v.getContext(), InformationFeedsActivity.class);
                             break;
                         case DashboardEntry.TWITCH_STREAM_COUNT:
-                            Toast.makeText(v.getContext(), "Not Yet Implemented", Toast.LENGTH_SHORT).show();
                             intent.setClass(v.getContext(), BrowserActivity.class);
                             break;
                     }
 
-                    // TODO : Remove as I implement the activities
-                    if (mEntries[position].getType() != DashboardEntry.TWITCH_STREAM_COUNT) {
-                        v.getContext().startActivity(intent);
-                    }
+                    v.getContext().startActivity(intent);
                 }
             });
 
@@ -90,6 +84,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
                     holder.mReadMore.setText(R.string.dashboard_check_news_button_name);
                     break;
                 case DashboardEntry.TWITCH_STREAM_COUNT:
+                    holder.mReadMore.setText(R.string.dashboard_streams_button_text);
                     break;
             }
 

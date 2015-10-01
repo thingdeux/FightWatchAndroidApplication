@@ -36,6 +36,7 @@
     <string name="dashboard_check_news_button_name">See Latest FGC News</string>
     <string name="dashboard_share_button_name">Share</string>
     <string name="dashboard_event_button_text">Browse Upcoming Events</string>
+    <string name="dashboard_streams_button_text">Check Twitch Streams</string>
     <string name="read_more_button_name">Read More</string>
     <string name="events_brackets_button_name">Brackets</string>
     <string name="events_website_button_name">Event Website</string>

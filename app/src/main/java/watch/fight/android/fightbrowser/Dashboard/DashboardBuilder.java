@@ -5,6 +5,12 @@ import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +19,9 @@ import watch.fight.android.fightbrowser.Events.models.EventDB;
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStreamSummary;
+import watch.fight.android.fightbrowser.Utils.Network.GsonRequest;
+import watch.fight.android.fightbrowser.Utils.Network.NetworkRequest;
 import watch.fight.android.fightbrowser.Utils.StringUtils;
 
 /**
@@ -23,8 +32,12 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
      Gather top-level information from twitch streams / rss feeds / events and turn it into
      DashboardEntry items for the adapter.
     */
+    private String TAG = DashboardBuilder.class.getSimpleName();
     private DashboardFragment mDashboardFragment;
     private Context mContext;
+    private RequestQueue mRequestQueue;
+    private ArrayList<TwitchStreamSummary> mSummaries = new ArrayList<>();
+    private int mTimeAwaitingTwitchSummaryResponse = 0;
 
     protected DashboardEntry[] doInBackground(DashboardBuilderValues... dbValues) {
         Log.i("ThreadCheck", "DashboardBuild on thread: " + Thread.currentThread());
@@ -33,12 +46,11 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
 
             if (mDashboardFragment != null) {
                 mContext = dbValues[0].mContext;
-//            dashboards.add(buildStoryModule(mContext));
-//            dashboards.add(buildEventsModule());
-//            dashboards.add(buildStreamModule());
+                mRequestQueue = NetworkRequest.getInstance(mContext.getApplicationContext()).getRequestQueue();
                 DashboardEntry[] de = {
                         buildStoryModule(mContext),
-                        buildEventsModule(mContext)
+                        buildEventsModule(mContext),
+                        buildStreamModule(mContext)
                 };
                 Log.v("DashboardBuilder", "Created dashboard entries");
                 return de;
@@ -79,8 +91,6 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
                 }
             }
 
-            // System.getProperty("line.separator") + System.getProperty("line.separator")
-
             entry.setType(DashboardEntry.RSS_FEED_TYPE);
             entry.setHeader(mContext.getResources().getText(R.string.dashboard_stories_header_name).toString());
             entry.setContent(sb.toString());
@@ -117,9 +127,63 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         return null;
     }
 
-    private DashboardEntry buildStreamModule() {
+    private DashboardEntry buildStreamModule(Context context) {
         // TwitchSearches - Get Counts
-        return new DashboardEntry();
+        // TODO : Perhaps pass in synchronized list to prevent any concurrency issues.
+        mRequestQueue.add(createStreamSummaryRequest("Ultra Street Fighter IV", mSummaries));
+        mRequestQueue.add(createStreamSummaryRequest("Mortal Kombat X", mSummaries));
+        mRequestQueue.add(createStreamSummaryRequest("Super Smash Bros. Melee", mSummaries));
+        mRequestQueue.add(createStreamSummaryRequest("Ultimate Marvel vs. Capcom 3", mSummaries));
+
+
+        while (mTimeAwaitingTwitchSummaryResponse < 4000) {
+            Log.i(TAG, "Waiting for twitch calls to finish: " + mTimeAwaitingTwitchSummaryResponse);
+            try {
+                Thread.sleep(100);
+                mTimeAwaitingTwitchSummaryResponse += 100;
+            } catch (InterruptedException ie) {
+            }
+        }
+
+        DashboardEntry dashboardEntry = new DashboardEntry();
+        dashboardEntry.setHeader("FGC Stream Activity on Twitch");
+        dashboardEntry.setType(DashboardEntry.TWITCH_STREAM_COUNT);
+        StringBuilder sb = new StringBuilder(mSummaries.size());
+        for (int i = 0; i < mSummaries.size(); i++) {
+            sb.append(mSummaries.get(i).getChannels() + " Viewers: " + mSummaries.get(i).getViewers());
+        }
+        dashboardEntry.setContent(sb.toString());
+        return dashboardEntry;
+    }
+
+    private static Response.Listener<TwitchStreamSummary> twitchResponseListener(final ArrayList<TwitchStreamSummary> summaries) {
+        // NOTE!! Volley returns responses on the main thread, so keep this light.
+        return new Response.Listener<TwitchStreamSummary>() {
+            @Override
+            public void onResponse(TwitchStreamSummary response) {
+                summaries.add(response);
+            }
+        };
+    }
+
+    private static Response.ErrorListener twitchErrorListener() {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VolleyError", "Error Retrieving twitch summary response! - " + error.toString());
+            }
+        };
+    }
+
+    private static GsonRequest<TwitchStreamSummary> createStreamSummaryRequest(String game,
+                                                                               ArrayList<TwitchStreamSummary> summaries) {
+        return new GsonRequest<TwitchStreamSummary>(
+                "https://api.twitch.tv/kraken/streams/summary?game=" + game.replace(" ", "+"),
+                TwitchStreamSummary.class,
+                null,
+                twitchResponseListener(summaries),
+                twitchErrorListener()
+        );
     }
 
     public static class DashboardBuilderValues {

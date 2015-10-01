@@ -11,6 +11,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
@@ -27,7 +30,12 @@ import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivit
 import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchFeaturedStream;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStream;
+import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStreamSummary;
 import watch.fight.android.fightbrowser.Utils.DateParser;
+import watch.fight.android.fightbrowser.Utils.Network.GsonRequest;
+import watch.fight.android.fightbrowser.Utils.Network.NetworkRequest;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**
@@ -84,7 +92,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
+//        Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
         new FetchConfig(this).execute();
 
         setContentView(R.layout.dashboard_activity);
@@ -95,7 +103,6 @@ public class DashboardActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.dashboard_main_fragment, dashboardFragment).commit();
         }
-
     }
 
     @Override

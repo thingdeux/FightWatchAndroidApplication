@@ -3,16 +3,12 @@ package watch.fight.android.fightbrowser.StreamBrowser.Twitch;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import watch.fight.android.fightbrowser.Utils.NetworkUtils;
+import watch.fight.android.fightbrowser.Utils.Network.ParseUtils;
 
 /**
  * Created by josh on 9/12/15.
@@ -37,7 +33,7 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
             connection.connect();
             int response = connection.getResponseCode();
             InputStream input = connection.getInputStream();
-            return NetworkUtils.InputStreamToString(input);
+            return ParseUtils.InputStreamToString(input);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -17,7 +17,7 @@ import java.net.URL;
 import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.JsonFromRaw;
-import watch.fight.android.fightbrowser.Utils.NetworkUtils;
+import watch.fight.android.fightbrowser.Utils.Network.ParseUtils;
 
 /**
  * Created by josh on 9/20/15.
@@ -41,7 +41,7 @@ public class ConfigFetcher {
             connection.connect();
             int responseCode = connection.getResponseCode();
             InputStream input = connection.getInputStream();
-            String response = NetworkUtils.InputStreamToString(input);
+            String response = ParseUtils.InputStreamToString(input);
             return gson.fromJson(response, Config.class);
         } catch (MalformedURLException mue) {
             // TODO : Implement last config from DB on fail.

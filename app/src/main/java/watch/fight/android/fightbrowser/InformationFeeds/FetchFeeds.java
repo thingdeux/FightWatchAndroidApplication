@@ -21,7 +21,7 @@ import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDB;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.InformationFeeds.models.StoryDB;
 import watch.fight.android.fightbrowser.Utils.DateParser;
-import watch.fight.android.fightbrowser.Utils.NetworkUtils;
+import watch.fight.android.fightbrowser.Utils.Network.ParseUtils;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**
@@ -137,7 +137,7 @@ public class FetchFeeds {
 ////                        DB.deleteStoriesBySiteName(siteName);
 //                        List<RSSItem> items = feeds.get(i).getItems();
 //                        if (items != null) {
-//                            DB.addStories(NetworkUtils.getStoriesFromFeed(items));
+//                            DB.addStories(ParseUtils.getStoriesFromFeed(items));
 //                        }
 //
 //                    } else {
@@ -150,7 +150,7 @@ public class FetchFeeds {
 
         protected void processFeed(Feed site, String url) {
             Log.v("ProcessFeed", "Fetching feed for: " + url);
-            ArrayList<Story> stories = NetworkUtils.parseRss(site, url);
+            ArrayList<Story> stories = ParseUtils.parseRss(site, url);
             if (stories != null) {
                 StoryDB DB = StoryDB.getInstance(mContext.getApplicationContext());
                 // Delete all stories from the given site and add the new updates
@@ -181,7 +181,7 @@ public class FetchFeeds {
 //        // TODO : Will check the DB First and if it hasn't been updated in a while kickoff an update task while returning what it found.
 //        // So that the next request will be fresh.
 //        Log.i("ProcessFeed", "Fetching feed for: " + url);
-//        ArrayList<Story> stories = NetworkUtils.parseRss(siteName, url);
+//        ArrayList<Story> stories = ParseUtils.parseRss(siteName, url);
 //        if (stories != null) {
 //            return stories.get(0);
 //        } else {

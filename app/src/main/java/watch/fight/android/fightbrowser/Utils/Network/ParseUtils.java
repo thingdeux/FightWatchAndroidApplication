@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser.Utils;
+package watch.fight.android.fightbrowser.Utils.Network;
 
 import android.util.Log;
 
@@ -20,8 +20,8 @@ import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 /**
  * Created by josh on 9/21/15.
  */
-public class NetworkUtils {
-    private static String TAG = NetworkUtils.class.getSimpleName();
+public class ParseUtils {
+    private static String TAG = ParseUtils.class.getSimpleName();
 
     public static String InputStreamToString(InputStream stream) {
         try {
@@ -72,20 +72,20 @@ public class NetworkUtils {
         return null;
     }
 
-    public static ArrayList<Story> getStoriesFromFeed(List<RSSItem> rss_items) {
-        ArrayList<Story> feeds = new ArrayList<>();
-        if (rss_items != null) {
-            for (int i = 0; i < rss_items.size(); i++) {
-                Story s = new Story();
-//                s.setSiteName(siteName);
-                s.setTitle(rss_items.get(i).getTitle());
-                s.setDescription(rss_items.get(i).getDescription());
-                s.setUrl(rss_items.get(i).getLink());
-                s.setPublishedDate(rss_items.get(i).getPubDate());
-                // TODO : Add get author
-                feeds.add(s);
-            }
-        }
-        return feeds;
-    }
+//    public static ArrayList<Story> getStoriesFromFeed(List<RSSItem> rss_items) {
+//        ArrayList<Story> feeds = new ArrayList<>();
+//        if (rss_items != null) {
+//            for (int i = 0; i < rss_items.size(); i++) {
+//                Story s = new Story();
+////                s.setSiteName(siteName);
+//                s.setTitle(rss_items.get(i).getTitle());
+//                s.setDescription(rss_items.get(i).getDescription());
+//                s.setUrl(rss_items.get(i).getLink());
+//                s.setPublishedDate(rss_items.get(i).getPubDate());
+//                // TODO : Add get author
+//                feeds.add(s);
+//            }
+//        }
+//        return feeds;
+//    }
 }

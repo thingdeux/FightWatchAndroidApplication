@@ -16,7 +16,10 @@
       ]
     }, {
       "id": 3,
-      "name": "Super Smash Bros. Melee"
+      "name": "Super Smash Bros. Melee",
+      "known_streamers": [
+        "vgbootcamp"
+      ]
     }, {
       "id": 4,
       "name": "Mortal Kombat X",
@@ -24,6 +27,15 @@
         "yomi_gaming",
         "zsonicfox"
       ]
+    }, {
+      "id": 5,
+      "name": "Killer Instinct"
+    }, {
+      "id": 6,
+      "name": "Street Fighter III: 3rd Strike"
+    }, {
+      "id": 7,
+      "name": "Super Smash Bros. for Wii U"
     }
 
   ],
@@ -34,13 +46,6 @@
       "rss_url": "http://www.eventhubs.com/feeds/latest/",
       "website_url": "http://www.eventhubs.com",
       "feed_image_url": "http://fgccompanion-79b.kxcdn.com/eventhubs-min.png"
-    }, {
-      "id": 3,
-      "name": "Shoryuken",
-      "rss_url": "http://shoryuken.com/feed/",
-      "website_url": "http://shoryuken.com",
-      "feed_image_url": "http://fgccompanion-79b.kxcdn.com/srk.png"
-
     }
   ],
   "events":  [

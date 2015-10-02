@@ -12,27 +12,37 @@ import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.LinePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
+import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.FragmentAdapter;
 
 
 public class BrowserActivity extends AppCompatActivity {
     private void initStreams() {
+        List<GameConfig> games = GameDB.getInstance(this).getAllGames();
+        ArrayList<BrowserFragment> fragments = new ArrayList<BrowserFragment>();
+
         // Create Fragments
         BrowserFragment twitchBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_FEATURED_TYPE);
-        BrowserFragment gameSpecificBrowser = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Street Fighter");
-        BrowserFragment gameSpecificBrowser2 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Mortal Kombat");
-        BrowserFragment gameSpecificBrowser3 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Smash Brothers");
-        BrowserFragment gameSpecificBrowser4 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Killer Instinct");
-        BrowserFragment gameSpecificBrowser5 = BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, "Ultimate Marvel");
+
+        if (games != null && games.size() > 0) {
+            for (int i = 0; i < games.size(); i++) {
+                if (!games.get(i).getIsFiltered()) {
+                    fragments.add(BrowserFragment.newInstance(BrowserFragment.BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE, games.get(i).getGameName()));
+                }
+            }
+        }
 
         // Setup FragmentManager
         FragmentAdapter browserAdapter = new FragmentAdapter(getSupportFragmentManager());
-        browserAdapter.addFragment(gameSpecificBrowser);
-        browserAdapter.addFragment(gameSpecificBrowser2);
-        browserAdapter.addFragment(gameSpecificBrowser3);
-        browserAdapter.addFragment(gameSpecificBrowser4);
-        browserAdapter.addFragment(gameSpecificBrowser5);
+        for (int i = 0; i < fragments.size(); i++) {
+            browserAdapter.addFragment(fragments.get(i));
+        }
+        // Add Featured fragment at the end
         browserAdapter.addFragment(twitchBrowser);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.browser_viewPager);

@@ -16,6 +16,7 @@ public class GameDBSchema {
             public static final String GAME_NAME = "gamename";
             public static final String DATE_ADDED = "gamedateadded";
             public static final String IS_FILTERED = "gameisfiltered";
+            public static final String ORDINAL = "gameordinal";
         }
 
     }

@@ -132,10 +132,10 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         List<GameConfig> storedGames = GameDB.getInstance(mContext).getAllGames();
         if (storedGames != null) {
             for (int i=0; i < storedGames.size(); i++) {
-                mRequestQueue.add(createStreamSummaryRequest(storedGames.get(i).getGameName(), mSummaries));
                 if (i > 3) {
                     break;
                 }
+                mRequestQueue.add(createStreamSummaryRequest(storedGames.get(i).getGameName(), mSummaries));
             }
         }
 

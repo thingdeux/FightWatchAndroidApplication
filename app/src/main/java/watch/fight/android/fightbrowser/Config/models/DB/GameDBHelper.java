@@ -22,7 +22,8 @@ public class GameDBHelper extends SQLiteOpenHelper {
                     GameDBSchema.GameTable.Cols.ID + " INTEGER" + "," +
                     GameDBSchema.GameTable.Cols.GAME_NAME + TEXT_TYPE + "," +
                     GameDBSchema.GameTable.Cols.IS_FILTERED + " INTEGER " + "," +
-                    GameDBSchema.GameTable.Cols.DATE_ADDED + " INTEGER " +
+                    GameDBSchema.GameTable.Cols.DATE_ADDED + " INTEGER " + "," +
+                    GameDBSchema.GameTable.Cols.ORDINAL + " INTEGER " +
                     " )";
 
     public static final String SQL_DROP_GameS_TABLE = "DROP TABLE IF EXISTS " + GameDBSchema.GameTable.NAME;

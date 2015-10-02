@@ -16,12 +16,14 @@ public class GameCursorWrapper extends CursorWrapper {
         String name = getString(getColumnIndex(GameDBSchema.GameTable.Cols.GAME_NAME));
         Long dateAdded = getLong(getColumnIndex(GameDBSchema.GameTable.Cols.DATE_ADDED));
         Integer isFiltered = getInt(getColumnIndex(GameDBSchema.GameTable.Cols.IS_FILTERED));
+        int ordinal = getInt(getColumnIndex(GameDBSchema.GameTable.Cols.ORDINAL));
 
         GameConfig gameConfig = new GameConfig();
         gameConfig.setId(id);
         gameConfig.setGameName(name);
         gameConfig.setDateAdded(dateAdded);
         gameConfig.setIsFiltered(isFiltered == 1);
+        gameConfig.setOrdinal(ordinal);
 
         return gameConfig;
     }

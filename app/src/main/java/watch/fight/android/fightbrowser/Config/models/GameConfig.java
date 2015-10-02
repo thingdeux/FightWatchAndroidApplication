@@ -26,6 +26,8 @@ public class GameConfig {
 
     private Long mDateAdded;
 
+    private int mOrdinal;
+
     public String getGameName() {
         return mGameName;
     }
@@ -64,5 +66,13 @@ public class GameConfig {
 
     public void setIsFiltered(Boolean isFiltered) {
         this.isFiltered = isFiltered;
+    }
+
+    public int getOrdinal() {
+        return mOrdinal;
+    }
+
+    public void setOrdinal(int ordinal) {
+        mOrdinal = ordinal;
     }
 }

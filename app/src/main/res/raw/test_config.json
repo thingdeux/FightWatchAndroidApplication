@@ -1,6 +1,7 @@
 {
   "games": [
     {
+      "id": 1,
       "name": "Ultra Street Fighter IV",
       "known_streamers": [
         "TeamSp00ky",
@@ -8,13 +9,16 @@
       ]
 
     }, {
+      "id": 2,
       "name": "Ultimate Marvel vs. Capcom 3",
       "known_streamers": [
         "IFCYipes"
       ]
     }, {
+      "id": 3,
       "name": "Super Smash Bros. Melee"
     }, {
+      "id": 4,
       "name": "Mortal Kombat X",
       "known_streamers": [
         "yomi_gaming",

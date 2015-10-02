@@ -11,31 +11,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.Events.EventsActivity;
-import watch.fight.android.fightbrowser.Events.models.Event;
-import watch.fight.android.fightbrowser.Events.models.EventDB;
+import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
-import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDB;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
-import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchFeaturedStream;
-import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStream;
-import watch.fight.android.fightbrowser.StreamBrowser.Twitch.models.TwitchStreamSummary;
 import watch.fight.android.fightbrowser.Utils.DateParser;
-import watch.fight.android.fightbrowser.Utils.Network.GsonRequest;
-import watch.fight.android.fightbrowser.Utils.Network.NetworkRequest;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**

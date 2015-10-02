@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
-import watch.fight.android.fightbrowser.InformationFeeds.models.StoryDB;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDB;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.DateParser;
 

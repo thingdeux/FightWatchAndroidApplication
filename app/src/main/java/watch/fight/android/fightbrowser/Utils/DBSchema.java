@@ -2,9 +2,10 @@ package watch.fight.android.fightbrowser.Utils;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import watch.fight.android.fightbrowser.Events.models.EventDBHelper;
-import watch.fight.android.fightbrowser.InformationFeeds.models.FeedDBHelper;
-import watch.fight.android.fightbrowser.InformationFeeds.models.StoryDBHelper;
+import watch.fight.android.fightbrowser.Config.models.DB.GameDBHelper;
+import watch.fight.android.fightbrowser.Events.models.DB.EventDBHelper;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDBHelper;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDBHelper;
 
 /**
  * Created by josh on 10/1/15.
@@ -19,5 +20,7 @@ public class DBSchema {
         db.execSQL(EventDBHelper.SQL_INDEX_EVENT_ID);
         db.execSQL(StoryDBHelper.SQL_CREATE_FEED_TABLE);
         db.execSQL(StoryDBHelper.SQL_INDEX_SITE_NAME);
+        db.execSQL(GameDBHelper.SQL_CREATE_FEED_TABLE);
+        db.execSQL(GameDBHelper.SQL_INDEX_GAME_ID);
     }
 }

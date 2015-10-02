@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser.Events.models;
+package watch.fight.android.fightbrowser.Events.models.DB;
 
 import android.provider.BaseColumns;
 

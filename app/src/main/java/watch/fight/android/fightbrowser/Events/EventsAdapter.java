@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Events.models.Event;
-import watch.fight.android.fightbrowser.Events.models.EventDB;
+import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.DateParser;
 

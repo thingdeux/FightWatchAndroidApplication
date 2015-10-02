@@ -1,18 +1,16 @@
-package watch.fight.android.fightbrowser.InformationFeeds.models;
+package watch.fight.android.fightbrowser.InformationFeeds.models.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.Utils.DateParser;
-
-import static watch.fight.android.fightbrowser.InformationFeeds.models.StoryDBSchema.*;
 
 /**
  * Created by josh on 9/26/15.
@@ -36,7 +34,7 @@ public class StoryDB {
 
     public Story getStory(int id) {
         StoryCursorWrapper cursor = queryStories(
-                StoryTable.Cols._ID + " = ?",
+                StoryDBSchema.StoryTable.Cols._ID + " = ?",
                 new String[]{"" + id}
         );
 
@@ -88,7 +86,7 @@ public class StoryDB {
 
     public void addStory(Story story) {
         ContentValues values = getContentValues(story);
-        mDatabase.insert(StoryTable.NAME, null, values);
+        mDatabase.insert(StoryDBSchema.StoryTable.NAME, null, values);
     }
 
     public void addStories(List<Story> stories) {
@@ -96,7 +94,7 @@ public class StoryDB {
             mDatabase.beginTransaction();
             for (int i = 0; i < stories.size(); i++) {
                 ContentValues values = getContentValues(stories.get(i));
-                mDatabase.insert(StoryTable.NAME, null, values);
+                mDatabase.insert(StoryDBSchema.StoryTable.NAME, null, values);
             }
             mDatabase.setTransactionSuccessful();
             mDatabase.endTransaction();
@@ -108,23 +106,23 @@ public class StoryDB {
 
     public void deleteStory(float id) {
         Log.v("DeleteStory", "Deleting Story: " + id);
-        deleteStories(StoryTable.Cols._ID + " = ?", new String[]{"" + id});
+        deleteStories(StoryDBSchema.StoryTable.Cols._ID + " = ?", new String[]{"" + id});
     }
 
     public void deleteAllStories() {
         Log.v("deleteStories", "Deleting All Stories!");
-        mDatabase.delete(StoryTable.NAME, null, null);
+        mDatabase.delete(StoryDBSchema.StoryTable.NAME, null, null);
     }
 
     public void deleteStoriesBySiteName(String siteName) {
         if (siteName != null && !siteName.isEmpty()) {
-            deleteStories(StoryTable.Cols.SITE_NAME + " = ?",
+            deleteStories(StoryDBSchema.StoryTable.Cols.SITE_NAME + " = ?",
                     new String[]{siteName});
         }
     }
 
     private void deleteStories(String whereClause, String[] whereArgs) {
-        int isDeleted = mDatabase.delete(StoryTable.NAME, whereClause, whereArgs);
+        int isDeleted = mDatabase.delete(StoryDBSchema.StoryTable.NAME, whereClause, whereArgs);
         if (whereClause == null && isDeleted != 1) {
             Log.e("deleteStories", "Unable to delete stories -> " + whereArgs);
         } else {
@@ -134,7 +132,7 @@ public class StoryDB {
 
     private StoryCursorWrapper queryStories(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-                StoryTable.NAME,
+                StoryDBSchema.StoryTable.NAME,
                 null, // Columns -null selects all columns
                 whereClause,
                 whereArgs,
@@ -148,13 +146,13 @@ public class StoryDB {
 
     private StoryCursorWrapper queryStoriesWithOrder(String whereClause, String[] whereArgs, String DescOrASC) {
         Cursor cursor = mDatabase.query(
-                StoryTable.NAME,
+                StoryDBSchema.StoryTable.NAME,
                 null, // Columns -null selects all columns
                 whereClause,
                 whereArgs,
                 null, //GroupBy
                 null, // having
-                StoryTable.Cols.PUBLISHED_DATE + " " + DescOrASC // orderBy
+                StoryDBSchema.StoryTable.Cols.PUBLISHED_DATE + " " + DescOrASC // orderBy
         );
 
         return new StoryCursorWrapper(cursor);
@@ -163,9 +161,9 @@ public class StoryDB {
 
     private StoryCursorWrapper queryStoriesBySite(String siteName) {
         Cursor cursor = mDatabase.query(
-                StoryTable.NAME,
+                StoryDBSchema.StoryTable.NAME,
                 null, // Columns - null selects all columns
-                StoryTable.Cols.SITE_NAME + " = ?",
+                StoryDBSchema.StoryTable.Cols.SITE_NAME + " = ?",
                 new String[] {siteName},
                 null, //GroupBy
                 null, // having
@@ -178,7 +176,7 @@ public class StoryDB {
     private StoryCursorWrapper queryStoriesWithGroupAndOrder(String whereClause, String[] whereArgs,
                                                              String groupBy, String orderBy) {
         Cursor cursor = mDatabase.query(
-                StoryTable.NAME,
+                StoryDBSchema.StoryTable.NAME,
                 null, // Columns -null selects all columns
                 whereClause,
                 whereArgs,
@@ -191,20 +189,20 @@ public class StoryDB {
     }
 
     private StoryCursorWrapper TopStoriesQuery() {
-        Cursor cursor = mDatabase.rawQuery("SELECT *, MAX(" + StoryTable.Cols.PUBLISHED_DATE + ") " + "FROM stories GROUP BY storysitename", null);
+        Cursor cursor = mDatabase.rawQuery("SELECT *, MAX(" + StoryDBSchema.StoryTable.Cols.PUBLISHED_DATE + ") " + "FROM stories GROUP BY storysitename", null);
         return new StoryCursorWrapper(cursor);
     }
 
     private static ContentValues getContentValues(Story story) {
         ContentValues values = new ContentValues();
-        values.put(StoryTable.Cols.SITE_NAME, story.getSiteName());
-        values.put(StoryTable.Cols.TITLE, story.getTitle());
-        values.put(StoryTable.Cols.DESCRIPTION, story.getDescription());
-        values.put(StoryTable.Cols.URL, story.getUrl().toString());
-        values.put(StoryTable.Cols.AUTHOR, story.getAuthor());
-        values.put(StoryTable.Cols.PUBLISHED_DATE, DateParser.dateToEpoch(story.getPublishedDate()));
-        values.put(StoryTable.Cols.LAST_UPDATED, story.getLastUpdated());
-        values.put(StoryTable.Cols.THUMBNAIL, story.getThumbnail());
+        values.put(StoryDBSchema.StoryTable.Cols.SITE_NAME, story.getSiteName());
+        values.put(StoryDBSchema.StoryTable.Cols.TITLE, story.getTitle());
+        values.put(StoryDBSchema.StoryTable.Cols.DESCRIPTION, story.getDescription());
+        values.put(StoryDBSchema.StoryTable.Cols.URL, story.getUrl().toString());
+        values.put(StoryDBSchema.StoryTable.Cols.AUTHOR, story.getAuthor());
+        values.put(StoryDBSchema.StoryTable.Cols.PUBLISHED_DATE, DateParser.dateToEpoch(story.getPublishedDate()));
+        values.put(StoryDBSchema.StoryTable.Cols.LAST_UPDATED, story.getLastUpdated());
+        values.put(StoryDBSchema.StoryTable.Cols.THUMBNAIL, story.getThumbnail());
 
         return values;
     }

@@ -11,6 +11,10 @@ import java.util.ArrayList;
 public class GameConfig {
 
     @Expose
+    @SerializedName("id")
+    private Integer mId;
+
+    @Expose
     @SerializedName("name")
     private String mGameName;
 
@@ -18,11 +22,37 @@ public class GameConfig {
     @SerializedName("known_streamers")
     private ArrayList<String> mKnownStreamers;
 
+    private Long mDateAdded;
+
     public String getGameName() {
         return mGameName;
     }
 
     public ArrayList<String> getKnownStreamers() {
         return mKnownStreamers;
+    }
+
+    public void setGameName(String gameName) {
+        mGameName = gameName;
+    }
+
+    public void setKnownStreamers(ArrayList<String> knownStreamers) {
+        mKnownStreamers = knownStreamers;
+    }
+
+    public Long getDateAdded() {
+        return mDateAdded;
+    }
+
+    public void setDateAdded(Long dateAdded) {
+        mDateAdded = dateAdded;
+    }
+
+    public Integer getId() {
+        return mId;
+    }
+
+    public void setId(Integer id) {
+        mId = id;
     }
 }

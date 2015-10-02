@@ -22,6 +22,8 @@ public class GameConfig {
     @SerializedName("known_streamers")
     private ArrayList<String> mKnownStreamers;
 
+    private Boolean isFiltered;
+
     private Long mDateAdded;
 
     public String getGameName() {
@@ -54,5 +56,13 @@ public class GameConfig {
 
     public void setId(Integer id) {
         mId = id;
+    }
+
+    public Boolean getIsFiltered() {
+        return isFiltered;
+    }
+
+    public void setIsFiltered(Boolean isFiltered) {
+        this.isFiltered = isFiltered;
     }
 }

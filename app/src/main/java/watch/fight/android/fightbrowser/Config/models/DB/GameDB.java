@@ -68,8 +68,10 @@ public class GameDB {
     }
 
     public void addGame(GameConfig game) {
-        ContentValues values = getContentValues(game);
-        mDatabase.insert(GameDBSchema.GameTable.NAME, null, values);
+        if (game != null && game.getId() != null && game.getId() != 0) {
+            ContentValues values = getContentValues(game);
+            mDatabase.insert(GameDBSchema.GameTable.NAME, null, values);
+        }
     }
 
     public void addGames(List<GameConfig> games) {
@@ -125,6 +127,14 @@ public class GameDB {
         values.put(GameDBSchema.GameTable.Cols.ID, config.getId());
         values.put(GameDBSchema.GameTable.Cols.GAME_NAME, config.getGameName());
         values.put(GameDBSchema.GameTable.Cols.DATE_ADDED, config.getDateAdded());
+
+        int isFiltered = 0;
+        // Convert bool to int - Stored in the DB as an INT
+        if (config.getIsFiltered() != null) {
+            isFiltered = (config.getIsFiltered()) ? 1 : 0;
+        }
+
+        values.put(GameDBSchema.GameTable.Cols.IS_FILTERED, isFiltered);
 
         return values;
     }

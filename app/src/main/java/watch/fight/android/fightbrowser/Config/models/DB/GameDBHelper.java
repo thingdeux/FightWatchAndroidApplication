@@ -21,6 +21,7 @@ public class GameDBHelper extends SQLiteOpenHelper {
                     GameDBSchema.GameTable.Cols._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     GameDBSchema.GameTable.Cols.ID + " INTEGER" + "," +
                     GameDBSchema.GameTable.Cols.GAME_NAME + TEXT_TYPE + "," +
+                    GameDBSchema.GameTable.Cols.IS_FILTERED + " INTEGER " + "," +
                     GameDBSchema.GameTable.Cols.DATE_ADDED + " INTEGER " +
                     " )";
 

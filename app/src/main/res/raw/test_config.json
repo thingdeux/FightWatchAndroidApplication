@@ -24,30 +24,22 @@
         "yomi_gaming",
         "zsonicfox"
       ]
-    }, {
-
     }
 
   ],
   "rss_feeds": [
     {
-      "id": 12313,
+      "id": 1,
       "name": "Eventhubs",
       "rss_url": "http://www.eventhubs.com/feeds/latest/",
       "website_url": "http://www.eventhubs.com",
       "feed_image_url": "http://fgccompanion-79b.kxcdn.com/eventhubs-min.png"
     }, {
-      "id": 356969,
-      "name": "r/Kappa",
-      "rss_url": "https://www.reddit.com/r/kappa/.rss",
-      "website_url": "http://www.reddit.com/r/kappa",
-      "feed_image_url": "http://fgccompanion-79b.kxcdn.com/kappa-min.png"
-    }, {
-      "id": 5,
-      "name": "r/smashbros",
-      "rss_url": "https://www.reddit.com/r/smashbros/.rss",
-      "website_url": "http://www.reddit.com/r/smashbros",
-      "feed_image_url": "http://fgccompanion-79b.kxcdn.com/smash-min.png"
+      "id": 3,
+      "name": "Shoryuken",
+      "rss_url": "http://shoryuken.com/feed/",
+      "website_url": "http://shoryuken.com",
+      "feed_image_url": "http://fgccompanion-79b.kxcdn.com/srk.png"
 
     }
   ],

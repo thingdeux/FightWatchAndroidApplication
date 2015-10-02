@@ -16,9 +16,13 @@ import io.fabric.sdk.android.Fabric;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
 
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
+import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
+import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.Events.EventsActivity;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
@@ -53,8 +57,27 @@ public class DashboardActivity extends AppCompatActivity {
             if (today.after(date)) {
                 // TODO : Actually make API call here instead of just getting test config.
                 Config config = ConfigFetcher.getTestConfig(mContext);
+
                 if (config != null) {
-                    SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());
+                    List<GameConfig> receivedGames = config.getGames();
+
+                    if (receivedGames != null && receivedGames.size() > 0) {
+                        GameDB db = GameDB.getInstance(mContext);
+                        List<GameConfig> existingDBGames = db.getAllGames();
+
+                        // Place Each ID in a hashset to reduce cost of checks below
+                        HashSet<Integer> gameSet = new HashSet<>();
+                        for (int i = 0; i < existingDBGames.size(); i++) {
+                            gameSet.add(existingDBGames.get(i).getId());
+                        }
+
+                        for (int i=0; i < receivedGames.size(); i++) {
+                            if (!gameSet.contains(receivedGames.get(i).getId())) {
+                                // If DB key is not found in the DB - create it.
+                                db.addGame(receivedGames.get(i));
+                            }
+                        }
+                    }
 
                     if (config.getFeeds() != null) {
                         FeedDB.getInstance(mContext).deleteAllFeeds();
@@ -66,6 +89,7 @@ public class DashboardActivity extends AppCompatActivity {
                         EventDB.getInstance(mContext).addEvents(config.getEvents());
                     }
                 }
+                SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());
                 return config;
             }
             return null;

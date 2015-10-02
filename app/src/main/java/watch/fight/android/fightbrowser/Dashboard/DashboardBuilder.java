@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
+import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
@@ -39,7 +41,6 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
     private int mTimeAwaitingTwitchSummaryResponse = 0;
 
     protected DashboardEntry[] doInBackground(DashboardBuilderValues... dbValues) {
-        Log.i("ThreadCheck", "DashboardBuild on thread: " + Thread.currentThread());
         if (dbValues[0] != null) {
             mDashboardFragment = dbValues[0].mDashboardFragment;
 
@@ -47,9 +48,9 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
                 mContext = dbValues[0].mContext;
                 mRequestQueue = NetworkRequest.getInstance(mContext.getApplicationContext()).getRequestQueue();
                 DashboardEntry[] de = {
-                        buildStoryModule(mContext),
-                        buildEventsModule(mContext),
-                        buildStreamModule(mContext)
+                        buildStoryModule(),
+                        buildEventsModule(),
+                        buildStreamModule()
                 };
                 Log.v("DashboardBuilder", "Created dashboard entries");
                 return de;
@@ -65,9 +66,9 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         mDashboardFragment.setUIReady();
     }
 
-    private DashboardEntry buildStoryModule(Context context) {
+    private DashboardEntry buildStoryModule() {
         // Read from latest feeds - pop the top off of each feed
-        HashMap<String, Story> latestStories = FetchFeeds.FetchLatestStories(context);
+        HashMap<String, Story> latestStories = FetchFeeds.FetchLatestStories(mContext);
 
         if (latestStories != null) {
             StringBuilder sb = new StringBuilder(latestStories.size());
@@ -100,9 +101,9 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         }
     }
 
-    private DashboardEntry buildEventsModule(Context context) {
+    private DashboardEntry buildEventsModule() {
         // Get Upcoming Events
-        List<Event> events = EventDB.getInstance(context).getAllEvents();
+        List<Event> events = EventDB.getInstance(mContext).getAllEvents();
         if (events != null) {
             DashboardEntry dashboardEntry = new DashboardEntry();
             dashboardEntry.setType(DashboardEntry.EVENT_TYPE);
@@ -126,14 +127,17 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
         return null;
     }
 
-    private DashboardEntry buildStreamModule(Context context) {
-        // TwitchSearches - Get Counts
+    private DashboardEntry buildStreamModule() {
         // TODO : Perhaps pass in synchronized list to prevent any concurrency issues.
-        mRequestQueue.add(createStreamSummaryRequest("Ultra Street Fighter IV", mSummaries));
-        mRequestQueue.add(createStreamSummaryRequest("Mortal Kombat X", mSummaries));
-        mRequestQueue.add(createStreamSummaryRequest("Super Smash Bros. Melee", mSummaries));
-        mRequestQueue.add(createStreamSummaryRequest("Ultimate Marvel vs. Capcom 3", mSummaries));
-
+        List<GameConfig> storedGames = GameDB.getInstance(mContext).getAllGames();
+        if (storedGames != null) {
+            for (int i=0; i < storedGames.size(); i++) {
+                mRequestQueue.add(createStreamSummaryRequest(storedGames.get(i).getGameName(), mSummaries));
+                if (i > 3) {
+                    break;
+                }
+            }
+        }
 
         // Wait 4 seconds or 3 summary responses
         while (mTimeAwaitingTwitchSummaryResponse < 4000) {

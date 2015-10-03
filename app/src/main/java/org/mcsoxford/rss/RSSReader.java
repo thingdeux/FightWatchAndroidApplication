@@ -103,7 +103,7 @@ public class RSSReader implements java.io.Closeable {
    */
   public RSSFeed load(String uri) throws RSSReaderException {
     final HttpGet httpget = new HttpGet(uri);
-    String userAgent = "Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36";
+    String userAgent = "android:watch.fight.android.fightbrowser:v0.1.3 (by /u/thingdeux)";
     httpget.getParams().setParameter(CoreProtocolPNames.USER_AGENT, userAgent);
 
     InputStream feedStream = null;

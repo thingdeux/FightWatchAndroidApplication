@@ -83,7 +83,6 @@ public class FetchFeeds {
             // of time has passed (in case the app goes to sleep or does something else, don't want it to reset the clock)
             if (today.after(date) || mIsForcedRefresh) {
                 updateStories();
-//                new ASyncRSSFeedLoader(this).updateStoriesAsync();
                 SharedPreferences.setFeedsLastUpdatedToNow(mContext);
                 return true;
             }
@@ -126,27 +125,6 @@ public class FetchFeeds {
                 }
             }
         }
-
-//        protected void loadProcessedFeedsIntoDB(List<RSSFeed> feeds) {
-//            if (feeds != null) {
-//                for (int i = 0; i < feeds.size(); i++) {
-//                    if (feeds.get(i) != null) {
-//                        StoryDB DB = StoryDB.getInstance(mContext.getApplicationContext());
-//                        // Delete all stories from the given site and add the new updates
-//                        // will only delete if the feed has been succesfully gathered
-////                        DB.deleteStoriesBySiteName(siteName);
-//                        List<RSSItem> items = feeds.get(i).getItems();
-//                        if (items != null) {
-//                            DB.addStories(ParseUtils.getStoriesFromFeed(items));
-//                        }
-//
-//                    } else {
-//                        Log.e("ProcessFeed", "Received error loadingProcessedFeedsIntoDb");
-//                    }
-//                }
-//
-//            }
-//        }
 
         protected void processFeed(Feed site, String url) {
             Log.v("ProcessFeed", "Fetching feed for: " + url);

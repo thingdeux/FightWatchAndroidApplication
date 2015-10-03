@@ -46,6 +46,18 @@
       "rss_url": "http://www.eventhubs.com/feeds/latest/",
       "website_url": "http://www.eventhubs.com",
       "feed_image_url": "http://fgccompanion-79b.kxcdn.com/eventhubs-min.png"
+    }, {
+      "id": 2,
+      "name": "r/Kappa",
+      "rss_url": "https://www.reddit.com/r/kappa/.rss?limit=10",
+      "website_url": "http://www.reddit.com/r/kappa",
+      "feed_image_url": "http://fgccompanion-79b.kxcdn.com/kappa-min.png"
+    }, {
+      "id": 3,
+      "name": "r/smashbros",
+      "rss_url": "https://www.reddit.com/r/smashbros/.rss?limit=10",
+      "website_url": "http://www.reddit.com/r/smashbros",
+      "feed_image_url": "http://fgccompanion-79b.kxcdn.com/smash-min.png"
     }
   ],
   "events":  [

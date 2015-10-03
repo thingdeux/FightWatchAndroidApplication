@@ -127,6 +127,7 @@ public class GameDB {
         values.put(GameDBSchema.GameTable.Cols.ID, config.getId());
         values.put(GameDBSchema.GameTable.Cols.GAME_NAME, config.getGameName());
         values.put(GameDBSchema.GameTable.Cols.DATE_ADDED, config.getDateAdded());
+        values.put(GameDBSchema.GameTable.Cols.ORDINAL, config.getOrdinal());
 
         int isFiltered = 0;
         // Convert bool to int - Stored in the DB as an INT

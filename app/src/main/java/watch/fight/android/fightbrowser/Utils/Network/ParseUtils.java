@@ -72,6 +72,31 @@ public class ParseUtils {
         return null;
     }
 
+    public static ArrayList<Story> parseRSS(RSSFeed feed, Feed parentFeed) {
+        List<RSSItem> rss_items = feed.getItems();
+        ArrayList<Story> feeds = new ArrayList<>();
+
+        if (rss_items != null) {
+            for (int i = 0; i < rss_items.size(); i++) {
+                RSSItem item = rss_items.get(i);
+
+                Story s = new Story();
+                s.setSiteName(parentFeed.getName());
+                s.setTitle(item.getTitle());
+                s.setDescription(item.getDescription());
+                s.setUrl(item.getLink());
+                s.setPublishedDate(item.getPubDate());
+                if (item.getThumbnails() != null && item.getThumbnails().size() > 0) {
+                    s.setThumbnail(item.getThumbnails().get(0).toString());
+                } else {
+                    s.setThumbnail(parentFeed.getFeedImageUrl());
+                }
+                feeds.add(s);
+            }
+        }
+        return feeds;
+    }
+
 //    public static ArrayList<Story> getStoriesFromFeed(List<RSSItem> rss_items) {
 //        ArrayList<Story> feeds = new ArrayList<>();
 //        if (rss_items != null) {

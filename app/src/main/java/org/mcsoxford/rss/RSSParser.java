@@ -18,6 +18,7 @@ package org.mcsoxford.rss;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -129,7 +130,8 @@ public class RSSParser implements RSSParserSPI {
 
     // SAX automatically detects the correct character encoding from the stream
     // See also http://www.w3.org/TR/REC-xml/#sec-guessing
-    final InputSource source = new InputSource(feed);
+//    final InputSource source = new InputSource(feed);
+    final InputSource source = new InputSource(new StringReader(feed));
     final XMLReader xmlreader = parser.getXMLReader();
     final RSSHandler handler = new RSSHandler(config);
 

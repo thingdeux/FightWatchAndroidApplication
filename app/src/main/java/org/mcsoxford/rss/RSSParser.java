@@ -71,6 +71,28 @@ public class RSSParser implements RSSParserSPI {
     }
   }
 
+  public RSSFeed parse(String feed) {
+    try {
+      // Since SAXParserFactory implementations are not guaranteed to be
+      // thread-safe, a new local object is instantiated.
+      final SAXParserFactory factory = SAXParserFactory.newInstance();
+
+      // Support Android 1.6 (see Issue 1)
+      factory.setFeature("http://xml.org/sax/features/namespaces", false);
+      factory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+
+      final SAXParser parser = factory.newSAXParser();
+
+      return parse(parser, feed);
+    } catch (ParserConfigurationException e) {
+      throw new RSSFault(e);
+    } catch (SAXException e) {
+      throw new RSSFault(e);
+    } catch (IOException e) {
+      throw new RSSFault(e);
+    }
+  }
+
   /**
    * Parses input stream as an RSS 2.0 feed.
    * 
@@ -79,6 +101,26 @@ public class RSSParser implements RSSParserSPI {
    */
   private RSSFeed parse(SAXParser parser, InputStream feed)
       throws SAXException, IOException {
+    if (parser == null) {
+      throw new IllegalArgumentException("RSS parser must not be null.");
+    } else if (feed == null) {
+      throw new IllegalArgumentException("RSS feed must not be null.");
+    }
+
+    // SAX automatically detects the correct character encoding from the stream
+    // See also http://www.w3.org/TR/REC-xml/#sec-guessing
+    final InputSource source = new InputSource(feed);
+    final XMLReader xmlreader = parser.getXMLReader();
+    final RSSHandler handler = new RSSHandler(config);
+
+    xmlreader.setContentHandler(handler);
+    xmlreader.parse(source);
+
+    return handler.feed();
+  }
+
+  private RSSFeed parse(SAXParser parser, String feed)
+          throws SAXException, IOException {
     if (parser == null) {
       throw new IllegalArgumentException("RSS parser must not be null.");
     } else if (feed == null) {

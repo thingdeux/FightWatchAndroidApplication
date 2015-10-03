@@ -21,6 +21,7 @@ import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDB;
 import watch.fight.android.fightbrowser.Utils.DateParser;
+import watch.fight.android.fightbrowser.Utils.Network.NetworkRequest;
 import watch.fight.android.fightbrowser.Utils.Network.ParseUtils;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
@@ -110,17 +111,14 @@ public class FetchFeeds {
             }
         }
 
-//        public void enoughFeedsRetrieved(List<RSSFeed> feeds) {
-//            Log.i("IFeedRetrieval", "Received Feeds!");
-//            loadProcessedFeedsIntoDB(feeds);
-//        }
-
         private void updateStories() {
             Log.v("FetchStories", "Fetching new feeds");
             List<Feed> feeds = FeedDB.getInstance(mContext.getApplicationContext()).getAllFeeds();
 
             if (feeds != null) {
                 for (int i = 0; i < feeds.size(); i++) {
+                    NetworkRequest.getInstance(mContext).addToRequestQueue(
+                            InformationFeedsNetworkHandlers.createInformationFeedRequest(feeds.get(i).getRSSUrl()));
                     processFeed(feeds.get(i), feeds.get(i).getRSSUrl());
                 }
             }

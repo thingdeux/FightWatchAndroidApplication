@@ -29,7 +29,7 @@ public class StoryDBHelper extends SQLiteOpenHelper {
                     StoryDBSchema.StoryTable.Cols.THUMBNAIL + TEXT_TYPE +
                     " )";
 
-    private static final String SQL_DROP_FEEDS_TABLE = "DROP TABLE IF EXISTS " + StoryDBSchema.StoryTable.NAME;
+    public static final String SQL_DROP_FEEDS_TABLE = "DROP TABLE IF EXISTS " + StoryDBSchema.StoryTable.NAME;
 
 
     public StoryDBHelper(Context context) {

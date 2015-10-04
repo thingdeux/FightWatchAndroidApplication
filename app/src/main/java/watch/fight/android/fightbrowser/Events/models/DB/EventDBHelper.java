@@ -30,7 +30,6 @@ public class EventDBHelper extends SQLiteOpenHelper{
 
     public static final String SQL_DROP_EVENTS_TABLE = "DROP TABLE IF EXISTS " + EventDBSchema.EventTable.NAME;
 
-
     public EventDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

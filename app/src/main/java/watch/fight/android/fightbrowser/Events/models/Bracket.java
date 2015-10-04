@@ -20,13 +20,13 @@ public class Bracket {
     @SerializedName("bracket_type")
     private String mBracketType;
 
-    private Integer mRelatedEvent;
+    private Long mRelatedEvent;
 
-    public Integer getRelatedEvent() {
+    public Long getRelatedEvent() {
         return mRelatedEvent;
     }
 
-    public void setRelatedEvent(Integer relatedEvent) {
+    public void setRelatedEvent(Long relatedEvent) {
         mRelatedEvent = relatedEvent;
     }
 

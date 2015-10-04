@@ -24,7 +24,10 @@ import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
 import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.Events.EventsActivity;
+import watch.fight.android.fightbrowser.Events.models.Bracket;
+import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
+import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
@@ -60,10 +63,11 @@ public class DashboardActivity extends AppCompatActivity {
 
                 if (config != null) {
                     List<GameConfig> receivedGames = config.getGames();
-
+                    // TODO : Only process if updated flag in response is > last update or null.
+                    // TODO : Savelastupdate date as long in sharedprefs
                     if (receivedGames != null && receivedGames.size() > 0) {
-                        GameDB db = GameDB.getInstance(mContext);
-                        List<GameConfig> existingDBGames = db.getAllGames();
+                        GameDB gameDB = GameDB.getInstance(mContext);
+                        List<GameConfig> existingDBGames = gameDB.getAllGames();
 
                         // Place Each ID in a hashset to reduce cost of checks below
                         HashSet<Integer> gameSet = new HashSet<>();
@@ -74,7 +78,7 @@ public class DashboardActivity extends AppCompatActivity {
                         for (int i=0; i < receivedGames.size(); i++) {
                             if (!gameSet.contains(receivedGames.get(i).getId())) {
                                 // If DB key is not found in the DB - create it.
-                                db.addGame(receivedGames.get(i));
+                                gameDB.addGame(receivedGames.get(i));
                             }
                         }
                     }
@@ -85,8 +89,16 @@ public class DashboardActivity extends AppCompatActivity {
                     }
 
                     if (config.getEvents() != null) {
+                        List<Event> events = config.getEvents();
                         EventDB.getInstance(mContext).deleteAllEvents();  // TODO : Will actually check for lastUpdated being > thn
-                        EventDB.getInstance(mContext).addEvents(config.getEvents());
+                        EventDB.getInstance(mContext).addEvents(events);
+
+                        for (int i =0; i < config.getEvents().size(); i++) {
+                            if (events.get(i).getBrackets() != null) {
+                                BracketDB.getInstance(mContext).addBrackets(events.get(i).getBrackets(), events.get(i));
+                            }
+                        }
+
                     }
                 }
                 SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());

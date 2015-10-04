@@ -26,8 +26,12 @@ public class GameDBHelper extends SQLiteOpenHelper {
                     GameDBSchema.GameTable.Cols.ORDINAL + " INTEGER " +
                     " )";
 
-    public static final String SQL_DROP_GameS_TABLE = "DROP TABLE IF EXISTS " + GameDBSchema.GameTable.NAME;
+    public static final String SQL_DROP_GAMES_TABLE = "DROP TABLE IF EXISTS " + GameDBSchema.GameTable.NAME;
 
+    @Override
+    public void onConfigure(SQLiteDatabase db){
+        db.setForeignKeyConstraintsEnabled(true);
+    }
 
     public GameDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,7 +43,7 @@ public class GameDBHelper extends SQLiteOpenHelper {
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // For now blow the table out and recreate on upgrade
-        db.execSQL(SQL_DROP_GameS_TABLE);
+        db.execSQL(SQL_DROP_GAMES_TABLE);
         onCreate(db);
     }
 

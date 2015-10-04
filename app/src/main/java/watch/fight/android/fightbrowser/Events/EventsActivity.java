@@ -37,26 +37,4 @@ public class EventsActivity extends AppCompatActivity {
         super.onPause();
     }
 
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_information_feeds, menu);
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_refresh:
-//                InformationFeedsFragment feedsFragment = (InformationFeedsFragment) getSupportFragmentManager().findFragmentById(
-//                        R.id.information_feed_main_fragment);
-//
-//                if (feedsFragment != null) {
-//                    feedsFragment.onOptionsItemSelected(item);
-//                }
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 }

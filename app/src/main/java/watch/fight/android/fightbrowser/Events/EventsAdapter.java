@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Date;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.R;
@@ -99,6 +101,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         Picasso.with(this.mContext).load(ImageHeader)
                 .placeholder(R.mipmap.fist_icon)
                 .into(holder.mHeaderImage);
+
+        // TODO : REMOVE THIS --------------------------------
+        Log.i("bracketCheck", "Checking Brackets for - " + event.getEventName());
+        for (Bracket b : event.getBrackets()) {
+            Log.i("bracketCheck", "Bracket: " + b.getBracketName());
+        }
+        // TODO : END REMOVE
 
     }
 

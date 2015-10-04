@@ -76,9 +76,10 @@
                         android:background="@android:color/darker_gray"
                         android:layout_gravity="center_horizontal"/>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         >
 
                         <Button android:id="@+id/feed_read_more_button"
@@ -86,17 +87,15 @@
                                 android:layout_height="wrap_content"
                                 style="?android:attr/borderlessButtonStyle"
                                 android:text="@string/read_more_button_name"
-                            />
+                                android:textColor="@color/action_button_fgc"/>
 
                         <Button android:id="@+id/feed_share_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/feed_read_more_button"
-                                android:layout_toEndOf="@id/feed_read_more_button"
                                 style="?android:attr/borderlessButtonStyle"
                                 android:text="@string/dashboard_share_button_name"
                             />
-                    </RelativeLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
 

@@ -16,12 +16,15 @@
             android:layout_margin="4dp"
             android:padding="4dp"
             card_view:cardCornerRadius="3dp"
-            card_view:elevation="10dp">
+            card_view:elevation="10dp"
+            >
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp">
 
 
                 <ImageButton android:id="@+id/dashboard_entry_icon"
@@ -40,7 +43,8 @@
                               android:padding="5dp"
                               android:paddingTop="10dp"
                               style="?android:textAppearanceListItem"
-                              tools:text="Item Title" />
+                              tools:text="Item Title"
+                              android:layout_marginLeft="8dp"/>
 
                     <TextView android:id="@+id/dashboard_entry_content"
                               android:layout_width="wrap_content"
@@ -48,7 +52,8 @@
                               android:padding="5dp"
                               android:paddingTop="10dp"
                               style="?android:titleTextStyle"
-                              tools:text="Item Content" />
+                              tools:text="Item Content"
+                              android:layout_marginLeft="8dp"/>
 
                     <View
                         android:layout_width="wrap_content"
@@ -68,7 +73,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="?android:attr/borderlessButtonStyle"
-                            />
+                                android:textColor="@color/action_button_fgc"/>
 
                         <!--<Button android:id="@+id/dashboard_share_button"-->
                                 <!--android:layout_width="wrap_content"-->

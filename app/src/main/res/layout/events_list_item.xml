@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         style="?android:attr/borderlessButtonStyle"
                         android:text="@string/events_brackets_button_name"
-                    />
+                        android:textColor="@color/action_button_fgc"/>
 
                 <Button android:id="@+id/event_webpage_button"
                         android:layout_width="wrap_content"

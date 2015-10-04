@@ -49,11 +49,10 @@ public class Event {
 
     @Expose
     @SerializedName("brackets")
-    private List<ChallongeBracket> mBrackets;
+    private List<Bracket> mBrackets;
 
-    public List<ChallongeBracket> getBrackets() {
-        // Try to acquire the brackets from the fgccompanion server else use challonge search api
-        return null;
+    public List<Bracket> getBrackets() {
+        return mBrackets;
     }
 
     public Date getStartDateObj() { return DateParser.epochToDate(mStartDate); }
@@ -81,7 +80,7 @@ public class Event {
         mStartDate = startDate;
     }
 
-    public void setBrackets(List<ChallongeBracket> brackets) {
+    public void setBrackets(List<Bracket> brackets) {
         mBrackets = brackets;
     }
 

@@ -103,8 +103,6 @@ public class GameDB {
         int isDeleted = mDatabase.delete(GameDBSchema.GameTable.NAME, whereClause, whereArgs);
         if (whereClause == null && isDeleted != 1) {
             Log.e("deleteGames", "Unable to delete games -> " + whereArgs);
-        } else {
-            Log.i("deleteGames", "Deleted: " + isDeleted + " games");
         }
     }
 

@@ -35,6 +35,7 @@ public class InformationFeedsNetworkHandlers {
     private static Response.Listener<RSSFeed> InformationFeedResponseListener(final Feed parentFeed, final Context context) {
         // NOTE!! Volley returns responses on the main thread, so keep this light.
         // TODO : Profile this under extreme cases - may not want this done on the UI Thread.
+        // TODO : Possibly turn into service.
         return new Response.Listener<RSSFeed>() {
             @Override
             public void onResponse(RSSFeed response) {
@@ -53,21 +54,21 @@ public class InformationFeedsNetworkHandlers {
         };
     }
 
-    private static Response.ErrorListener informationFeedErrorListener() {
+    private static Response.ErrorListener informationFeedErrorListener(final String url) {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("VolleyError", "Error Retrieving rss feed! - " + error.toString());
+                Log.e("VolleyError", "Error Retrieving rss feed (" + url + ")! - " + error.toString());
             }
         };
     }
 
     public static VolleyRSSRequest<RSSFeed> createInformationFeedRequest(Feed feed, Context context) {
         return new VolleyRSSRequest<>(
-                feed,
+                feed.getRSSUrl(),
                 RSSFeed.class,
                 InformationFeedResponseListener(feed, context),
-                informationFeedErrorListener()
+                informationFeedErrorListener(feed.getRSSUrl())
         );
     }
 
@@ -77,17 +78,15 @@ public class InformationFeedsNetworkHandlers {
         private final Class<T> clazz;
         private final Map<String, String> headers;
         private final Response.Listener<T> listener;
-        private Feed mFeed;
 
-        public VolleyRSSRequest(Feed feed, Class<T> clazz,
+        public VolleyRSSRequest(String url, Class<T> clazz,
                                 Response.Listener<T> listener, Response.ErrorListener errorListener) {
-            this(feed, clazz, null, listener, errorListener);
+            this(url, clazz, null, listener, errorListener);
         }
 
-        public VolleyRSSRequest(Feed feed, Class<T> clazz, Map<String, String> headers,
+        public VolleyRSSRequest(String url, Class<T> clazz, Map<String, String> headers,
                                 Response.Listener<T> listener, Response.ErrorListener errorListener) {
-            super(Request.Method.GET, feed.getRSSUrl(), errorListener);
-            this.mFeed = feed;
+            super(Request.Method.GET, url, errorListener);
             this.clazz = clazz;
             this.headers = headers;
             this.listener = listener;

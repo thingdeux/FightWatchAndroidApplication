@@ -49,15 +49,20 @@
     }, {
       "id": 2,
       "name": "r/Kappa",
-      "rss_url": "https://www.reddit.com/r/kappa/.rss?limit=10",
+      "rss_url": "https://www.reddit.com/r/kappa/hot/.rss?limit=10",
       "website_url": "http://www.reddit.com/r/kappa",
       "feed_image_url": "http://fgccompanion-79b.kxcdn.com/kappa-min.png"
     }, {
       "id": 3,
       "name": "r/smashbros",
-      "rss_url": "https://www.reddit.com/r/smashbros/.rss?limit=10",
+      "rss_url": "https://www.reddit.com/r/smashbros/hot/.rss?limit=10",
       "website_url": "http://www.reddit.com/r/smashbros",
       "feed_image_url": "http://fgccompanion-79b.kxcdn.com/smash-min.png"
+    }, {
+      "id": 4,
+      "name": "r/mortalkombatx",
+      "rss_url": "https://www.reddit.com/r/MortalKombatX/hot/.rss?limit=10",
+      "website_url": "https://www.reddit.com/r/MortalKombatX/"
     }
   ],
   "events":  [

@@ -30,7 +30,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  */
 public class FetchFeeds {
     public static final String TAG = FetchFeeds.class.getSimpleName();
-    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 15;
+    public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 30;
 
     public static class FetchStories extends AsyncTask<Void, Void, Boolean> {
         private Context mContext;
@@ -39,9 +39,8 @@ public class FetchFeeds {
         private InformationFeedsFragment mInformationFeedsFragment;
         private InformationFeedsActivity mInformationFeedsActivity;
         private RecyclerView.Adapter mAdapter;
-        private boolean mIsSubTasker = false;
-        private String mUrl;
         private boolean mIsForcedRefresh = false;
+        private int mAllotedStoryWaitTime = 0;
 
         // Allows for passing in of a recyclerview adapter which will notify the recyclerviews adapter on finish.
         public FetchStories(Context c, final RecyclerView.Adapter adapter, InformationFeedsFragment fragment, boolean isForcedRefresh) {
@@ -121,6 +120,22 @@ public class FetchFeeds {
                             InformationFeedsNetworkHandlers.createInformationFeedRequest(feeds.get(i), mContext));
                 }
             }
+
+            if (StoryDB.getInstance(mContext).getTopStoryForEachSite() != null) {
+                while (StoryDB.getInstance(mContext).getTopStoryForEachSite().size() < 3) {
+                    // 2.5 Seconds is all the time alloted to load the stories, longer and the dashboard will simply load without them.
+                    if (mAllotedStoryWaitTime >= 2500) {
+                        break;
+                    }
+                    try {
+                        Thread.sleep(100);
+                        mAllotedStoryWaitTime += 100;
+                        Log.i("ThreadSleep", "AllotedStoryWaitTime: " + mAllotedStoryWaitTime);
+                    } catch (InterruptedException ie) {
+                    }
+                }
+            }
+
         }
 
     }

@@ -96,8 +96,8 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
         });
 
         Picasso.with(this.mContext).load(mThumbnail)
-                .resize(200, 200)
                 .placeholder(R.mipmap.fist_icon)
+                .resize(200, 200)
                 .centerCrop()
                 .into(holder.mPreviewImage);
 

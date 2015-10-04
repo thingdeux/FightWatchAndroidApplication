@@ -34,7 +34,7 @@ public class BracketDB {
 
     public Bracket getBrackets(long fk_event_id) {
         BracketCursorWrapper cursor = queryBrackets(
-                BracketDBSchema.BracketTable.Cols._ID + " = ?",
+                BracketDBSchema.BracketTable.Cols.FK_EVENT_ID + " = ?",
                 new String[]{"" + fk_event_id}
         );
 
@@ -51,7 +51,7 @@ public class BracketDB {
     }
 
     public List<Bracket> getAllBrackets() {
-        List<Bracket> events = new ArrayList<>();
+        List<Bracket> brackets = new ArrayList<>();
 
         // Pass no where clause or args, will return everything.
         BracketCursorWrapper cursor = queryBrackets(null, null);
@@ -59,25 +59,24 @@ public class BracketDB {
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                events.add(cursor.getBracket());
+                brackets.add(cursor.getBracket());
                 cursor.moveToNext();
             }
         } finally {
             cursor.close();
         }
-        return events;
+        return brackets;
     }
 
-    public void addBracket(Bracket event, Event parentEvent) {
+    public void addBracket(Bracket bracket, Event parentEvent) {
         if (parentEvent != null) {
-            event.setRelatedEvent(parentEvent.getId());
+            bracket.setRelatedEvent(parentEvent.getId());
         }
-        ContentValues values = getContentValues(event);
+        ContentValues values = getContentValues(bracket);
         mDatabase.insert(BracketDBSchema.BracketTable.NAME, null, values);
     }
 
     public void addBrackets(List<Bracket> brackets, Event parentEvent) {
-        EventDB.getInstance(mContext).getAllEvents();
         if (brackets != null && brackets.size() > 0) {
             mDatabase.beginTransaction();
             for (int i = 0; i < brackets.size(); i++) {

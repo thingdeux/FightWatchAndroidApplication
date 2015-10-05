@@ -26,6 +26,12 @@
         </activity>
 
         <activity
+            android:name=".Brackets.BracketActivity"
+            android:label="@string/brackets_activity_name">
+
+        </activity>
+
+        <activity
             android:name=".Config.ConfigActivity"
             android:label="@string/config_activity_name" >
         </activity>

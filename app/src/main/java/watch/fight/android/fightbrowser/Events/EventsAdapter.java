@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Date;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Brackets.BracketActivity;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
@@ -69,6 +70,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         final Date startDate = event.getStartDateObj();
         final Date endDate = event.getEndDateObj();
         final Uri eventSite = event.getWebsiteAsUri();
+        final List<Bracket> brackets = event.getStoredBrackets(mContext);
 
         holder.mEventName.setText(event.getEventName());
         if (event.getFlavorText() != null) {
@@ -81,31 +83,36 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                         DateParser.dateToSimpleDateStr(endDate)
         );
 
-        holder.mBracketsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "Not Yet Implemented", Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        holder.mViewWebPageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (eventSite != null) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(eventSite);
-                    v.getContext().startActivity(intent);
+
+        if (brackets != null && brackets.size() > 0) {
+            holder.mBracketsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(BracketActivity.NewInstance(mContext, event.getId()));
                 }
-            }
-        });
+            });
+        } else {
+            holder.mBracketsButton.setActivated(false);
+        }
+
+        if (eventSite != null) {
+            holder.mViewWebPageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(eventSite);
+                        v.getContext().startActivity(intent);
+                    }
+                });
+        } else {
+            holder.mViewWebPageButton.setActivated(false);
+        }
 
         Picasso.with(this.mContext).load(ImageHeader)
                 .placeholder(R.mipmap.fist_icon)
                 .into(holder.mHeaderImage);
-
-//        for (Bracket b : event.getStoredBrackets(mContext)) {
-//            Log.i("bracketCheck", "Bracket: " + b.getBracketName());
-//        }
 
     }
 

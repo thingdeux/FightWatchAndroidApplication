@@ -38,37 +38,9 @@ public class EventsActivity extends AppCompatActivity {
 
     }
 
-    private Response.Listener<TournamentWrapper> ChallongeSuccessListener() {
-        return new Response.Listener<TournamentWrapper>() {
-            @Override
-            public void onResponse(TournamentWrapper response) {
-                Log.i("JJDEBUG", "Got Response");
-                Log.i("JJDEBUG", "Name " + response.getTournament().getName());
-            }
-        };
-    }
-
-    private Response.ErrorListener ChallongeErrorListener() {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("JJDEBUG", "Got Error: " + error);
-            }
-        };
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        ChallongeAPI api = ChallongeAPI.getInstance(this.getApplicationContext());
-        RequestQueue queue = NetworkRequest.getInstance(this.getApplicationContext()).getRequestQueue();
-        queue.add(new GsonRequest<TournamentWrapper>(
-                        api.getTournamentUri("nextlevel-nlbc140usf4", false, false).toString(),
-                        TournamentWrapper.class,
-                        null,
-                        ChallongeSuccessListener(),
-                        ChallongeErrorListener()
-                ));
     }
 
     @Override

@@ -47,7 +47,7 @@ public class Event {
 
     @Expose
     @SerializedName("streams")
-    private List<String> mStream;
+    private List<String> mStreams;
 
     @Expose
     @SerializedName("brackets")
@@ -90,12 +90,12 @@ public class Event {
         mBrackets = brackets;
     }
 
-    public List<String> getStream() {
-        return mStream;
+    public List<String> getStreams() {
+        return mStreams;
     }
 
-    public void setStream(List<String> stream) {
-        mStream = stream;
+    public void setStreams(List<String> streams) {
+        mStreams = streams;
     }
 
     public Long getEndDate() {

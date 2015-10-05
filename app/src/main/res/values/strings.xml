@@ -5,6 +5,7 @@
     <string name="config_activity_name">Configuration</string>
     <string name="browser_activity_name">Stream Browser</string>
     <string name="information_feeds_activity_name">Information</string>
+    <string name="brackets_activity_name">Brackets</string>
 
     <!--Intent Chooser Text-->
     <string name="intent_text_share_feed">Share Story With...</string>
@@ -40,10 +41,12 @@
     <string name="read_more_button_name">Read More</string>
     <string name="events_brackets_button_name">Brackets</string>
     <string name="events_website_button_name">Event Website</string>
+    <string name="bracket_view_participants_button_name">Participants</string>
 
 
     <!--Misc-->
     <string name="loading_message_subtitle">Loading Content</string>
+    <string name="bracket_vs_text">-- VS --</string>
 
     <string-array name="main_menu_options">
         <item>Dashboard</item>

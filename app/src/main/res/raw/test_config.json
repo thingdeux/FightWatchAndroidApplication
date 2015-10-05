@@ -73,10 +73,10 @@
       "website": "http://www.socalregionals.com/",
       "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/SoCalRegionals.png",
       "flavor_text": "SoCal Regionals is the premiere tournament in Southern California. $15,000 in prize money this year means it's going to be one heck of a show!",
-      "stream": ["http://twitch.tv/teamsp00ky"],
+      "streams": ["http://twitch.tv/teamsp00ky"],
       "brackets": [{
-        "bracket_name": "USF4 Top 16",
-        "bracket_url": "http://challonge.com/evo2015usf4top16"
+        "bracket_name": "Next Level Battle Circuit 140 - Ultra Street Fighter 4",
+        "bracket_url": "http://nextlevel.challonge.com/nlbc140usf4"
       }],
       "end_date": 1443592312000,
       "start_date": 1443592312000
@@ -90,10 +90,13 @@
       "brackets": [
         {
           "bracket_name": "USF4 Top 16",
-          "bracket_url": "http://challonge.com/evo2015usf4top16"
+          "bracket_url": "http://juggleguy.challonge.com/evo2015meleesingles"
         }, {
           "bracket_name": "USF4 Top 32",
-          "bracket_url": "http://challonge.com/evo322016usf4top32"
+          "bracket_url": "http://challonge.com/EVOSSBMPicks"
+        }, {
+          "bracket_name": "EVO2015 Misc",
+          "bracket_url": "http://challonge.com/u5osto2p"
         }
 
       ],

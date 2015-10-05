@@ -43,8 +43,6 @@ public class BracketDB {
         try {
             if (cursor.getCount() == 0) {
                 return null;
-            } else {
-                Log.i("BracketsFound", "Found " + cursor.getCount() + " brackets for " + fk_event_id);
             }
 
             cursor.moveToFirst();

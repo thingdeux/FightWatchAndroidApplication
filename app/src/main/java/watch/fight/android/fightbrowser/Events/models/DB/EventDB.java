@@ -33,7 +33,7 @@ public class EventDB {
 
     public Event getEvent(Long id) {
         EventCursorWrapper cursor = queryEvents(
-                EventDBSchema.EventTable.Cols._ID + " = ?",
+                EventDBSchema.EventTable.Cols.ID + " = ?",
                 new String[]{"" + id}
         );
 
@@ -89,7 +89,7 @@ public class EventDB {
 
     public void deleteEvent(float id) {
         Log.v("DeleteEvent", "Deleting Event: " + id);
-        deleteEvents(EventDBSchema.EventTable.Cols._ID + " = ?", new String[]{"" + id});
+        deleteEvents(EventDBSchema.EventTable.Cols.ID + " = ?", new String[]{"" + id});
     }
 
     public void deleteAllEvents() {

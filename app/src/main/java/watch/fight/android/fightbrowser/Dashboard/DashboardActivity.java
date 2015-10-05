@@ -109,18 +109,6 @@ public class DashboardActivity extends AppCompatActivity {
                     }
                 }
                 SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());
-
-                // TODO : REMOVE THIS
-                List<GameConfig> games = GameDB.getInstance(mContext).getAllGames();
-                for (GameConfig c : games) {
-                    if (c.getKnownStreamersFromDB(mContext) != null) {
-                        Log.i("JJDEBUG", "Game: " + c.getGameName());
-                        for (Streamer s : c.getKnownStreamersFromDB(mContext)) {
-                            Log.i("JJDEBUG", "Streamer " + s.getName());
-                        }
-                    }
-                }
-                // To here
                 return config;
             }
             return null;
@@ -137,7 +125,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
+        Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
         new FetchConfig(this).execute();
 
         setContentView(R.layout.dashboard_activity);

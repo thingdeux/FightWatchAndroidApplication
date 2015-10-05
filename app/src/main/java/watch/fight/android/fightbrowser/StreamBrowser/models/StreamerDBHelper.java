@@ -15,7 +15,7 @@ public class StreamerDBHelper extends BaseDB {
     public static final String SQL_INDEX_FK_GAME_ID = "CREATE INDEX " + StreamerTable.Cols.FK_GAME_ID +
             "_index " + "ON " + StreamerTable.NAME + "(" + StreamerTable.Cols.FK_GAME_ID + ")";
 
-    public static final String SQL_SET_GAME_FK_CONSTRAINT = " FOREIGN KEY(" + StreamerTable.Cols.FK_GAME_ID + ") " +
+    private static final String SQL_SET_GAME_FK_CONSTRAINT = " FOREIGN KEY(" + StreamerTable.Cols.FK_GAME_ID + ") " +
             "REFERENCES " + GameTable.NAME + "(" + GameTable.Cols.ID + ") ON DELETE CASCADE";
 
     public static final String SQL_CREATE_STREAMER_TABLE =

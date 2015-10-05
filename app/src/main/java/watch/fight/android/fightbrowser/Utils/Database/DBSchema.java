@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import watch.fight.android.fightbrowser.Config.models.DB.GameDBHelper;
+import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
 import watch.fight.android.fightbrowser.Events.models.DB.BracketDBHelper;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDBHelper;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDBHelper;
@@ -26,9 +27,9 @@ public class DBSchema {
 
         // Tables requiring Foreign Keys
         db.execSQL(BracketDBHelper.SQL_CREATE_BRACKET_TABLE);
-        db.execSQL(BracketDBHelper.SQL_SET_EVENT_FK_CONSTRAINT);
+        db.execSQL(BracketDBHelper.SQL_INDEX_FK_EVENT_ID);
         db.execSQL(StreamerDBHelper.SQL_CREATE_STREAMER_TABLE);
-        db.execSQL(StreamerDBHelper.SQL_SET_GAME_FK_CONSTRAINT);
+        db.execSQL(StreamerDBHelper.SQL_INDEX_FK_GAME_ID);
     }
 
     public void onCreate(SQLiteDatabase db) {

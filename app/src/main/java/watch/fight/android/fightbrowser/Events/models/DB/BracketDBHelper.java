@@ -14,7 +14,7 @@ public class BracketDBHelper extends BaseDB {
     public static final String SQL_INDEX_FK_EVENT_ID = "CREATE INDEX " + BracketTable.Cols.FK_EVENT_ID +
             "_index " + "ON " + BracketTable.NAME + "(" + BracketTable.Cols.FK_EVENT_ID + ")";
 
-    public static final String SQL_SET_EVENT_FK_CONSTRAINT = " FOREIGN KEY(" + BracketTable.Cols.FK_EVENT_ID + ") " +
+    private static final String SQL_SET_EVENT_FK_CONSTRAINT = " FOREIGN KEY(" + BracketTable.Cols.FK_EVENT_ID + ") " +
             "REFERENCES " + EventDBSchema.EventTable.NAME + "(" + EventDBSchema.EventTable.Cols.ID + ") ON DELETE CASCADE";
 
     public static final String SQL_CREATE_BRACKET_TABLE =

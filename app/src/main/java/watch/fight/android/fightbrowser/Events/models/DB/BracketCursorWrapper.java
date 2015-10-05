@@ -13,7 +13,7 @@ public class BracketCursorWrapper extends CursorWrapper {
     public BracketCursorWrapper(Cursor cursor) { super(cursor); }
 
     public Bracket getBracket() {
-        long event_id = getInt(getColumnIndex(BracketDBSchema.BracketTable.Cols.FK_EVENT_ID));
+        long event_id = getLong(getColumnIndex(BracketDBSchema.BracketTable.Cols.FK_EVENT_ID));
         String name = getString(getColumnIndex(BracketDBSchema.BracketTable.Cols.NAME));
         String type = getString(getColumnIndex(BracketDBSchema.BracketTable.Cols.TYPE));
         String url = getString(getColumnIndex(BracketDBSchema.BracketTable.Cols.URL));

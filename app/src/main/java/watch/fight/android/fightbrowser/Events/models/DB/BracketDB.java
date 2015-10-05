@@ -32,7 +32,9 @@ public class BracketDB {
         mDatabase = new BracketDBHelper(mContext).getWritableDatabase();
     }
 
-    public Bracket getBrackets(long fk_event_id) {
+    public List<Bracket> getBrackets(long fk_event_id) {
+        List<Bracket> brackets = new ArrayList<>();
+
         BracketCursorWrapper cursor = queryBrackets(
                 BracketDBSchema.BracketTable.Cols.FK_EVENT_ID + " = ?",
                 new String[]{"" + fk_event_id}
@@ -41,13 +43,19 @@ public class BracketDB {
         try {
             if (cursor.getCount() == 0) {
                 return null;
+            } else {
+                Log.i("BracketsFound", "Found " + cursor.getCount() + " brackets for " + fk_event_id);
             }
 
             cursor.moveToFirst();
-            return cursor.getBracket();
+            while (!cursor.isAfterLast()) {
+                brackets.add(cursor.getBracket());
+                cursor.moveToNext();
+            }
         } finally {
             cursor.close();
         }
+        return brackets;
     }
 
     public List<Bracket> getAllBrackets() {

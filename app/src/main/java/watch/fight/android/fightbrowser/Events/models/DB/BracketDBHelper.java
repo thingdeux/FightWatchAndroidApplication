@@ -18,9 +18,11 @@ public class BracketDBHelper extends SQLiteOpenHelper {
     public static final String SQL_INDEX_FK_EVENT_ID = "CREATE INDEX " + BracketTable.Cols.FK_EVENT_ID +
             "_index " + "ON " + BracketTable.NAME + "(" + BracketTable.Cols.FK_EVENT_ID + ")";
 
-    public static final String SQL_SET_EVENT_FK_CONSTRAINT = "FOREIGN KEY(" + BracketTable.Cols.FK_EVENT_ID + ")" +
-            " REFERENCES " + EventDBSchema.EventTable.NAME + "(" + EventDBSchema.EventTable.Cols.ID + ") " +
-            "ON DELETE CASCADE";
+    public static final String SQL_SET_EVENT_FK_CONSTRAINT = " FOREIGN KEY(" + BracketTable.Cols.FK_EVENT_ID + ")" +
+            " REFERENCES " + EventDBSchema.EventTable.NAME + "(" + EventDBSchema.EventTable.Cols.ID + ")";
+//            "ON DELETE CASCADE";
+
+    //    " FOREIGN KEY ("+TASK_CAT+") REFERENCES "+CAT_TABLE+" ("+CAT_ID+"), "
 
     public static final String SQL_CREATE_BRACKET_TABLE =
             "CREATE TABLE " + BracketTable.NAME + " (" +
@@ -28,9 +30,11 @@ public class BracketDBHelper extends SQLiteOpenHelper {
                     BracketTable.Cols.FK_EVENT_ID + " INTEGER" + "," +
                     BracketTable.Cols.NAME + TEXT_TYPE + "," +
                     BracketTable.Cols.URL + TEXT_TYPE + "," +
-                    BracketTable.Cols.TYPE + TEXT_TYPE + "," +
-                    SQL_SET_EVENT_FK_CONSTRAINT +
-                    " )";
+                    BracketTable.Cols.TYPE + TEXT_TYPE +
+
+                    ")";
+
+//    SQL_SET_EVENT_FK_CONSTRAINT +
 
     public static final String SQL_DROP_EVENTS_TABLE = "DROP TABLE IF EXISTS " + BracketTable.NAME;
 

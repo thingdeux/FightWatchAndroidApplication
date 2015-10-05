@@ -1,5 +1,6 @@
 package watch.fight.android.fightbrowser.Events.models;
 
+import android.content.Context;
 import android.net.Uri;
 
 import com.google.gson.annotations.Expose;
@@ -8,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
 import watch.fight.android.fightbrowser.Utils.DateParser;
 
 /**
@@ -53,6 +55,10 @@ public class Event {
 
     public List<Bracket> getBrackets() {
         return mBrackets;
+    }
+
+    public List<Bracket> getStoredBrackets(Context c) {
+        return BracketDB.getInstance(c).getBrackets(getId());
     }
 
     public Date getStartDateObj() { return DateParser.epochToDate(mStartDate); }

@@ -104,7 +104,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
         // TODO : REMOVE THIS --------------------------------
         Log.i("bracketCheck", "Checking Brackets for - " + event.getEventName());
-        for (Bracket b : event.getBrackets()) {
+        for (Bracket b : event.getStoredBrackets(mContext)) {
             Log.i("bracketCheck", "Bracket: " + b.getBracketName());
         }
         // TODO : END REMOVE

@@ -19,6 +19,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Brackets.ChallongeAPI;
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.Config.models.DB.GameDB;

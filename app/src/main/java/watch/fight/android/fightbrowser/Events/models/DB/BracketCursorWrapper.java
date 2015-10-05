@@ -17,8 +17,10 @@ public class BracketCursorWrapper extends CursorWrapper {
         String name = getString(getColumnIndex(BracketDBSchema.BracketTable.Cols.NAME));
         String type = getString(getColumnIndex(BracketDBSchema.BracketTable.Cols.TYPE));
         String url = getString(getColumnIndex(BracketDBSchema.BracketTable.Cols.URL));
+        Integer id = getInt(getColumnIndex(BracketDBSchema.BracketTable.Cols._ID));
 
         Bracket bracket = new Bracket();
+        bracket.setId(id);
         bracket.setBracketName(name);
         bracket.setBracketUrl(url);
         bracket.setRelatedEvent(event_id);

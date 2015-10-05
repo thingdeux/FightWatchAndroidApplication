@@ -56,6 +56,24 @@ public class BracketDB {
         return brackets;
     }
 
+    public Bracket getBracket(Long id) {
+        BracketCursorWrapper cursor = queryBrackets(
+                BracketDBSchema.BracketTable.Cols._ID + " = ?",
+                new String[]{"" + id}
+        );
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getBracket();
+        } finally {
+            cursor.close();
+        }
+    }
+
     public List<Bracket> getAllBrackets() {
         List<Bracket> brackets = new ArrayList<>();
 
@@ -133,6 +151,7 @@ public class BracketDB {
 
     private static ContentValues getContentValues(Bracket bracket) {
         ContentValues values = new ContentValues();
+        values.put(BracketDBSchema.BracketTable.Cols._ID, bracket.getId());
         values.put(BracketDBSchema.BracketTable.Cols.FK_EVENT_ID, bracket.getRelatedEvent());
         values.put(BracketDBSchema.BracketTable.Cols.NAME, bracket.getBracketName());
         values.put(BracketDBSchema.BracketTable.Cols.URL, bracket.getBracketUrl());

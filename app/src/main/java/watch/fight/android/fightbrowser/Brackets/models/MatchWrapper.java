@@ -25,4 +25,12 @@ public class MatchWrapper {
     @Expose
     @SerializedName("participant")
     Match mMatch;
+
+    public List<Match> getMatches() {
+        return mMatches;
+    }
+
+    public Match getMatch() {
+        return mMatch;
+    }
 }

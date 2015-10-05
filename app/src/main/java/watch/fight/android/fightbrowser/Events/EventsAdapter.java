@@ -93,10 +93,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 }
             });
         } else {
-            holder.mBracketsButton.setActivated(false);
+            holder.mBracketsButton.setEnabled(false);
         }
 
-        if (eventSite != null) {
+        if (eventSite != null && !eventSite.toString().isEmpty()) {
             holder.mViewWebPageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -107,7 +107,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                     }
                 });
         } else {
-            holder.mViewWebPageButton.setActivated(false);
+            holder.mViewWebPageButton.setEnabled(false);
         }
 
         Picasso.with(this.mContext).load(ImageHeader)

@@ -20,10 +20,10 @@ public class ChallongeAPI {
     private static String GET_MATCHES = "matches";
 
     // Match States to be used as params in getMatches
-    private static String MATCH_STATE_ALL = "all";
-    private static String MATCH_STATE_PENDING = "pending";
-    private static String MATCH_STATE_OPEN = "open";
-    private static String MATCH_STATE_COMPLETE = "complete";
+    public static String MATCH_STATE_ALL = "all";
+    public static String MATCH_STATE_PENDING = "pending";
+    public static String MATCH_STATE_OPEN = "open";
+    public static String MATCH_STATE_COMPLETE = "complete";
 
     private ChallongeAPI(Context context) {
         API_KEY = context.getResources().getString(R.string.challonge_api_key);
@@ -38,6 +38,7 @@ public class ChallongeAPI {
 
     public Uri getTournamentUri(final String tournamentID, final Boolean includeParticipants, final Boolean includeMatches) {
         if (tournamentID != null) {
+            String parsedTournamentID = ParseTournamentID(tournamentID);
             String ip = (includeParticipants) ? "1" : "0";
             String im = (includeMatches) ? "1" : "0";
 
@@ -46,7 +47,7 @@ public class ChallongeAPI {
                     .authority(API_URL)
                     .appendPath(API_VERSION)
                     .appendPath(GET_TOURNAMENT)
-                    .appendPath(tournamentID + FORMAT)
+                    .appendPath(parsedTournamentID + FORMAT)
                     .appendQueryParameter("api_key", API_KEY)
                     .appendQueryParameter("include_participants", ip)
                     .appendQueryParameter("include_matches", im)
@@ -56,15 +57,16 @@ public class ChallongeAPI {
         }
     }
 
-    // TODO : Fix URI Builders for these
     public Uri getParticipantsUri(String tournamentID) {
         if (tournamentID != null) {
+            String parsedTournamentID = ParseTournamentID(tournamentID);
+
             return new Uri.Builder()
-                    .appendPath(API_URL)
+                    .scheme("https")
+                    .authority(API_URL)
                     .appendPath(GET_TOURNAMENT)
-                    .appendPath(tournamentID)
-                    .appendPath(GET_PARTICIPANTS)
-                    .appendPath(FORMAT)
+                    .appendPath(parsedTournamentID)
+                    .appendPath(GET_PARTICIPANTS + FORMAT)
                     .appendQueryParameter("api_key", API_KEY)
                     .build();
         } else {
@@ -74,12 +76,13 @@ public class ChallongeAPI {
 
     public Uri getMatchesUri(String tournamentID, String state) {
         if (tournamentID != null) {
+            String parsedTournamentID = ParseTournamentID(tournamentID);
             return new Uri.Builder()
-                    .appendPath(API_URL)
+                    .scheme("https")
+                    .authority(API_URL)
                     .appendPath(GET_TOURNAMENT)
-                    .appendPath(tournamentID)
-                    .appendPath(GET_MATCHES)
-                    .appendPath(FORMAT)
+                    .appendPath(parsedTournamentID)
+                    .appendPath(GET_MATCHES + FORMAT)
                     .appendQueryParameter("state", state)
                     .build();
         } else {
@@ -89,12 +92,13 @@ public class ChallongeAPI {
 
     public Uri getMatchesUriFilteredForParticipant(String tournamentID, String state, String participant) {
         if (tournamentID != null) {
+            String parsedTournamentID = ParseTournamentID(tournamentID);
             return new Uri.Builder()
-                    .appendPath(API_URL)
+                    .scheme("https")
+                    .authority(API_URL)
                     .appendPath(GET_TOURNAMENT)
-                    .appendPath(tournamentID)
-                    .appendPath(GET_MATCHES)
-                    .appendPath(FORMAT)
+                    .appendPath(parsedTournamentID)
+                    .appendPath(GET_MATCHES + FORMAT)
                     .appendQueryParameter("state", state)
                     .appendQueryParameter("participant_id", participant)
                     .build();
@@ -103,4 +107,24 @@ public class ChallongeAPI {
         }
     }
 
+    public String ParseTournamentID(String id) {
+        /* Challonge expects tournaments in the following format.
+           <tournament_name> - <subdomain-tournament_name>
+           Find out if the passed id has a subdomain and build the proper id. */
+
+        // EX: challonge.com/EVOSSBMPicks | nextlevel.challonge.com/nlbc140usf4
+        if (id != null) {
+            String[] splitID = id.split("/");
+            String bracketName = splitID[1];
+            String[] possibleSubdomain = splitID[0].split("\\.");
+            if (possibleSubdomain.length > 2) {
+                return possibleSubdomain[0] + "-" + bracketName;
+            } else {
+                return bracketName;
+            }
+        }
+        return null;
+
+
+    }
 }

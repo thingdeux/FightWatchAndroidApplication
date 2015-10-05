@@ -22,6 +22,16 @@ public class Bracket {
 
     private Long mRelatedEvent;
 
+    private Integer mId;
+
+    public Integer getId() {
+        return mId;
+    }
+
+    public void setId(Integer id) {
+        mId = id;
+    }
+
     public Long getRelatedEvent() {
         return mRelatedEvent;
     }

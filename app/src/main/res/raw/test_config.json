@@ -76,7 +76,7 @@
       "streams": ["http://twitch.tv/teamsp00ky"],
       "brackets": [{
         "bracket_name": "Next Level Battle Circuit 140 - Ultra Street Fighter 4",
-        "bracket_url": "http://nextlevel.challonge.com/nlbc140usf4"
+        "bracket_url": "nextlevel.challonge.com/nlbc140usf4"
       }],
       "end_date": 1443592312000,
       "start_date": 1443592312000
@@ -90,16 +90,27 @@
       "brackets": [
         {
           "bracket_name": "USF4 Top 16",
-          "bracket_url": "http://juggleguy.challonge.com/evo2015meleesingles"
+          "bracket_url": "juggleguy.challonge.com/evo2015meleesingles"
         }, {
           "bracket_name": "USF4 Top 32",
-          "bracket_url": "http://challonge.com/EVOSSBMPicks"
+          "bracket_url": "challonge.com/EVOSSBMPicks"
         }, {
           "bracket_name": "EVO2015 Misc",
-          "bracket_url": "http://challonge.com/u5osto2p"
+          "bracket_url": "challonge.com/u5osto2p"
         }
 
       ],
+      "end_date": 1443592312000,
+      "start_date": 1443592312000
+
+    },  {
+      "id": 1,
+      "name": "Capcom Pro Tour Brazil",
+      "website": "http://capcomprotour.com/brasil/",
+      "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/CPT-BR.png",
+      "flavor_text": "Capcom Pro Tour Brazil!",
+      "streams": ["http://twitch.tv/capcomunitybr"],
+      "brackets": [],
       "end_date": 1443592312000,
       "start_date": 1443592312000
 

@@ -3,6 +3,10 @@ package watch.fight.android.fightbrowser.Brackets.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
+import watch.fight.android.fightbrowser.Utils.Network.ParseUtils;
+
 /**
  * Created by josh on 10/5/15.
  */
@@ -20,6 +24,10 @@ public class Tournament {
     @Expose
     @SerializedName("description")
     private String mDescription;
+
+    @Expose
+    @SerializedName("tournament_type")
+    private String mTournamentType;
 
     @Expose
     @SerializedName("name")
@@ -42,6 +50,10 @@ public class Tournament {
     private String mState;
 
     @Expose
+    @SerializedName("progress_meter")
+    private int mProgress;
+
+    @Expose
     @SerializedName("subdomain")
     private String mSubdomain;
 
@@ -56,6 +68,22 @@ public class Tournament {
     @Expose
     @SerializedName("game_name")
     private String mGameName;
+
+    @Expose
+    @SerializedName("matches")
+    private List<MatchWrapper> mMatches;
+
+    @Expose
+    @SerializedName("participants")
+    private List<ParticipantWrapper> mParticipants;
+
+    public List<MatchWrapper> getMatches() {
+        return mMatches;
+    }
+
+    public List<ParticipantWrapper> getParticipants() {
+        return mParticipants;
+    }
 
     public String getCreatedAt() {
         return mCreatedAt;

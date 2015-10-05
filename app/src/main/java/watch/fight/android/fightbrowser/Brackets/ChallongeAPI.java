@@ -12,43 +12,51 @@ public class ChallongeAPI {
     private static ChallongeAPI mChallongeAPI;
     private String API_KEY;
 
-    private static String API_URL = "https://api.challonge.com/v1";
+    private static String API_URL = "api.challonge.com";
+    private static String API_VERSION = "v1";
     private static String FORMAT = ".json";
     private static String GET_TOURNAMENT = "tournaments";
     private static String GET_PARTICIPANTS = "participants";
     private static String GET_MATCHES = "matches";
 
     // Match States to be used as params in getMatches
-    public static String MATCH_STATE_ALL = "all";
-    public static String MATCH_STATE_PENDING = "pending";
-    public static String MATCH_STATE_OPEN = "open";
-    public static String MATCH_STATE_COMPLETE = "complete";
+    private static String MATCH_STATE_ALL = "all";
+    private static String MATCH_STATE_PENDING = "pending";
+    private static String MATCH_STATE_OPEN = "open";
+    private static String MATCH_STATE_COMPLETE = "complete";
 
+    private ChallongeAPI(Context context) {
+        API_KEY = context.getResources().getString(R.string.challonge_api_key);
+    }
 
-    ChallongeAPI() {}
-
-    public ChallongeAPI getInstance(final Context context) {
+    public static ChallongeAPI getInstance(final Context context) {
         if (mChallongeAPI == null) {
-            mChallongeAPI = new ChallongeAPI();
-            API_KEY = context.getResources().getString(R.string.challonge_api_key);
+            mChallongeAPI = new ChallongeAPI(context);
         }
         return mChallongeAPI;
     }
 
-    public Uri getTournamentUri(String tournamentID) {
+    public Uri getTournamentUri(final String tournamentID, final Boolean includeParticipants, final Boolean includeMatches) {
         if (tournamentID != null) {
+            String ip = (includeParticipants) ? "1" : "0";
+            String im = (includeMatches) ? "1" : "0";
+
             return new Uri.Builder()
-                    .appendPath(API_URL)
+                    .scheme("https")
+                    .authority(API_URL)
+                    .appendPath(API_VERSION)
                     .appendPath(GET_TOURNAMENT)
-                    .appendPath(tournamentID)
-                    .appendPath(FORMAT)
+                    .appendPath(tournamentID + FORMAT)
                     .appendQueryParameter("api_key", API_KEY)
+                    .appendQueryParameter("include_participants", ip)
+                    .appendQueryParameter("include_matches", im)
                     .build();
         } else {
             return null;
         }
     }
 
+    // TODO : Fix URI Builders for these
     public Uri getParticipantsUri(String tournamentID) {
         if (tournamentID != null) {
             return new Uri.Builder()
@@ -95,8 +103,4 @@ public class ChallongeAPI {
         }
     }
 
-//    TODO : Implement subdomain support
-//    Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain,
-//    URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-//    :subdomain-:tournament_url
 }

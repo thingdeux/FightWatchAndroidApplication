@@ -35,6 +35,20 @@ public class ChallongeAPI {
         return mChallongeAPI;
     }
 
+    public Uri getTournamentUri(String tournamentID) {
+        if (tournamentID != null) {
+            return new Uri.Builder()
+                    .appendPath(API_URL)
+                    .appendPath(GET_TOURNAMENT)
+                    .appendPath(tournamentID)
+                    .appendPath(FORMAT)
+                    .appendQueryParameter("api_key", API_KEY)
+                    .build();
+        } else {
+            return null;
+        }
+    }
+
     public Uri getParticipantsUri(String tournamentID) {
         if (tournamentID != null) {
             return new Uri.Builder()

@@ -48,7 +48,7 @@ public class ParticipantsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        Long BracketId = intent.getLongExtra(BRACKET_ID, -1);
+        Integer BracketId = intent.getIntExtra(BRACKET_ID, -1);
 
         mBracket = BracketDB.getInstance(this).getBracket(BracketId);
         if (mBracket != null) {
@@ -70,8 +70,8 @@ public class ParticipantsActivity extends AppCompatActivity
         super.onPause();
     }
 
-    public static Intent NewInstance(Context activity, Long bracketid) {
-        Intent intent = new Intent(activity, BracketActivity.class);
+    public static Intent NewInstance(Context activity, Integer bracketid) {
+        Intent intent = new Intent(activity, ParticipantsActivity.class);
         intent.putExtra(BRACKET_ID, bracketid);
         return intent;
     }

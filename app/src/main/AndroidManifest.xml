@@ -28,7 +28,11 @@
         <activity
             android:name=".Brackets.BracketActivity"
             android:label="@string/brackets_activity_name">
+        </activity>
 
+        <activity
+            android:name=".Brackets.ParticipantsActivity"
+            android:label="@string/participants_activity_name">
         </activity>
 
         <activity

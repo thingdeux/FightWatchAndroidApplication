@@ -53,7 +53,12 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
         final Bracket bracket = mBrackets.get(position);
 
         holder.mBracketName.setText(bracket.getBracketName());
-
+        holder.mViewParticipants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(ParticipantsActivity.NewInstance(mContext, bracket.getId()));
+            }
+        });
     }
 
     @Override

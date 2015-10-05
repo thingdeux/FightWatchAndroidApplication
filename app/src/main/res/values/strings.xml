@@ -6,6 +6,7 @@
     <string name="browser_activity_name">Stream Browser</string>
     <string name="information_feeds_activity_name">Information</string>
     <string name="brackets_activity_name">Brackets</string>
+    <string name="participants_activity_name">Participants</string>
 
     <!--Intent Chooser Text-->
     <string name="intent_text_share_feed">Share Story With...</string>

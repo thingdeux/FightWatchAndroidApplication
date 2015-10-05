@@ -56,7 +56,7 @@ public class BracketDB {
         return brackets;
     }
 
-    public Bracket getBracket(Long id) {
+    public Bracket getBracket(Integer id) {
         BracketCursorWrapper cursor = queryBrackets(
                 BracketDBSchema.BracketTable.Cols._ID + " = ?",
                 new String[]{"" + id}

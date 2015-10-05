@@ -75,6 +75,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             holder.mEventDetails.setText(event.getFlavorText());
         }
 
+        // TODO : Use String resources with placeholders
         holder.mEventDateRange.setText(
                 DateParser.dateToSimpleDateStr(startDate) + " - " +
                         DateParser.dateToSimpleDateStr(endDate)
@@ -102,12 +103,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 .placeholder(R.mipmap.fist_icon)
                 .into(holder.mHeaderImage);
 
-        // TODO : REMOVE THIS --------------------------------
-        Log.i("bracketCheck", "Checking Brackets for - " + event.getEventName());
-        for (Bracket b : event.getStoredBrackets(mContext)) {
-            Log.i("bracketCheck", "Bracket: " + b.getBracketName());
-        }
-        // TODO : END REMOVE
+//        for (Bracket b : event.getStoredBrackets(mContext)) {
+//            Log.i("bracketCheck", "Bracket: " + b.getBracketName());
+//        }
 
     }
 

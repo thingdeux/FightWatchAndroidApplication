@@ -26,12 +26,15 @@ import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.Events.EventsActivity;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
+import watch.fight.android.fightbrowser.Events.models.DB.BracketDBHelper;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.StreamBrowser.models.Streamer;
+import watch.fight.android.fightbrowser.StreamBrowser.models.StreamerDB;
 import watch.fight.android.fightbrowser.Utils.DateParser;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
@@ -78,7 +81,11 @@ public class DashboardActivity extends AppCompatActivity {
                         for (int i=0; i < receivedGames.size(); i++) {
                             if (!gameSet.contains(receivedGames.get(i).getId())) {
                                 // If DB key is not found in the DB - create it.
-                                gameDB.addGame(receivedGames.get(i));
+                                GameConfig game = receivedGames.get(i);
+                                gameDB.addGame(game);
+                                if (game.getKnownStreamers() != null && game.getKnownStreamers().size() > 0) {
+                                    StreamerDB.getInstance(mContext).addStreamers(game.getKnownStreamers(), game);
+                                }
                             }
                         }
                     }
@@ -102,6 +109,18 @@ public class DashboardActivity extends AppCompatActivity {
                     }
                 }
                 SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());
+
+                // TODO : REMOVE THIS
+                List<GameConfig> games = GameDB.getInstance(mContext).getAllGames();
+                for (GameConfig c : games) {
+                    if (c.getKnownStreamersFromDB(mContext) != null) {
+                        Log.i("JJDEBUG", "Game: " + c.getGameName());
+                        for (Streamer s : c.getKnownStreamersFromDB(mContext)) {
+                            Log.i("JJDEBUG", "Streamer " + s.getName());
+                        }
+                    }
+                }
+                // To here
                 return config;
             }
             return null;
@@ -118,7 +137,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
+//        Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
         new FetchConfig(this).execute();
 
         setContentView(R.layout.dashboard_activity);

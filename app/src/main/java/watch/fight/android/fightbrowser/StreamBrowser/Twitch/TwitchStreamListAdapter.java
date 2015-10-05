@@ -84,7 +84,7 @@ public class TwitchStreamListAdapter extends RecyclerView.Adapter<TwitchStreamLi
             gameTitle = " ??";
         }
 
-
+        // TODO : Update this to use string resource replacement
         holder.mTextViewStreamInfo.setText("Playing " + gameTitle +
                 " for " + stream.getViewers() + " viewers");
 

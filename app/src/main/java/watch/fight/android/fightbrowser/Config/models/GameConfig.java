@@ -1,9 +1,15 @@
 package watch.fight.android.fightbrowser.Config.models;
 
+import android.content.Context;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import watch.fight.android.fightbrowser.StreamBrowser.models.Streamer;
+import watch.fight.android.fightbrowser.StreamBrowser.models.StreamerDB;
 
 /**
  * Created by josh on 9/16/15.
@@ -42,6 +48,10 @@ public class GameConfig {
 
     public void setKnownStreamers(ArrayList<String> knownStreamers) {
         mKnownStreamers = knownStreamers;
+    }
+
+    public List<Streamer> getKnownStreamersFromDB (Context context) {
+        return StreamerDB.getInstance(context).getStreamers(getId());
     }
 
     public Long getDateAdded() {

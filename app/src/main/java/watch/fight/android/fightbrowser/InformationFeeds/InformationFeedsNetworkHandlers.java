@@ -26,6 +26,7 @@ import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDB;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.Utils.Network.GsonRequest;
+import watch.fight.android.fightbrowser.Utils.Network.NetworkRequest;
 import watch.fight.android.fightbrowser.Utils.Network.ParseUtils;
 
 /**
@@ -50,25 +51,28 @@ public class InformationFeedsNetworkHandlers {
                 } else {
                     Log.e("ProcessFeed", "Received error on " + parentFeed.getName());
                 }
+                NetworkRequest.getInstance(context.getApplicationContext()).DecrementPendingRssRequests();
             }
         };
     }
 
-    private static Response.ErrorListener informationFeedErrorListener(final String url) {
+    private static Response.ErrorListener informationFeedErrorListener(final String url, final Context context) {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                NetworkRequest.getInstance(context.getApplicationContext()).IncrementPendingRssRequests();
                 Log.e("VolleyError", "Error Retrieving rss feed (" + url + ")! - " + error.toString());
             }
         };
     }
 
     public static VolleyRSSRequest<RSSFeed> createInformationFeedRequest(Feed feed, Context context) {
+        NetworkRequest.getInstance(context.getApplicationContext()).IncrementPendingRssRequests();
         return new VolleyRSSRequest<>(
                 feed.getRSSUrl(),
                 RSSFeed.class,
                 InformationFeedResponseListener(feed, context),
-                informationFeedErrorListener(feed.getRSSUrl())
+                informationFeedErrorListener(feed.getRSSUrl(), context)
         );
     }
 

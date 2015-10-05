@@ -29,6 +29,16 @@ public class Feed {
 
     private String mLastUpdated;
 
+    private int mOrdinal;
+
+    public int getOrdinal() {
+        return mOrdinal;
+    }
+
+    public void setOrdinal(int ordinal) {
+        mOrdinal = ordinal;
+    }
+
     public long getId() {
         return id;
     }

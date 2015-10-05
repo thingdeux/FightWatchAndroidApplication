@@ -11,6 +11,8 @@ import java.util.List;
 
 import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 
+import static watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDBSchema.FeedTable;
+
 /**
  * Created by josh on 9/25/15.
  */
@@ -51,7 +53,7 @@ public class FeedDB {
 
     public Feed getFeed(int id) {
         FeedCursorWrapper cursor = queryFeeds(
-                FeedDBSchema.FeedTable.Cols._ID + " = ?",
+                FeedTable.Cols._ID + " = ?",
                 new String[]{"" + id}
         );
 
@@ -69,7 +71,7 @@ public class FeedDB {
 
     public void addFeed(Feed feed) {
         ContentValues values = getContentValues(feed);
-        mDatabase.insert(FeedDBSchema.FeedTable.NAME, null, values);
+        mDatabase.insert(FeedTable.NAME, null, values);
     }
 
     public void addFeeds(List<Feed> feeds) {
@@ -77,7 +79,7 @@ public class FeedDB {
             mDatabase.beginTransaction();
             for (int i = 0; i < feeds.size(); i++) {
                 ContentValues values = getContentValues(feeds.get(i));
-                mDatabase.insert(FeedDBSchema.FeedTable.NAME, null, values);
+                mDatabase.insert(FeedTable.NAME, null, values);
             }
             mDatabase.setTransactionSuccessful();
             mDatabase.endTransaction();
@@ -91,39 +93,37 @@ public class FeedDB {
         String id = "" + feed.getId();
         ContentValues values = getContentValues(feed);
 
-        mDatabase.update(FeedDBSchema.FeedTable.NAME, values,
-                FeedDBSchema.FeedTable.Cols._ID + " = ?",
+        mDatabase.update(FeedTable.NAME, values,
+                FeedTable.Cols._ID + " = ?",
                 new String[]{id});
     }
 
     public void deleteFeed(float id) {
         Log.v("DeleteFeed", "Deleting Feed: " + id);
-        deleteFeeds(FeedDBSchema.FeedTable.Cols._ID + " = ?", new String[]{"" + id});
+        deleteFeeds(FeedTable.Cols._ID + " = ?", new String[]{"" + id});
     }
 
     public void deleteAllFeeds() {
         Log.v("DeletedFeed", "Deleting All Feeds!");
-        mDatabase.delete(FeedDBSchema.FeedTable.NAME, null, null);
+        mDatabase.delete(FeedTable.NAME, null, null);
     }
 
     public void deleteFeeds(String whereClause, String[] whereArgs) {
-        int isDeleted = mDatabase.delete(FeedDBSchema.FeedTable.NAME, whereClause, whereArgs);
+        int isDeleted = mDatabase.delete(FeedTable.NAME, whereClause, whereArgs);
         if (isDeleted != 1) {
             Log.e("deleteFeeds", "Unable to delete feeds -> " + whereArgs.toString());
         }
     }
 
-
-
     private FeedCursorWrapper queryFeeds(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-                FeedDBSchema.FeedTable.NAME,
+                FeedTable.NAME,
                 null, // Columns -null selects all columns
                 whereClause,
                 whereArgs,
                 null, //GroupBy
                 null, // having
-                null // orderBy
+                FeedTable.Cols.ORDINAL + " DESC" // orderBy
         );
 
         return new FeedCursorWrapper(cursor);
@@ -131,12 +131,13 @@ public class FeedDB {
 
     private static ContentValues getContentValues(Feed feed) {
         ContentValues values = new ContentValues();
-        values.put(FeedDBSchema.FeedTable.Cols.ID, feed.getId());
-        values.put(FeedDBSchema.FeedTable.Cols.NAME, feed.getName());
-        values.put(FeedDBSchema.FeedTable.Cols.IMAGE_URL, feed.getFeedImageUrl());
-        values.put(FeedDBSchema.FeedTable.Cols.LAST_UPDATED, feed.getLastUpdated());
-        values.put(FeedDBSchema.FeedTable.Cols.PARENT_URL, feed.getWebUrl());
-        values.put(FeedDBSchema.FeedTable.Cols.RSS_URL, feed.getRSSUrl());
+        values.put(FeedTable.Cols.ID, feed.getId());
+        values.put(FeedTable.Cols.NAME, feed.getName());
+        values.put(FeedTable.Cols.IMAGE_URL, feed.getFeedImageUrl());
+        values.put(FeedTable.Cols.LAST_UPDATED, feed.getLastUpdated());
+        values.put(FeedTable.Cols.PARENT_URL, feed.getWebUrl());
+        values.put(FeedTable.Cols.RSS_URL, feed.getRSSUrl());
+        values.put(FeedTable.Cols.ORDINAL, feed.getOrdinal());
 
         return values;
     }

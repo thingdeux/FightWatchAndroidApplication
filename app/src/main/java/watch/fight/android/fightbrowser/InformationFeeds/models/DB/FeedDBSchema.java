@@ -18,6 +18,7 @@ public final class FeedDBSchema {
             public static final String PARENT_URL = "feedparenturl";
             public static final String IMAGE_URL = "feedimageurl";
             public static final String LAST_UPDATED = "feedlastupdated";
+            public static final String ORDINAL = "feedordinal";
         }
 
     }

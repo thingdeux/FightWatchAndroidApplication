@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -22,7 +21,6 @@ import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDB;
 import watch.fight.android.fightbrowser.Utils.DateParser;
 import watch.fight.android.fightbrowser.Utils.Network.NetworkRequest;
-import watch.fight.android.fightbrowser.Utils.Network.ParseUtils;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**
@@ -98,6 +96,7 @@ public class FetchFeeds {
             if (mAdapter != null) {
                 // Notify the recyclerview adapter if one has been passed in.
                 mAdapter.notifyDataSetChanged();
+                didUpdate = true;
             }
 
             if (mInformationFeedsFragment != null) {
@@ -111,34 +110,64 @@ public class FetchFeeds {
         }
 
         private void updateStories() {
-            Log.v("FetchStories", "Fetching new feeds");
-            List<Feed> feeds = FeedDB.getInstance(mContext.getApplicationContext()).getAllFeeds();
-
-            if (feeds != null) {
-                for (int i = 0; i < feeds.size(); i++) {
-                    NetworkRequest.getInstance(mContext).addToRequestQueue(
-                            InformationFeedsNetworkHandlers.createInformationFeedRequest(feeds.get(i), mContext));
-                }
-            }
-
-            if (StoryDB.getInstance(mContext).getTopStoryForEachSite() != null) {
-                while (StoryDB.getInstance(mContext).getTopStoryForEachSite().size() < 3) {
-                    // 2.5 Seconds is all the time alloted to load the stories, longer and the dashboard will simply load without them.
-                    if (mAllotedStoryWaitTime >= 2500) {
+            if (mAdapter != null) {
+                // Handle forced refresh from news
+                QueueRefreshFeeds(-1);
+                mAllotedStoryWaitTime = 0;
+                while (NetworkRequest.getInstance(mContext.getApplicationContext()).getPendingRssRequests() > 1) {
+                    if (mAllotedStoryWaitTime >= 10000) {
+                        // Temp 10 second max wait time
                         break;
                     }
                     try {
                         Thread.sleep(100);
                         mAllotedStoryWaitTime += 100;
-                        Log.i("ThreadSleep", "AllotedStoryWaitTime: " + mAllotedStoryWaitTime);
+                        Log.i("ThreadSleep", "AllotedStoryWaitTime: " + mAllotedStoryWaitTime +
+                                " Pending RSSRequests: " + NetworkRequest.getInstance(mContext.getApplicationContext()).getPendingRssRequests());
                     } catch (InterruptedException ie) {
+                    }
+                }
+
+            } else {
+                QueueRefreshFeeds(4);
+
+                if (StoryDB.getInstance(mContext).getTopStoryForEachSite() != null) {
+                    while (StoryDB.getInstance(mContext).getTopStoryForEachSite().size() < 3) {
+                        // 2.5 Seconds is all the time alloted to load the stories, longer and the dashboard will simply load without them.
+                        if (mAllotedStoryWaitTime >= 2500) {
+                            break;
+                        }
+                        try {
+                            Thread.sleep(100);
+                            mAllotedStoryWaitTime += 100;
+                            Log.i("ThreadSleep", "AllotedStoryWaitTime: " + mAllotedStoryWaitTime);
+                        } catch (InterruptedException ie) {
+                        }
                     }
                 }
             }
 
         }
 
+        private void QueueRefreshFeeds(int maxNumberofFeedsToQueue) {
+            Log.v("FetchStories", "Fetching new feeds");
+            List<Feed> feeds = FeedDB.getInstance(mContext.getApplicationContext()).getAllFeeds();
+
+            if (feeds != null) {
+                for (int i = 0; i < feeds.size(); i++) {
+                    if (i < maxNumberofFeedsToQueue || maxNumberofFeedsToQueue == -1) {
+                        NetworkRequest.getInstance(mContext.getApplicationContext()).addToRequestQueue(
+                                InformationFeedsNetworkHandlers.createInformationFeedRequest(feeds.get(i), mContext));
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+
     }
+
 
     public static HashMap<String, Story> FetchLatestStories(Context context) {
         HashMap<String, Story> feedMapper = new HashMap<>();

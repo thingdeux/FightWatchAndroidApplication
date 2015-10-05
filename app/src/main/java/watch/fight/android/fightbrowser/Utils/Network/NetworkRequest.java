@@ -17,6 +17,7 @@ public class NetworkRequest {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Context mCtx;
+    private int pendingRssRequests = 0;
 
     private NetworkRequest(Context context) {
         mCtx = context;
@@ -61,5 +62,17 @@ public class NetworkRequest {
 
     public ImageLoader getImageLoader() {
         return mImageLoader;
+    }
+
+    public int getPendingRssRequests() {
+        return pendingRssRequests;
+    }
+
+    public void IncrementPendingRssRequests() {
+        pendingRssRequests += 1;
+    }
+
+    public void DecrementPendingRssRequests() {
+        pendingRssRequests -= 1;
     }
 }

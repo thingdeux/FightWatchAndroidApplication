@@ -27,7 +27,6 @@ public class TwitchConsumer extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         try {
             URL urlConnection = new URL(mUrl);
-            Log.d(TAG, "Requested Url from: " + mUrl);
             HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
             connection.setDoInput(true);
             connection.connect();

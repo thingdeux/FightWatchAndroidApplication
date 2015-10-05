@@ -66,7 +66,7 @@ public class BrowserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "onCreateView Called");
+//        Log.v(TAG, "onCreateView Called");
         View v = inflater.inflate(R.layout.browser_fragment, container, false);
 
         mLoadingTextView = v.findViewById(R.id.twitch_loading_container);
@@ -121,7 +121,7 @@ public class BrowserFragment extends Fragment {
         super.onResume();
         // TODO : Query Twitch Again if it's been more than .... 2 mins from last call.
         // TODO : Save UUID onResume and state changes
-        Log.v(TAG, "onResume Called");
+//        Log.v(TAG, "onResume Called");
 //        if (!haveStreamsLoaded) {
 //            setUILoading();
 //            loadTwitchStream("https://api.twitch.tv/kraken/streams/featured?limit=30");

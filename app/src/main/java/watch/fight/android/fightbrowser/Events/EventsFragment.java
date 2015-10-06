@@ -18,7 +18,7 @@ import watch.fight.android.fightbrowser.R;
 public class EventsFragment extends Fragment {
     private String TAG = EventsFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
-    private RelativeLayout mLoadingOverlay;
+    private View mLoadingOverlay;
     EventsAdapter mAdapter;
 
     @Override
@@ -37,7 +37,7 @@ public class EventsFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
 //        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this.getActivity(), 2);
 
-        mLoadingOverlay = (RelativeLayout) v.findViewById(R.id.loading_container);
+        mLoadingOverlay = (View) v.findViewById(R.id.loading_container);
         mAdapter = new EventsAdapter(this.getActivity());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);

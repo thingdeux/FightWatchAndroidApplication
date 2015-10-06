@@ -47,7 +47,12 @@
 
     <!--Misc-->
     <string name="loading_message_subtitle">Loading Content</string>
-    <string name="bracket_vs_text">-- VS --</string>
+    <string name="bracket_vs_text">VS</string>
+
+    <!--Error Text-->
+    <string name="challonge_participants_loading_error">Error Loading Brackets</string>
+
+
 
     <string-array name="main_menu_options">
         <item>Dashboard</item>

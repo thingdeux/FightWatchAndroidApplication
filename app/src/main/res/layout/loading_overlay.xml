@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/loading_container"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
@@ -18,19 +20,23 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_gravity="center_horizontal"
-                 android:layout_marginTop="15dp"
-                 android:layout_below="@id/loading_title"
-                 android:layout_alignParentTop="false"
-                 android:layout_alignParentBottom="false"
-                 android:layout_centerHorizontal="true"/>
+                 android:layout_marginTop="15dp"         />
+
+    <TextView android:id="@+id/loading_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="@color/primary_dark_fgc"
+        android:layout_gravity="center"
+        android:visibility="gone"
+              android:gravity="center_vertical|center|center_horizontal"/>
 
     <TextView android:id="@+id/loading_subtitle"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:textAppearance="@android:style/TextAppearance.Large"
-              android:layout_below="@id/loading_spinner"
               android:layout_marginTop="15dp"
               android:text="@string/loading_message_subtitle"
               android:gravity="center"/>
-</RelativeLayout>
+</LinearLayout>
 

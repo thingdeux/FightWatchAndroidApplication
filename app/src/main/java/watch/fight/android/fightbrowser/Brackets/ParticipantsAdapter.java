@@ -2,11 +2,9 @@ package watch.fight.android.fightbrowser.Brackets;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -17,7 +15,6 @@ import watch.fight.android.fightbrowser.Brackets.models.MatchWrapper;
 import watch.fight.android.fightbrowser.Brackets.models.Participant;
 import watch.fight.android.fightbrowser.Brackets.models.ParticipantWrapper;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
-import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.R;
 
 /**
@@ -47,8 +44,16 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         mContext = c;
         mBracket = bracket;
         mMatches = matches;
-        Log.i("JJDEBUG", "Received Bracket: " + bracket.getBracketUrl());
         BuildParticipantMap(participants);
+    }
+
+    public ParticipantsAdapter(Context c) {
+        mContext = c;
+        ParticipantsHolder holder = ParticipantsHolder.getInstance(mContext);
+        mBracket = holder.getBracket();
+        mMatches = holder.getTournamentWrapper().getTournament().getMatches();
+        BuildParticipantMap(holder.getTournamentWrapper().getTournament().getParticipants());
+
     }
 
     public void BuildParticipantMap(List<ParticipantWrapper> participants) {

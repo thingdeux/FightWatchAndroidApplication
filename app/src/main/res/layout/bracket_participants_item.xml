@@ -1,50 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bracket_card_view"
-    android:layout_gravity="center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
     android:layout_margin="2dp"
-    card_view:cardCornerRadius="3dp"
-    card_view:elevation="4dp">
+    >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+    <TextView android:id="@+id/bracket_player_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="14sp"
+        >
+    </TextView>
 
-            <TextView android:id="@+id/bracket_player_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textSize="14dp"
-                >
-            </TextView>
+    <TextView android:id="@+id/vs_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bracket_vs_text"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textSize="14sp"
+              android:textStyle="bold">
+    </TextView>
 
-            <TextView android:id="@+id/vs_line"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/bracket_vs_text"
-                android:textSize="8dp"
-                >
-            </TextView>
-
-            <TextView android:id="@+id/bracket_player_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textSize="14dp"
-                >
-            </TextView>
+    <TextView android:id="@+id/bracket_player_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textSize="14sp"
+        >
+    </TextView>
 
 
-        </LinearLayout>
-
-
-
-</android.support.v7.widget.CardView>
+</LinearLayout>
 

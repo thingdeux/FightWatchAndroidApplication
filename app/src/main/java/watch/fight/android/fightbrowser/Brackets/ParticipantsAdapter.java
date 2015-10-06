@@ -74,8 +74,10 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         final Participant p1 = mParticipants.get(match.getPlayerOneId());
         final Participant p2 = mParticipants.get(match.getPlayerTwoId());
 
-        holder.mPlayerOne.setText(p1.getName());
-        holder.mPlayerTwo.setText(p2.getName());
+        holder.mPlayerOne.setText((p1 == null) ? "??" : p1.getName());
+        holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
+
+        // TODO : Matches with Pending state or only one player
     }
 
     @Override

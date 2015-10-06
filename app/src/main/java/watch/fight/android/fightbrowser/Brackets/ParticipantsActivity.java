@@ -20,7 +20,6 @@ import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
 import watch.fight.android.fightbrowser.R;
-import watch.fight.android.fightbrowser.Utils.FragmentAdapter;
 import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
 
 /**
@@ -83,6 +82,12 @@ public class ParticipantsActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ParticipantsHolder.getInstance(this).wipe();
     }
 
     public static Intent NewInstance(Context activity, Integer bracketid) {

@@ -10,12 +10,12 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Brackets.models.Match;
 import watch.fight.android.fightbrowser.Brackets.models.MatchWrapper;
 import watch.fight.android.fightbrowser.Brackets.models.Participant;
-import watch.fight.android.fightbrowser.Brackets.models.ParticipantWrapper;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.R;
 
@@ -26,8 +26,11 @@ import static watch.fight.android.fightbrowser.Brackets.ParticipantsFragment.*;
  */
 public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapter.ViewHolder>{
     private Bracket mBracket;
-    private HashMap<String, Participant> mParticipants = new HashMap<>();
+    private HashMap<String, Participant> mParticipants;
+    private List<String> mActiveParticipants;
     private List<MatchWrapper> mMatches;
+    private List<MatchWrapper> mUpcomingMatches;
+    private boolean mIsTournamentActive;
     private Context mContext;
     private int mFragmentType;
 
@@ -52,33 +55,16 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         }
     }
 
-    public ParticipantsAdapter(Context c, Bracket bracket,
-                               List<ParticipantWrapper> participants, List<MatchWrapper> matches) {
-        mContext = c;
-        mBracket = bracket;
-        mMatches = matches;
-        BuildParticipantMap(participants);
-    }
-
     public ParticipantsAdapter(Context c, int fragmentType) {
         mContext = c;
         mFragmentType = fragmentType;
-        ParticipantsHolder holder = ParticipantsHolder.getInstance(mContext);
-        mBracket = holder.getBracket();
-        mMatches = holder.getTournamentWrapper().getTournament().getMatches();
-        BuildParticipantMap(holder.getTournamentWrapper().getTournament().getParticipants());
-
-    }
-
-    public void BuildParticipantMap(List<ParticipantWrapper> participants) {
-        if (participants != null) {
-            Participant p;
-            for (int i = 0; i < participants.size(); i++) {
-                p = participants.get(i).getParticipant();
-                mParticipants.put(p.getId().toString(), p);
-            }
-        }
-
+        ParticipantsHolder pHolder = ParticipantsHolder.getInstance(mContext);
+        mBracket = pHolder.getBracket();
+        mMatches = pHolder.getMatches();
+        mParticipants = pHolder.getParticipants();
+        mActiveParticipants = pHolder.getActiveParticipantIds();
+        mUpcomingMatches = pHolder.getUpcomingMatches();
+        mIsTournamentActive = pHolder.isTournamentActive();
     }
 
     @Override
@@ -124,15 +110,22 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
         holder.mPlayerOne.setText((p1 == null) ? "??" : p1.getName());
         holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
+        if (match.getWinnerId() != null) {
+            if (match.getWinnerId().equals(p1.getId())) {
+                holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
+            } else {
+                holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
+            }
+        }
     }
 
     public void bindWhosLeft(final ViewHolder holder, final int position) {
-        final Match match = mMatches.get(position).getMatch();
-        holder.mPlayerName.setText(match.getPlayerOneId());
+        final String participantId = mActiveParticipants.get(position);
+        holder.mPlayerName.setText(mParticipants.get(participantId).getName());
     }
 
     public void bindUpcoming(final ViewHolder holder, final int position) {
-        final Match match = mMatches.get(position).getMatch();
+        final Match match = mUpcomingMatches.get(position).getMatch();
         final Participant p1 = mParticipants.get(match.getPlayerOneId());
         final Participant p2 = mParticipants.get(match.getPlayerTwoId());
 
@@ -141,6 +134,18 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     }
 
     @Override
-    public int getItemCount() { return mMatches.size(); }
+    public int getItemCount() {
+        switch (mFragmentType) {
+            case PARTICIPANTS_FRAGMENT_BATTLELOG:
+                return mMatches.size();
+            case PARTICIPANTS_FRAGMENT_WHOSLEFT:
+                return mActiveParticipants.size();
+            case PARTICIPANTS_FRAGMENT_UPCOMING:
+                return mUpcomingMatches.size();
+            default:
+                return 0;
+        }
+
+    }
 
 }

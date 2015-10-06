@@ -110,7 +110,12 @@
       "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/CPT-BR.png",
       "flavor_text": "Capcom Pro Tour Brazil!",
       "streams": ["http://twitch.tv/capcomunitybr"],
-      "brackets": [],
+      "brackets": [
+        {
+          "bracket_name": "TopDeck Online",
+          "bracket_url": "challonge.com/ToooopDecccckkk"
+        }
+      ],
       "end_date": 1443592312000,
       "start_date": 1443592312000
 

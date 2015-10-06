@@ -12,17 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.viewpagerindicator.LinePageIndicator
+        <com.viewpagerindicator.TitlePageIndicator
             android:id="@+id/participant_viewPager_indicator"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
-            android:padding="2dp"
-            app:strokeWidth="6dp"
-            app:lineWidth="30dp"
-            app:unselectedColor="#212121"
-            app:selectedColor="#E0E0E0"
+            style="CustomTabPageIndicator"
             />
 
         <android.support.v4.view.ViewPager

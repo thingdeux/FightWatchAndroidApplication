@@ -18,7 +18,7 @@ import watch.fight.android.fightbrowser.R;
 public class InformationFeedsFragment extends Fragment {
     private String TAG = InformationFeedsFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
-    private RelativeLayout mLoadingOverlay;
+    private View mLoadingOverlay;
     InformationFeedsAdapter mAdapter;
 
     @Override
@@ -34,7 +34,7 @@ public class InformationFeedsFragment extends Fragment {
         View v = inflater.inflate(R.layout.information_feeds_fragment, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.information_feeds_recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mLoadingOverlay = (RelativeLayout) v.findViewById(R.id.loading_container);
+        mLoadingOverlay = v.findViewById(R.id.loading_container);
         mAdapter = new InformationFeedsAdapter(this.getActivity());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);

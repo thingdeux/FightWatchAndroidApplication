@@ -5,4 +5,26 @@
         <item name="colorPrimaryDark">@color/toolbar_dark_fgc</item>
         <item name="colorPrimary">@color/primary_dark_fgc</item>
     </style>
+
+    <style name="Widget.TitlePageIndicator" >
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/vpi__tab_indicator</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:color">#000000</item>
+        <item name="android:textColor">#FF555555</item>
+    </style>
+
+    <style name="TextAppearance.TitlePageIndicator" parent="Widget">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="Widget.IconPageIndicator" parent="Widget">
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+    </style>
 </resources>

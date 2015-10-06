@@ -3,6 +3,10 @@ package watch.fight.android.fightbrowser.Brackets;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +17,8 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.viewpagerindicator.LinePageIndicator;
+import com.viewpagerindicator.TabPageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
 
 import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
@@ -26,6 +32,7 @@ import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
  */
 public class ParticipantsActivity extends AppCompatActivity
         implements IVolleyResponse<TournamentWrapper> {
+    private static final String[] INDICATOR_TAB_NAMES = new String[] { "Who's Left", "Battlelog", "Upcoming Matches"};
     public static String BRACKET_ID = "watch.fight.android.fightbrowser.brackets.participants.bracket";
     private View mParticipantsContainer;
     private Bracket mBracket;
@@ -38,8 +45,8 @@ public class ParticipantsActivity extends AppCompatActivity
         ParticipantsHolder holder = ParticipantsHolder.getInstance(this);
         holder.setTournamentWrapper(response);
         holder.setBracket(mBracket);
-        initViewPager();
         setUIReady();
+        initViewPager();
     }
 
     public void onFailure(VolleyError error) {
@@ -64,6 +71,7 @@ public class ParticipantsActivity extends AppCompatActivity
         setContentView(R.layout.bracket_participants_activity);
         mParticipantsContainer = findViewById(R.id.participants_container);
         mLoadingContainer = findViewById(R.id.loading_container);
+
         setUILoading();
     }
 
@@ -109,19 +117,38 @@ public class ParticipantsActivity extends AppCompatActivity
 
     public void initViewPager() {
         // Setup FragmentManager
-        FragmentAdapter participantsAdapter = new FragmentAdapter(getSupportFragmentManager());
-        ParticipantsFragment whosLeft = ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_WHOSLEFT);
-        ParticipantsFragment upcoming = ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_UPCOMING);
-        ParticipantsFragment battlelog = ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_BATTLELOG);
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
-        participantsAdapter.addFragment(whosLeft);
-        participantsAdapter.addFragment(upcoming);
-        participantsAdapter.addFragment(battlelog);
+        adapter.addFragment(ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_WHOSLEFT));
+        adapter.addFragment(ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_BATTLELOG));
+        adapter.addFragment(ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_UPCOMING));
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.participant_viewPager);
-        viewPager.setAdapter(participantsAdapter);
+        ViewPager mPager = (ViewPager) findViewById(R.id.participant_viewPager);
+        TitlePageIndicator mIndicator = (TitlePageIndicator) findViewById(R.id.participant_viewPager_indicator);
 
-        LinePageIndicator lineIndicator = (LinePageIndicator) findViewById(R.id.participant_viewPager_indicator);
-        lineIndicator.setViewPager(viewPager);
+        mPager.setAdapter(adapter);
+        mIndicator.setViewPager(mPager);
     }
+
+    // Extension of pager adapter to name tabs in tabpageindicator
+//    class ParticipantTabAdapter extends FragmentPagerAdapter {
+//        public ParticipantTabAdapter(FragmentManager fm) {
+//            super(fm);
+//        }
+//
+//        @Override
+//        public Fragment getItem(int position) {
+//            return ParticipantsFragment.newInstance(INDICATOR_TAB_NAMES[position % INDICATOR_TAB_NAMES.length]);
+//        }
+//
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            return INDICATOR_TAB_NAMES[position % INDICATOR_TAB_NAMES.length].toUpperCase();
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return INDICATOR_TAB_NAMES.length;
+//        }
+//    }
 }

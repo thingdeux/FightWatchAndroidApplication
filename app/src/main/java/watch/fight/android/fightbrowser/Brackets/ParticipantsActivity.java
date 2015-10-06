@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 
@@ -26,9 +27,9 @@ public class ParticipantsActivity extends AppCompatActivity
     private Bracket mBracket;
 
     public void onSuccess(TournamentWrapper response) {
+        Log.i("VolleySuccess", "Received Challonge Success");
         mRecyclerView = (RecyclerView) findViewById(R.id.bracket_recycler_view);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 3);
-
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
 
         mAdapter = new ParticipantsAdapter(this,
                 mBracket,
@@ -37,10 +38,11 @@ public class ParticipantsActivity extends AppCompatActivity
                 );
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
     }
 
     public void onFailure(VolleyError error) {
-
+        Log.e("VolleyFailure", "Error Retrieving Challonge Feed: " + error);
     }
 
     @Override

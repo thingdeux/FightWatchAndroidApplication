@@ -36,7 +36,7 @@ public class BracketActivity extends AppCompatActivity {
 
         setContentView(R.layout.bracket_activity);
         mRecyclerView = (RecyclerView) findViewById(R.id.bracket_recycler_view);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 3);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
 
         mAdapter = new BracketAdapter(this, event);
         mRecyclerView.setAdapter(mAdapter);

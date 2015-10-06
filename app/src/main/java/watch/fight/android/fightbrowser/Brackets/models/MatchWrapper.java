@@ -23,7 +23,7 @@ public class MatchWrapper {
     List<Match> mMatches;
 
     @Expose
-    @SerializedName("participant")
+    @SerializedName("match")
     Match mMatch;
 
     public List<Match> getMatches() {

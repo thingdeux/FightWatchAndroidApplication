@@ -2,12 +2,14 @@ package watch.fight.android.fightbrowser.Brackets;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Brackets.models.Match;
@@ -23,18 +25,20 @@ import watch.fight.android.fightbrowser.R;
  */
 public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapter.ViewHolder>{
     private Bracket mBracket;
-    private List<ParticipantWrapper> mParticipants;
+    private HashMap<String, Participant> mParticipants = new HashMap<>();
     private List<MatchWrapper> mMatches;
     private Context mContext;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public Button mPlayerOne;
-        public Button mPlayerTwo;
+        public TextView mPlayerOne;
+        public TextView mPlayerTwo;
+        public TextView mVs;
 
         public ViewHolder(View v) {
             super(v);
-            mPlayerOne = (Button) v.findViewById(R.id.bracket_player_one);
-            mPlayerTwo = (Button) v.findViewById(R.id.bracket_player_two);
+            mPlayerOne = (TextView) v.findViewById(R.id.bracket_player_one);
+            mPlayerTwo = (TextView) v.findViewById(R.id.bracket_player_two);
+            mVs = (TextView) v.findViewById(R.id.vs_line);
         }
     }
 
@@ -42,8 +46,20 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
                                List<ParticipantWrapper> participants, List<MatchWrapper> matches) {
         mContext = c;
         mBracket = bracket;
-        mParticipants = participants;
         mMatches = matches;
+        Log.i("JJDEBUG", "Received Bracket: " + bracket.getBracketUrl());
+        BuildParticipantMap(participants);
+    }
+
+    public void BuildParticipantMap(List<ParticipantWrapper> participants) {
+        if (participants != null) {
+            Participant p = new Participant();
+            for (int i = 0; i < participants.size(); i++) {
+                p = participants.get(i).getParticipant();
+                mParticipants.put(p.getId().toString(), p);
+            }
+        }
+
     }
 
     @Override
@@ -55,10 +71,11 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Match match = mMatches.get(position).getMatch();
-        holder.mPlayerOne.setText(match.getPlayerOneId());
-        holder.mPlayerTwo.setText(match.getPlayerTwoId());
+        final Participant p1 = mParticipants.get(match.getPlayerOneId());
+        final Participant p2 = mParticipants.get(match.getPlayerTwoId());
 
-
+        holder.mPlayerOne.setText(p1.getName());
+        holder.mPlayerTwo.setText(p2.getName());
     }
 
     @Override

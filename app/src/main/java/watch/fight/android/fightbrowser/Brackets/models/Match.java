@@ -54,7 +54,7 @@ public class Match {
 
     @Expose
     @SerializedName("scores_csv")
-    private Long mScores;
+    private String mScores;
 
     public Long getId() {
         return mId;
@@ -96,7 +96,7 @@ public class Match {
         return mWinnerId;
     }
 
-    public Long getScores() {
+    public String getScores() {
         return mScores;
     }
 }

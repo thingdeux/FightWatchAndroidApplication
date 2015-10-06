@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +19,8 @@ import watch.fight.android.fightbrowser.Brackets.models.ParticipantWrapper;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.R;
 
+import static watch.fight.android.fightbrowser.Brackets.ParticipantsFragment.*;
+
 /**
  * Created by josh on 10/5/15.
  */
@@ -25,17 +29,26 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     private HashMap<String, Participant> mParticipants = new HashMap<>();
     private List<MatchWrapper> mMatches;
     private Context mContext;
+    private int mFragmentType;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mPlayerOne;
         public TextView mPlayerTwo;
         public TextView mVs;
+        public TextView mPlayerName;
 
-        public ViewHolder(View v) {
+        public ViewHolder(View v, int fragmentType) {
             super(v);
-            mPlayerOne = (TextView) v.findViewById(R.id.bracket_player_one);
-            mPlayerTwo = (TextView) v.findViewById(R.id.bracket_player_two);
-            mVs = (TextView) v.findViewById(R.id.vs_line);
+            switch (fragmentType) {
+                case PARTICIPANTS_FRAGMENT_WHOSLEFT:
+                    mPlayerName = (TextView) v.findViewById(R.id.bracket_player_name);
+                    break;
+                default:
+                    mPlayerOne = (TextView) v.findViewById(R.id.bracket_player_one);
+                    mPlayerTwo = (TextView) v.findViewById(R.id.bracket_player_two);
+                    mVs = (TextView) v.findViewById(R.id.vs_line);
+                    break;
+            }
         }
     }
 
@@ -47,8 +60,9 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         BuildParticipantMap(participants);
     }
 
-    public ParticipantsAdapter(Context c) {
+    public ParticipantsAdapter(Context c, int fragmentType) {
         mContext = c;
+        mFragmentType = fragmentType;
         ParticipantsHolder holder = ParticipantsHolder.getInstance(mContext);
         mBracket = holder.getBracket();
         mMatches = holder.getTournamentWrapper().getTournament().getMatches();
@@ -58,7 +72,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
     public void BuildParticipantMap(List<ParticipantWrapper> participants) {
         if (participants != null) {
-            Participant p = new Participant();
+            Participant p;
             for (int i = 0; i < participants.size(); i++) {
                 p = participants.get(i).getParticipant();
                 mParticipants.put(p.getId().toString(), p);
@@ -69,20 +83,61 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
     @Override
     public ParticipantsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_participants_item, parent, false);
-        return new ViewHolder(v);
+        View v;
+        switch (mFragmentType) {
+            case PARTICIPANTS_FRAGMENT_BATTLELOG:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_participants_vs_item, parent, false);
+                break;
+            case PARTICIPANTS_FRAGMENT_WHOSLEFT:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_participants_item, parent, false);
+                break;
+            case PARTICIPANTS_FRAGMENT_UPCOMING:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_participants_vs_item, parent, false);
+                break;
+            default:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_participants_vs_item, parent, false);
+        }
+        return new ViewHolder(v, mFragmentType);
+
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        switch (mFragmentType) {
+            case PARTICIPANTS_FRAGMENT_BATTLELOG:
+                bindBattleLog(holder, position);
+                break;
+            case PARTICIPANTS_FRAGMENT_WHOSLEFT:
+                bindWhosLeft(holder, position);
+                break;
+            case PARTICIPANTS_FRAGMENT_UPCOMING:
+                bindUpcoming(holder, position);
+                break;
+        }
+
+    }
+
+    public void bindBattleLog(final ViewHolder holder, final int position) {
         final Match match = mMatches.get(position).getMatch();
         final Participant p1 = mParticipants.get(match.getPlayerOneId());
         final Participant p2 = mParticipants.get(match.getPlayerTwoId());
 
         holder.mPlayerOne.setText((p1 == null) ? "??" : p1.getName());
         holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
+    }
 
-        // TODO : Matches with Pending state or only one player
+    public void bindWhosLeft(final ViewHolder holder, final int position) {
+        final Match match = mMatches.get(position).getMatch();
+        holder.mPlayerName.setText(match.getPlayerOneId());
+    }
+
+    public void bindUpcoming(final ViewHolder holder, final int position) {
+        final Match match = mMatches.get(position).getMatch();
+        final Participant p1 = mParticipants.get(match.getPlayerOneId());
+        final Participant p2 = mParticipants.get(match.getPlayerTwoId());
+
+        holder.mPlayerOne.setText((p1 == null) ? "??" : p1.getName());
+        holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
     }
 
     @Override

@@ -25,33 +25,22 @@ public class ParticipantsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Bundle args = getArguments();
+        int fragmentType = 0;
+
+        if (args != null) {
+            fragmentType = args.getInt(PARTICIPANTS_FRAGMENT_TYPE, 0);
+        } else {
+            Log.v(TAG, "No arguments found in intent");
+        }
+
         View v = inflater.inflate(R.layout.bracket_participants_fragment, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.participants_recycler_view);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mAdapter = new ParticipantsAdapter(this.getActivity());
+        mAdapter = new ParticipantsAdapter(this.getActivity(), fragmentType);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        Bundle args = getArguments();
-
-        if (args != null) {
-
-            int fragment_type = args.getInt(PARTICIPANTS_FRAGMENT_TYPE, 0);
-
-            if (fragment_type > 0) {
-                switch (fragment_type) {
-                    case PARTICIPANTS_FRAGMENT_WHOSLEFT:
-                        break;
-                    case PARTICIPANTS_FRAGMENT_BATTLELOG:
-                        break;
-                    case PARTICIPANTS_FRAGMENT_UPCOMING:
-                        break;
-                }
-            }
-        } else {
-            Log.v(TAG, "No arguments found in intent");
-        }
 
         return v;
     }

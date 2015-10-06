@@ -6,18 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.viewpagerindicator.LinePageIndicator;
-import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
@@ -32,7 +28,7 @@ import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
  */
 public class ParticipantsActivity extends AppCompatActivity
         implements IVolleyResponse<TournamentWrapper> {
-    private static final String[] INDICATOR_TAB_NAMES = new String[] { "Who's Left", "Battlelog", "Upcoming Matches"};
+    private static final String[] INDICATOR_TITLE_NAMES = new String[] { "Who's Left", "Battlelog", "Upcoming Matches"};
     public static String BRACKET_ID = "watch.fight.android.fightbrowser.brackets.participants.bracket";
     private View mParticipantsContainer;
     private Bracket mBracket;
@@ -71,6 +67,10 @@ public class ParticipantsActivity extends AppCompatActivity
         setContentView(R.layout.bracket_participants_activity);
         mParticipantsContainer = findViewById(R.id.participants_container);
         mLoadingContainer = findViewById(R.id.loading_container);
+        ActionBar ap = getSupportActionBar();
+        if (ap != null) {
+            ap.setElevation(0);
+        }
 
         setUILoading();
     }
@@ -117,12 +117,7 @@ public class ParticipantsActivity extends AppCompatActivity
 
     public void initViewPager() {
         // Setup FragmentManager
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
-
-        adapter.addFragment(ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_WHOSLEFT));
-        adapter.addFragment(ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_BATTLELOG));
-        adapter.addFragment(ParticipantsFragment.newInstance(ParticipantsFragment.PARTICIPANTS_FRAGMENT_UPCOMING));
-
+        ParticipantTabAdapter adapter = new ParticipantTabAdapter(getSupportFragmentManager());
         ViewPager mPager = (ViewPager) findViewById(R.id.participant_viewPager);
         TitlePageIndicator mIndicator = (TitlePageIndicator) findViewById(R.id.participant_viewPager_indicator);
 
@@ -131,24 +126,24 @@ public class ParticipantsActivity extends AppCompatActivity
     }
 
     // Extension of pager adapter to name tabs in tabpageindicator
-//    class ParticipantTabAdapter extends FragmentPagerAdapter {
-//        public ParticipantTabAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        @Override
-//        public Fragment getItem(int position) {
-//            return ParticipantsFragment.newInstance(INDICATOR_TAB_NAMES[position % INDICATOR_TAB_NAMES.length]);
-//        }
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            return INDICATOR_TAB_NAMES[position % INDICATOR_TAB_NAMES.length].toUpperCase();
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return INDICATOR_TAB_NAMES.length;
-//        }
-//    }
+    class ParticipantTabAdapter extends FragmentPagerAdapter {
+        public ParticipantTabAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return ParticipantsFragment.newInstance(INDICATOR_TITLE_NAMES[position % INDICATOR_TITLE_NAMES.length]);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return INDICATOR_TITLE_NAMES[position % INDICATOR_TITLE_NAMES.length].toUpperCase();
+        }
+
+        @Override
+        public int getCount() {
+            return INDICATOR_TITLE_NAMES.length;
+        }
+    }
 }

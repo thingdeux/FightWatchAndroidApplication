@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_margin="2dp"
+    >
+
+    <TextView android:id="@+id/bracket_player_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="14sp"
+        >
+    </TextView>
+
+    <TextView android:id="@+id/vs_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bracket_vs_text"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textSize="14sp"
+              android:textStyle="bold">
+    </TextView>
+
+    <TextView android:id="@+id/bracket_player_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textSize="14sp"
+        >
+    </TextView>
+
+
+</LinearLayout>
+

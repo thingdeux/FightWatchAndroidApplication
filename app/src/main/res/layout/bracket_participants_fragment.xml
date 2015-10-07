@@ -29,7 +29,7 @@
                   android:textColor="@color/primary_dark_fgc"
                   android:text="@string/bracket_winner_formatted"
                   style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
-                  android:layout_marginBottom="7dp"/>
+                  android:layout_marginBottom="6dp"/>
 
     </FrameLayout>
 

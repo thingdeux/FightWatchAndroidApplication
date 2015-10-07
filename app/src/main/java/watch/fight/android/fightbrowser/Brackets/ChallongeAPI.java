@@ -112,9 +112,12 @@ public class ChallongeAPI {
            <tournament_name> - <subdomain-tournament_name>
            Find out if the passed id has a subdomain and build the proper id. */
 
+        // Strip http/https
+
         // EX: challonge.com/EVOSSBMPicks | nextlevel.challonge.com/nlbc140usf4
         if (id != null) {
-            String[] splitID = id.split("/");
+            String stripped = id.replaceFirst("^(https?://|https?://www\\.|www\\.)", "");
+            String[] splitID = stripped.split("/");
             String bracketName = splitID[1];
             String[] possibleSubdomain = splitID[0].split("\\.");
             if (possibleSubdomain.length > 2) {

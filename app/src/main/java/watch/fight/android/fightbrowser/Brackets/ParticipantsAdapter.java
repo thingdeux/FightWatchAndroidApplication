@@ -110,10 +110,10 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
         holder.mPlayerOne.setText((p1 == null) ? "??" : p1.getName());
         holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
-        if (match.getWinnerId() != null) {
+        if (match.getWinnerId() != null && match.getState() != null && match.getState().equals("complete")) {
             if (match.getWinnerId().equals(p1.getId())) {
                 holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
-            } else {
+            } else if (match.getWinnerId().equals(p2.getId())) {
                 holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
             }
         }
@@ -121,7 +121,8 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
     public void bindWhosLeft(final ViewHolder holder, final int position) {
         final String participantId = mActiveParticipants.get(position);
-        holder.mPlayerName.setText(mParticipants.get(participantId).getName());
+        Participant p = mParticipants.get(participantId);
+        holder.mPlayerName.setText(p.getName());
     }
 
     public void bindUpcoming(final ViewHolder holder, final int position) {

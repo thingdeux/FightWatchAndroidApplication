@@ -7,10 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Brackets.models.Match;
@@ -33,6 +30,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     private boolean mIsTournamentActive;
     private Context mContext;
     private int mFragmentType;
+    private TextView mWinnerTextView;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mPlayerOne;
@@ -55,7 +53,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         }
     }
 
-    public ParticipantsAdapter(Context c, int fragmentType) {
+    public ParticipantsAdapter(Context c, int fragmentType, TextView tv) {
         mContext = c;
         mFragmentType = fragmentType;
         ParticipantsHolder pHolder = ParticipantsHolder.getInstance(mContext);
@@ -65,6 +63,8 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         mActiveParticipants = pHolder.getActiveParticipantIds();
         mUpcomingMatches = pHolder.getUpcomingMatches();
         mIsTournamentActive = pHolder.isTournamentActive();
+        mWinnerTextView = tv;
+        setWinnerText();
     }
 
     @Override
@@ -112,11 +112,11 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
         if (match.getWinnerId() != null && p1 != null && p2 != null) {
             if (match.getWinnerId().equals(p1.getId())) {
-                holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
-                holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
-            } else if (match.getWinnerId().equals(p2.getId())) {
                 holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
-                holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
+                holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_text_disabled_material_light));
+            } else if (match.getWinnerId().equals(p2.getId())) {
+                holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
+                holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.primary_text_disabled_material_light));
             }
         } else {
             holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
@@ -137,6 +137,23 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
         holder.mPlayerOne.setText((p1 == null) ? "??" : p1.getName());
         holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
+    }
+
+    public void setWinnerText() {
+        String winnerUnknown = mContext.getResources().getString(R.string.challonge_participants_winner_unknown);
+        String winnerText = mContext.getResources().getString(R.string.bracket_winner_formatted);
+        if (!mIsTournamentActive) {
+            Long winnerID = mMatches.get(mMatches.size() - 1).getMatch().getWinnerId();
+            if (winnerID != null) {
+                String winnerName = mParticipants.get(winnerID.toString()).getName();
+                mWinnerTextView.setText(String.format(winnerText,
+                        (!winnerName.isEmpty()) ? winnerName : winnerUnknown));
+            } else {
+                mWinnerTextView.setText(winnerUnknown);
+            }
+        } else {
+            mWinnerTextView.setText(String.format(winnerText, winnerUnknown));
+        }
     }
 
     @Override

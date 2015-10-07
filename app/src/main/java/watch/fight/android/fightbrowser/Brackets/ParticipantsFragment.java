@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import watch.fight.android.fightbrowser.R;
 
@@ -36,9 +37,10 @@ public class ParticipantsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.bracket_participants_fragment, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.participants_recycler_view);
+        TextView footer = (TextView) v.findViewById(R.id.bracket_footer_message);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mAdapter = new ParticipantsAdapter(this.getActivity(), fragmentType);
+        mAdapter = new ParticipantsAdapter(this.getActivity(), fragmentType, footer);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 

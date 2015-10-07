@@ -110,12 +110,17 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
 
         holder.mPlayerOne.setText((p1 == null) ? "??" : p1.getName());
         holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
-        if (match.getWinnerId() != null && match.getState() != null && match.getState().equals("complete")) {
+        if (match.getWinnerId() != null && p1 != null && p2 != null) {
             if (match.getWinnerId().equals(p1.getId())) {
                 holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
+                holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
             } else if (match.getWinnerId().equals(p2.getId())) {
                 holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
+                holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
             }
+        } else {
+            holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
+            holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
         }
     }
 

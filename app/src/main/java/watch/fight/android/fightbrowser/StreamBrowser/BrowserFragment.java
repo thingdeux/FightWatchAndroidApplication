@@ -150,14 +150,18 @@ public class BrowserFragment extends Fragment {
                         break;
                 }
 
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.notifyDataSetChanged();
-                    setUIReady();
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAdapter.notifyDataSetChanged();
+                            setUIReady();
+                        }
+                    });
                 }
-            });
+
             }
+
         });
 
         mTwitchLoader.getTwitchData(url);

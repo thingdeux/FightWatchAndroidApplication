@@ -53,6 +53,15 @@ public class ParticipantsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.bracket_participants_activity);
+        mParticipantsContainer = findViewById(R.id.participants_container);
+        mLoadingContainer = findViewById(R.id.loading_container);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         Intent intent = getIntent();
         Integer BracketId = intent.getIntExtra(BRACKET_ID, -1);
 
@@ -61,22 +70,15 @@ public class ParticipantsActivity extends AppCompatActivity
             // Make call to Challonge - pass response to onSuccess CB Above and build recyclerView
             ChallongeNetworkHandlers.getBracketTournamentInformation(this, mBracket, this, true, true);
         } else {
-            // TODO : Set Error State
+            setErrorState();
         }
-        setContentView(R.layout.bracket_participants_activity);
-        mParticipantsContainer = findViewById(R.id.participants_container);
-        mLoadingContainer = findViewById(R.id.loading_container);
+
         ActionBar ap = getSupportActionBar();
         if (ap != null) {
             ap.setElevation(0);
         }
 
         setUILoading();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -87,7 +89,6 @@ public class ParticipantsActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ParticipantsHolder.getInstance(this).wipe();
     }
 
     public static Intent NewInstance(Context activity, Integer bracketid) {

@@ -30,8 +30,6 @@ public class BracketActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Long EventId = intent.getLongExtra(BRACKET_EVENT_ID, -1);
-
-        // Null/Size check unnecessary - done before assigning the intent
         Event event = EventDB.getInstance(this).getEvent(EventId);
 
         setContentView(R.layout.bracket_activity);
@@ -52,6 +50,12 @@ public class BracketActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ParticipantsHolder.getInstance(this).wipe();
     }
 
     public static Intent NewInstance(Context activity, Long eventId) {

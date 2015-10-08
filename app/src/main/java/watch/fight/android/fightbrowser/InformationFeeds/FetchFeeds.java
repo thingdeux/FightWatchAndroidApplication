@@ -36,12 +36,12 @@ public class FetchFeeds {
         private DashboardActivity mDashboardActivity;
         private InformationFeedsFragment mInformationFeedsFragment;
         private InformationFeedsActivity mInformationFeedsActivity;
-        private RecyclerView.Adapter mAdapter;
+        private InformationFeedsAdapter mAdapter;
         private boolean mIsForcedRefresh = false;
         private int mAllotedStoryWaitTime = 0;
 
         // Allows for passing in of a recyclerview adapter which will notify the recyclerviews adapter on finish.
-        public FetchStories(Context c, final RecyclerView.Adapter adapter, InformationFeedsFragment fragment, boolean isForcedRefresh) {
+        public FetchStories(Context c, final InformationFeedsAdapter adapter, InformationFeedsFragment fragment, boolean isForcedRefresh) {
             mContext = c;
             mAdapter = adapter;
             mIsForcedRefresh = isForcedRefresh;
@@ -95,6 +95,7 @@ public class FetchFeeds {
 
             if (mAdapter != null) {
                 // Notify the recyclerview adapter if one has been passed in.
+                mAdapter.refreshStories();
                 mAdapter.notifyDataSetChanged();
                 didUpdate = true;
             }

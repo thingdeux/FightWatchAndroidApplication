@@ -27,7 +27,7 @@ import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
  */
 public class ParticipantsActivity extends AppCompatActivity
         implements IVolleyResponse<TournamentWrapper> {
-    private static final String[] INDICATOR_TITLE_NAMES = new String[] { "Who's Left", "Battlelog", "Upcoming Matches"};
+    private static final String[] INDICATOR_TITLE_NAMES = new String[] { "Who's Left", "Battlelog", "Upcoming Matches", "Player Roster"};
     public static String BRACKET_ID = "watch.fight.android.fightbrowser.brackets.participants.bracket";
     private View mParticipantsContainer;
     private Bracket mBracket;

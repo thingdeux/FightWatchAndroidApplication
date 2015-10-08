@@ -50,7 +50,11 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
 
     public InformationFeedsAdapter(Context c) {
         mContext = c;
-        mStories = StoryDB.getInstance(c.getApplicationContext()).getAllStories();
+        refreshStories();
+    }
+
+    public void refreshStories() {
+        mStories = StoryDB.getInstance(mContext.getApplicationContext()).getAllStories();
     }
 
     @Override

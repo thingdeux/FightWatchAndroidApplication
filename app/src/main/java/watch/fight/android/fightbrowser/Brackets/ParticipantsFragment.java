@@ -23,6 +23,7 @@ public class ParticipantsFragment extends Fragment {
     public static final int PARTICIPANTS_FRAGMENT_WHOSLEFT = 1;
     public static final int PARTICIPANTS_FRAGMENT_BATTLELOG = 2;
     public static final int PARTICIPANTS_FRAGMENT_UPCOMING = 3;
+    public static final int PARTICIPANTS_FRAGMENT_ROSTER = 4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,6 +73,9 @@ public class ParticipantsFragment extends Fragment {
                 break;
             case "battlelog":
                 type = PARTICIPANTS_FRAGMENT_BATTLELOG;
+                break;
+            case "player roster":
+                type = PARTICIPANTS_FRAGMENT_ROSTER;
                 break;
         }
 

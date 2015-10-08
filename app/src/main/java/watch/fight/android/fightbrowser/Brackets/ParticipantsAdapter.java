@@ -25,6 +25,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     private Bracket mBracket;
     private HashMap<String, Participant> mParticipants;
     private List<String> mActiveParticipants;
+    private List<String> mAllParticipants;
     private List<MatchWrapper> mMatches;
     private List<MatchWrapper> mUpcomingMatches;
     private boolean mIsTournamentActive;
@@ -42,6 +43,9 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
             super(v);
             switch (fragmentType) {
                 case PARTICIPANTS_FRAGMENT_WHOSLEFT:
+                    mPlayerName = (TextView) v.findViewById(R.id.bracket_player_name);
+                    break;
+                case PARTICIPANTS_FRAGMENT_ROSTER:
                     mPlayerName = (TextView) v.findViewById(R.id.bracket_player_name);
                     break;
                 default:
@@ -63,6 +67,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         mActiveParticipants = pHolder.getActiveParticipantIds();
         mUpcomingMatches = pHolder.getUpcomingMatches();
         mIsTournamentActive = pHolder.isTournamentActive();
+        mAllParticipants = pHolder.getAllParticipants();
         mWinnerTextView = tv;
         setWinnerText();
     }
@@ -79,6 +84,9 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
                 break;
             case PARTICIPANTS_FRAGMENT_UPCOMING:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_participants_vs_item, parent, false);
+                break;
+            case PARTICIPANTS_FRAGMENT_ROSTER:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_participants_item, parent, false);
                 break;
             default:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_participants_vs_item, parent, false);
@@ -98,6 +106,9 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
                 break;
             case PARTICIPANTS_FRAGMENT_UPCOMING:
                 bindUpcoming(holder, position);
+                break;
+            case PARTICIPANTS_FRAGMENT_ROSTER:
+                bindRoster(holder, position);
                 break;
         }
 
@@ -130,6 +141,12 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         holder.mPlayerName.setText(p.getName());
     }
 
+    public void bindRoster(final ViewHolder holder, final int position) {
+        final String participantId = mAllParticipants.get(position);
+        Participant p = mParticipants.get(participantId);
+        holder.mPlayerName.setText(p.getName());
+    }
+
     public void bindUpcoming(final ViewHolder holder, final int position) {
         final Match match = mUpcomingMatches.get(position).getMatch();
         final Participant p1 = mParticipants.get(match.getPlayerOneId());
@@ -140,20 +157,19 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     }
 
     public void setWinnerText() {
-        String winnerUnknown = mContext.getResources().getString(R.string.challonge_participants_winner_unknown);
+        String winner = mContext.getResources().getString(R.string.challonge_participants_winner_unknown);
         String winnerText = mContext.getResources().getString(R.string.bracket_winner_formatted);
+
         if (!mIsTournamentActive) {
-            Long winnerID = mMatches.get(mMatches.size() - 1).getMatch().getWinnerId();
-            if (winnerID != null) {
-                String winnerName = mParticipants.get(winnerID.toString()).getName();
-                mWinnerTextView.setText(String.format(winnerText,
-                        (!winnerName.isEmpty()) ? winnerName : winnerUnknown));
-            } else {
-                mWinnerTextView.setText(winnerUnknown);
+            if (mMatches.size() > 0) {
+                Long winnerID = mMatches.get(mMatches.size() - 1).getMatch().getWinnerId();
+                if (winnerID != null) {
+                    String winnerName = mParticipants.get(winnerID.toString()).getName();
+                    winner = !winnerName.isEmpty() ? winnerName : winner;
+                }
             }
-        } else {
-            mWinnerTextView.setText(String.format(winnerText, winnerUnknown));
         }
+        mWinnerTextView.setText(String.format(winnerText, winner));
     }
 
     @Override
@@ -165,6 +181,8 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
                 return mActiveParticipants.size();
             case PARTICIPANTS_FRAGMENT_UPCOMING:
                 return mUpcomingMatches.size();
+            case PARTICIPANTS_FRAGMENT_ROSTER:
+                return mAllParticipants.size();
             default:
                 return 0;
         }

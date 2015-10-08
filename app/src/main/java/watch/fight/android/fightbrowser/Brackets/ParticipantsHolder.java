@@ -23,6 +23,7 @@ public class ParticipantsHolder {
     private List<MatchWrapper> mUpcomingMatches = new ArrayList<>();
     private HashSet<String> mActiveParticipants = new HashSet<>();
     private List<String> mActiveParticipantIds = new ArrayList<>();
+    private List<String> mAllParticipants = new ArrayList<>();
     private HashMap<String, Participant> mParticipants = new HashMap<>();
     private List<MatchWrapper> mMatches = new ArrayList<>();
     private Bracket mBracket;
@@ -86,6 +87,10 @@ public class ParticipantsHolder {
             for (int i = 0; i < participants.size(); i++) {
                 p = participants.get(i).getParticipant();
                 mParticipants.put(p.getId().toString(), p);
+                if (p.getName() != null && !p.getName().toLowerCase().startsWith("bye")) {
+                    mAllParticipants.add(p.getId().toString());
+                }
+
             }
         }
     }
@@ -129,6 +134,10 @@ public class ParticipantsHolder {
 
     public List<String> getActiveParticipantIds() {
         return mActiveParticipantIds;
+    }
+
+    public List<String> getAllParticipants() {
+        return mAllParticipants;
     }
 
     public void wipe() {

@@ -32,6 +32,7 @@ import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryTrackerDB;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.StreamBrowser.models.Streamer;
@@ -53,6 +54,8 @@ public class DashboardActivity extends AppCompatActivity {
         }
 
         protected Config doInBackground(Void... response) {
+            // Prune old 'Mark as read' story trackers
+            StoryTrackerDB.getInstance(mContext).pruneOldTrackers();
             // TODO: If on first start and DB is empty - App will ship with last updated fixtures
             // The "fixtures" will set the app to the latest state.
             // Call API Server - convert to Config Object return Config instance

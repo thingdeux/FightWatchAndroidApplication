@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import watch.fight.android.fightbrowser.Utils.DateParser;
  * Created by josh on 10/8/15.
  */
 public class StoryTrackerDB {
+    public static int FEED_TRACKER_MAX_AGE = 24*5; // 5 Days (in hours)
     private static StoryTrackerDB sStoryTrackerDB;
     private SQLiteDatabase mDatabase;
     private Context mContext;
@@ -70,25 +74,41 @@ public class StoryTrackerDB {
         return stories;
     }
 
+    public List<StoryTracker> getAllTrackersAsObjs() {
+        List<StoryTracker> stories = new ArrayList<>();
+
+        // Pass no where clause or args, will return everything.
+        StoryTrackerCursorWrapper cursor = queryStoriesWithOrder(null, null, "DESC");
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                stories.add(cursor.getStoryTracker());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return stories;
+    }
+
     public void addStoryTracker(StoryTracker story) {
         ContentValues values = getContentValues(story);
         mDatabase.insert(StoryTrackerDBSchema.StoryTrackerTable.NAME, null, values);
     }
 
-//    public void addStoryTrackers(List<StoryTracker> stories) {
-//        if (stories != null && stories.size() > 0) {
-//            mDatabase.beginTransaction();
-//            for (int i = 0; i < stories.size(); i++) {
-//                ContentValues values = getContentValues(stories.get(i));
-//                mDatabase.insert(StoryTrackerDBSchema.StoryTrackerTable.NAME, null, values);
-//            }
-//            mDatabase.setTransactionSuccessful();
-//            mDatabase.endTransaction();
-//        } else {
-//            Log.e("addStories", "Error - Attemping to add 0 or null stories to DB");
-//        }
-//
-//    }
+    public void pruneOldTrackers() {
+        // Gather anything older than ... say .... 5 days and delete it.
+        GregorianCalendar today = new GregorianCalendar();
+        today.add(Calendar.HOUR, -FEED_TRACKER_MAX_AGE);
+
+        deleteStories(
+                StoryTrackerDBSchema.StoryTrackerTable.Cols.DATE_ADDED + " <= ?",
+                new String[] {DateParser.dateToEpoch(today).toString()}
+
+        );
+
+    }
 
     public void addStoryTrackers(List<Story> stories) {
         if (stories != null) {

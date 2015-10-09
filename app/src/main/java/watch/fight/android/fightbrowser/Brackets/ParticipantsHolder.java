@@ -87,10 +87,7 @@ public class ParticipantsHolder {
             for (int i = 0; i < participants.size(); i++) {
                 p = participants.get(i).getParticipant();
                 mParticipants.put(p.getId().toString(), p);
-                if (p.getName() != null && !p.getName().toLowerCase().startsWith("bye")) {
-                    mAllParticipants.add(p.getId().toString());
-                }
-
+                mAllParticipants.add(p.getId().toString());
             }
         }
     }

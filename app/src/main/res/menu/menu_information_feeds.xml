@@ -8,4 +8,10 @@
           android:icon="@drawable/ic_menu_refresh"
           app:showAsAction="ifRoom|withText"/>
 
+      <item android:id="@+id/action_mark_all_as_read"
+            android:title="@string/information_menu_mark_as_read_name"
+            android:orderInCategory="100"
+            android:icon="@drawable/ic_marked_as_read"
+            app:showAsAction="ifRoom|withText"/>
+
 </menu>

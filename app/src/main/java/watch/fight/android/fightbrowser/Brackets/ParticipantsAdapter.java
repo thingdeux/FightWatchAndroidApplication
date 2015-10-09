@@ -144,7 +144,12 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     public void bindRoster(final ViewHolder holder, final int position) {
         final String participantId = mAllParticipants.get(position);
         Participant p = mParticipants.get(participantId);
-        holder.mPlayerName.setText(p.getName());
+        if (p != null) {
+            holder.mPlayerName.setText(p.getName());
+        } else {
+            holder.mPlayerName.setText("??");
+        }
+
     }
 
     public void bindUpcoming(final ViewHolder holder, final int position) {

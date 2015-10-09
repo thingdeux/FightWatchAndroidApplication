@@ -26,6 +26,7 @@
 
     <!--Menu Options -->
     <string name="information_menu_refresh_name">Refresh</string>
+    <string name="information_menu_mark_as_read_name">Mark all as Read</string>
     <string name="menu_dashboard_name">Dashboard</string>
     <string name="menu_events_name">Events</string>
     <string name="menu_news_name">News</string>
@@ -37,6 +38,7 @@
     <string name="twitch_Chat_button">Chat</string>
     <string name="dashboard_check_news_button_name">See Latest FGC News</string>
     <string name="dashboard_share_button_name">Share</string>
+    <string name="dashboard_mark_as_read_button_name">Mark as Read</string>
     <string name="dashboard_event_button_text">Browse Upcoming Events</string>
     <string name="dashboard_streams_button_text">Check Twitch Streams</string>
     <string name="read_more_button_name">Read More</string>

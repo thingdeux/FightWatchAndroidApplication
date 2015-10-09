@@ -9,6 +9,7 @@ import watch.fight.android.fightbrowser.Events.models.DB.BracketDBHelper;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDBHelper;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDBHelper;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDBHelper;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryTrackerDBHelper;
 import watch.fight.android.fightbrowser.StreamBrowser.models.StreamerDBHelper;
 
 /**
@@ -24,6 +25,7 @@ public class DBSchema {
         db.execSQL(StoryDBHelper.SQL_CREATE_FEED_TABLE);
         db.execSQL(StoryDBHelper.SQL_INDEX_SITE_NAME);
         db.execSQL(GameDBHelper.SQL_CREATE_FEED_TABLE);
+        db.execSQL(StoryTrackerDBHelper.SQL_CREATE_STORYTRACKER_TABLE);
 
         // Tables requiring Foreign Keys
         db.execSQL(BracketDBHelper.SQL_CREATE_BRACKET_TABLE);
@@ -45,6 +47,7 @@ public class DBSchema {
         db.execSQL(FeedDBHelper.SQL_DROP_FEEDS_TABLE);
         db.execSQL(StoryDBHelper.SQL_DROP_FEEDS_TABLE);
         db.execSQL(StreamerDBHelper.SQL_DROP_STREAMER_TABLE);
+        db.execSQL(StoryTrackerDBHelper.SQL_DROP_STORYTRACKER_TABLE);
         createAllTables(db);
     }
 

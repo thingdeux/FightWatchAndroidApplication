@@ -49,6 +49,9 @@ public class InformationFeedsFragment extends Fragment {
                 setUILoading();
                 new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, true).execute();
                 return true;
+            case R.id.action_mark_all_as_read:
+                // Set all records to marked as read - refresh adapter
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

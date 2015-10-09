@@ -11,7 +11,7 @@ public class StoryTrackerCursorWrapper extends CursorWrapper {
 
     public StoryTracker getStoryTracker() {
         String url = getString(getColumnIndex(StoryTrackerDBSchema.StoryTrackerTable.Cols.URL));
-        Long published_date = getLong(getColumnIndex(StoryDBSchema.StoryTable.Cols.PUBLISHED_DATE));
+        Long published_date = getLong(getColumnIndex(StoryTrackerDBSchema.StoryTrackerTable.Cols.DATE_ADDED));
 
         StoryTracker storyTracker = new StoryTracker();
         storyTracker.setUrl(url);

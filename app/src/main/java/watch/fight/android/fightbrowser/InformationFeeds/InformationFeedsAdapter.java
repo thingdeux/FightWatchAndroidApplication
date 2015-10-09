@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -64,7 +65,7 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
         if (mStories != null) {
             mStories.clear();
         } else {
-            mStories = new ArrayList<Story>();
+            mStories = new ArrayList<>();
         }
         List<Story> latestStories = StoryDB.getInstance(mContext.getApplicationContext()).getAllStories();
         HashSet<String> markedRead = StoryTrackerDB.getInstance(mContext.getApplicationContext()).getAllTrackers();
@@ -75,8 +76,6 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
                 }
             }
         }
-
-//        mStories = StoryDB.getInstance(mContext.getApplicationContext()).getAllStories();
     }
 
     @Override
@@ -127,10 +126,8 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
                 if (story.getUrl() != null) {
                     StoryTrackerDB.getInstance(mContext.getApplicationContext())
                             .addStoryTracker(new StoryTracker(story.getUrl().toString()));
-                    holder.mMarkAsReadButton.setEnabled(false);
-                    // TODO : Remove
-                    String debugName = (story.getTitle() != null) ? story.getTitle() : story.getUrl().toString();
-                    Log.i("MarkedRead", "Marking as read: " + debugName);
+                    mStories.remove(holder.getAdapterPosition());
+                    notifyItemRemoved(holder.getAdapterPosition());
                 }
             }
         });

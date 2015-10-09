@@ -100,7 +100,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="?android:attr/borderlessButtonStyle"
-                                android:text="@string/dashboard_share_button_name"
+                                android:text="@string/dashboard_mark_as_read_button_name"
                             />
                     </LinearLayout>
 

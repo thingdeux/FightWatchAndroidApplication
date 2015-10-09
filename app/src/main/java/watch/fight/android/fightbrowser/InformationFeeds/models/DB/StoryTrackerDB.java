@@ -6,9 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.Utils.DateParser;
 
 /**
@@ -58,7 +60,8 @@ public class StoryTrackerDB {
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                stories.add(cursor.getStoryTracker().getUrl());
+                StoryTracker st = cursor.getStoryTracker();
+                stories.add(st.getUrl().toString());
                 cursor.moveToNext();
             }
         } finally {
@@ -72,21 +75,39 @@ public class StoryTrackerDB {
         mDatabase.insert(StoryTrackerDBSchema.StoryTrackerTable.NAME, null, values);
     }
 
-    public void addStoryTrackers(List<StoryTracker> stories) {
-        if (stories != null && stories.size() > 0) {
+//    public void addStoryTrackers(List<StoryTracker> stories) {
+//        if (stories != null && stories.size() > 0) {
+//            mDatabase.beginTransaction();
+//            for (int i = 0; i < stories.size(); i++) {
+//                ContentValues values = getContentValues(stories.get(i));
+//                mDatabase.insert(StoryTrackerDBSchema.StoryTrackerTable.NAME, null, values);
+//            }
+//            mDatabase.setTransactionSuccessful();
+//            mDatabase.endTransaction();
+//        } else {
+//            Log.e("addStories", "Error - Attemping to add 0 or null stories to DB");
+//        }
+//
+//    }
+
+    public void addStoryTrackers(List<Story> stories) {
+        if (stories != null) {
             mDatabase.beginTransaction();
+            StoryTracker tracker = new StoryTracker();
             for (int i = 0; i < stories.size(); i++) {
-                ContentValues values = getContentValues(stories.get(i));
-                mDatabase.insert(StoryTrackerDBSchema.StoryTrackerTable.NAME, null, values);
+                if (stories.get(i) != null && stories.get(i).getUrl() != null) {
+                    tracker.setUrl(stories.get(i).getUrl().toString());
+                    tracker.setDateAdded(System.currentTimeMillis());
+                    ContentValues values = getContentValues(tracker);
+                    mDatabase.insert(StoryTrackerDBSchema.StoryTrackerTable.NAME, null, values);
+                }
             }
             mDatabase.setTransactionSuccessful();
             mDatabase.endTransaction();
         } else {
-            Log.e("addStories", "Error - Attemping to add 0 or null stories to DB");
+            Log.e("addStoryTrackers", "Error attempting to add 0 or null stories to DB");
         }
-
     }
-
     public void deleteStoryTracker(int id) {
         Log.v("DeleteStoryTracker", "Deleting StoryTracker: " + id);
         deleteStories(StoryTrackerDBSchema.StoryTrackerTable.Cols._ID + " = ?", new String[]{"" + id});

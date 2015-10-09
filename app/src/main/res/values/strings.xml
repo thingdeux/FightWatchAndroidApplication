@@ -38,7 +38,7 @@
     <string name="twitch_Chat_button">Chat</string>
     <string name="dashboard_check_news_button_name">See Latest FGC News</string>
     <string name="dashboard_share_button_name">Share</string>
-    <string name="dashboard_mark_as_read_button_name">Mark as Read</string>
+    <string name="dashboard_mark_as_read_button_name">Mark Read</string>
     <string name="dashboard_event_button_text">Browse Upcoming Events</string>
     <string name="dashboard_streams_button_text">Check Twitch Streams</string>
     <string name="read_more_button_name">Read More</string>
@@ -51,6 +51,7 @@
     <string name="loading_message_subtitle">Loading Content</string>
     <string name="bracket_vs_text">VS</string>
     <string name="bracket_winner_formatted">Winner: %1$s</string>
+    <string name="dbinspector_app_name">FGC Comp. Debug DB</string>
 
     <!--Error Text-->
     <string name="challonge_participants_loading_error">Error Loading Brackets</string>

@@ -47,4 +47,6 @@ dependencies {
         transitive = true;
     }
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    debugCompile 'im.dino:dbinspector:3.2.1@aar'
 }
+

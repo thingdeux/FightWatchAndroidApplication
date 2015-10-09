@@ -6,6 +6,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.List;
+
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDB;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryTrackerDB;
+import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.R;
 
 /**
@@ -58,6 +63,16 @@ public class InformationFeedsActivity extends AppCompatActivity {
                 if (feedsFragment != null) {
                     feedsFragment.onOptionsItemSelected(item);
                 }
+                return true;
+
+            case R.id.action_mark_all_as_read:
+                InformationFeedsFragment fragment = (InformationFeedsFragment) getSupportFragmentManager().findFragmentById(
+                        R.id.information_feed_main_fragment);
+
+                if (fragment != null) {
+                    fragment.onOptionsItemSelected(item);
+                }
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import watch.fight.android.fightbrowser.Config.ConfigFetcher;
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.R;
 
@@ -24,7 +25,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        new FetchFeeds.FetchStories(this, this.getActivity()).execute();
+        new ConfigFetcher(this.getActivity(), this).execute();
         setUILoading();
     }
 
@@ -41,6 +42,10 @@ public class DashboardFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         return v;
+    }
+
+    public void fetchFeeds() {
+        new FetchFeeds.FetchStories(this, this.getActivity()).execute();
     }
 
     public void setUILoading() {

@@ -81,6 +81,10 @@
       "streams": ["http://twitch.tv/teamsp00ky"],
       "brackets": [
         {
+          "bracket_name": "SCR2015 USF4 3V3",
+          "bracket_url": "http://levelup.challonge.com/scr2015_usf4_3v3"
+        },
+        {
           "bracket_name": "SCR2015 TTT2",
           "bracket_url": "http://levelup.challonge.com/scr2015_ttt2"
         }, {

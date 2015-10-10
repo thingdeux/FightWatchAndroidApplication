@@ -138,6 +138,7 @@ public class ParticipantsHolder {
     }
 
     public void wipe() {
+        mAllParticipants.clear();
         mActiveParticipantIds.clear();
         mActiveParticipants.clear();
         mParticipants.clear();

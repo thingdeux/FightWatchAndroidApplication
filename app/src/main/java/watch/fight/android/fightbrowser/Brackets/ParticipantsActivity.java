@@ -89,6 +89,7 @@ public class ParticipantsActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ParticipantsHolder.getInstance(this).wipe();
     }
 
     public static Intent NewInstance(Context activity, Integer bracketid) {

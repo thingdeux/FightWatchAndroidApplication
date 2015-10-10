@@ -69,6 +69,12 @@
       "name": "Team YP",
       "rss_url": "http://www.teamyp.com/feed/",
       "website_url": "http://teamyp.com"
+    }, {
+      "id": 6,
+      "name": "Shoryuken",
+      "rss_url": "http://shoryuken.com/feed/",
+      "website_url": "http://shoryuken.com",
+      "feed_image_url": "http://fgccompanion-79b.kxcdn.com/srk_min.png"
     }
   ],
   "events":  [

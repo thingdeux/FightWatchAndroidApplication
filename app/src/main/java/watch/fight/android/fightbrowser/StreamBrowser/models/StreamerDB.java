@@ -105,9 +105,9 @@ public class StreamerDB {
 
     }
 
-    public void deleteStreamers(long event_id) {
-        Log.v("DeleteStreamer", "Deleting Streamer: " + event_id);
-        deleteStreamers(StreamerDBSchema.StreamerTable.Cols.FK_GAME_ID + " = ?", new String[]{"" + event_id});
+    public void deleteStreamers(long fk_game_id) {
+        Log.v("DeleteStreamer", "Deleting Streamer: " + fk_game_id);
+        deleteStreamers(StreamerDBSchema.StreamerTable.Cols.FK_GAME_ID + " = ?", new String[]{"" + fk_game_id});
     }
 
     public void deleteAllStreamers() {

@@ -60,8 +60,8 @@ public class InformationFeedsNetworkHandlers {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                NetworkRequest.getInstance(context.getApplicationContext()).IncrementPendingRssRequests();
                 Log.e("VolleyError", "Error Retrieving rss feed (" + url + ")! - " + error.toString());
+                NetworkRequest.getInstance(context.getApplicationContext()).DecrementPendingRssRequests();
             }
         };
     }
@@ -102,7 +102,7 @@ public class InformationFeedsNetworkHandlers {
             Map headers = new HashMap();
 
             // Add custom header for reddit rss feeds
-            String userAgent = "android:watch.fight.android.fightbrowser:v0.1.3 (by /u/thingdeux)";
+            String userAgent = "android:watch.fight.android.fightbrowser:v0.1.5 (by /u/thingdeux)";
             headers.put(CoreProtocolPNames.USER_AGENT, userAgent);
             return headers;
         }
@@ -117,9 +117,9 @@ public class InformationFeedsNetworkHandlers {
         protected Response<T> parseNetworkResponse(NetworkResponse response)
         {
             try {
-
                 String data = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-                return Response.success(parseFeed(data, clazz),
+                // Remove any errant carriage returns at the start of RSS Feeds (I'm looking at you Shoryuken!)
+                return Response.success(parseFeed(data.replaceAll(System.getProperty("line.separator"), ""), clazz),
                         HttpHeaderParser.parseCacheHeaders(response));
             }
             catch (UnsupportedEncodingException e) {

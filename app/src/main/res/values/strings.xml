@@ -54,6 +54,10 @@
     <string name="bracket_winner_formatted">Winner: %1$s</string>
     <string name="dbinspector_app_name">FGC Comp. Debug DB</string>
 
+    <!--Preferences labels-->
+    <string name="dark_view_label">Enable Dark Viewing Mode</string>
+    <string name="web_view_label">Use WebView with news items</string>
+
     <!--Error Text-->
     <string name="challonge_participants_loading_error">Error Loading Brackets</string>
     <!--Text for winner being unknown-->

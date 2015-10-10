@@ -5,12 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.viewpagerindicator.TitlePageIndicator;
 
-import watch.fight.android.fightbrowser.Brackets.ParticipantsFragment;
 import watch.fight.android.fightbrowser.R;
 
 /**
@@ -30,6 +29,15 @@ public class PreferencesActivity extends AppCompatActivity {
 
         mPager.setAdapter(adapter);
         mIndicator.setViewPager(mPager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActionBar ap = getSupportActionBar();
+        if (ap != null) {
+            ap.setElevation(0);
+        }
     }
 
     @Override

@@ -2,15 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:alpha="87.0">
 
-    <TextView android:id="@+id/preferences_item"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              style="@style/Base.TextAppearance.AppCompat.Title"
-              android:textColor="#FFFFFF"
-              android:textStyle="bold"
-              android:paddingLeft="8dp"
-              android:paddingBottom="8dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView android:id="@+id/preferences_item"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  style="@style/Base.TextAppearance.AppCompat.Title"
+                  android:textColor="#000"
+                  android:textStyle="bold"
+                  android:layout_weight="9"
+                  />
+
+        <Switch android:id="@+id/toggle_button"
+                      android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

@@ -7,7 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
+import watch.fight.android.fightbrowser.Config.models.GameConfig;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
+import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.SharedPrefManager;
 
 import static watch.fight.android.fightbrowser.Config.PreferencesFragment.*;
 
@@ -17,26 +25,36 @@ import static watch.fight.android.fightbrowser.Config.PreferencesFragment.*;
 public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder> {
     private Context mContext;
     private int mFragmentType;
+    private List<GameConfig> mGames;
+    private List<Feed> mFeeds;
+    private List<SharedPrefManager> mSharedPrefManager;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView mPlayerOne;
+        public TextView mPrefLabel;
 
         public ViewHolder(View v, int fragmentType) {
             super(v);
-            switch (fragmentType) {
-                case PREFERENCES_FRAGMENT_FEEDS:
-                    break;
-                case PREFERENCES_FRAGMENT_GAMES:
-                    break;
-                case PREFERENCES_FRAGMENT_GENERAL:
-                    break;
-            }
+            mPrefLabel = (TextView) v.findViewById(R.id.preferences_item);
         }
     }
 
         public PreferencesAdapter(Context c, int fragmentType) {
             mContext = c;
             mFragmentType = fragmentType;
+
+            switch (fragmentType) {
+                case PREFERENCES_FRAGMENT_FEEDS:
+                    mFeeds = FeedDB.getInstance(mContext).getAllFeeds();
+                    break;
+                case PREFERENCES_FRAGMENT_GAMES:
+                    mGames = GameDB.getInstance(mContext).getAllGames();
+                    break;
+                case PREFERENCES_FRAGMENT_GENERAL:
+                    mSharedPrefManager = new ArrayList<>();
+                    mSharedPrefManager.add(new SharedPrefManager(mContext, SharedPrefManager.WEB_VIEW_PREF));
+                    mSharedPrefManager.add(new SharedPrefManager(mContext, SharedPrefManager.DARK_MODE));
+                    break;
+            }
         }
 
         @Override
@@ -49,36 +67,41 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
-//            switch (mFragmentType) {
-//                case PARTICIPANTS_FRAGMENT_BATTLELOG:
-//                    bindBattleLog(holder, position);
-//                    break;
-//                case PARTICIPANTS_FRAGMENT_WHOSLEFT:
-//                    bindWhosLeft(holder, position);
-//                    break;
-//                case PARTICIPANTS_FRAGMENT_UPCOMING:
-//                    bindUpcoming(holder, position);
-//                    break;
-//                case PARTICIPANTS_FRAGMENT_ROSTER:
-//                    bindRoster(holder, position);
-//                    break;
-//            }
-            holder.mPlayerOne.setText("Yup");
-
+            switch (mFragmentType) {
+                case PREFERENCES_FRAGMENT_FEEDS:
+                    Feed feed = mFeeds.get(position);
+                    if (feed != null && feed.getName() != null) {
+                        holder.mPrefLabel.setText(feed.getName());
+                    }
+                    break;
+                case PREFERENCES_FRAGMENT_GAMES:
+                    GameConfig game = mGames.get(position);
+                    if (game != null && game.getGameName() != null) {
+                        holder.mPrefLabel.setText(game.getGameName());
+                    }
+                    break;
+                case PREFERENCES_FRAGMENT_GENERAL:
+                    SharedPrefManager sharedPref = mSharedPrefManager.get(position);
+                    if (sharedPref != null) {
+                        holder.mPrefLabel.setText(sharedPref.toString());
+                    }
+                    break;
+            }
         }
 
         @Override
         public int getItemCount() {
             switch (mFragmentType) {
                 case PREFERENCES_FRAGMENT_FEEDS:
-//                    return mMatches.size();
-                    return 0;
+                    if (mFeeds != null) {
+                        return mFeeds.size();
+                    }
                 case PREFERENCES_FRAGMENT_GENERAL:
-                    return 0;
-//                    return mActiveParticipants.size();
+                    return mSharedPrefManager.size();
                 case PREFERENCES_FRAGMENT_GAMES:
-                    return 0;
-//                    return mUpcomingMatches.size();
+                    if (mGames != null) {
+                        return mGames.size();
+                    }
             }
             return 0;
         }

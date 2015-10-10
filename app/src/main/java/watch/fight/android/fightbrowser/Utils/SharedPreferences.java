@@ -9,27 +9,26 @@ import java.util.Set;
  * Created by josh on 9/20/15.
  */
 public class SharedPreferences {
-    public static String FAVORITE_STREAMS = "FavoriteStreams";
-    public static String BLOCKED_STREAMS = "BlockedStreams";
-    public static String CONFIG_LAST_UPDATED = "ConfigLastUpdated";
-    public static String FEEDS_LAST_UPDATED = "FeedsLastUpdated";
-    public static String TWITCH_STREAMS_LAST_UPDATED = "TwitchStreamsLastUpdated";
+    public static final String CONFIG_LAST_UPDATED = "ConfigLastUpdated";
+    public static final String FEEDS_LAST_UPDATED = "FeedsLastUpdated";
+    public static final String TWITCH_STREAMS_LAST_UPDATED = "TwitchStreamsLastUpdated";
+    public static final String TO_WEBVIEW_OR_NOT_TO_WEBVIEW = "WebviewChoice";
+    public static final String DARK_VIEW = "DarkView";
 
-    public static void setFavoriteStreams(Context context, Set<String> favorites) { setStringSet(context, FAVORITE_STREAMS, favorites); }
-    public static void setBlockedStreams(Context context, Set<String> blocked) { setStringSet(context, BLOCKED_STREAMS, blocked); }
     public static void setConfigLastUpdated(Context context, long lastUpdated) { setLong(context, CONFIG_LAST_UPDATED, lastUpdated); }
     public static void setFeedsLastUpdated(Context context, long lastUpdated) { setLong(context, FEEDS_LAST_UPDATED, lastUpdated); }
     public static void setFeedsLastUpdatedToNow(Context context) { setLong(context, FEEDS_LAST_UPDATED, System.currentTimeMillis()); }
+    public static void setToWebviewOrNotToWebview(Context context, Boolean value) { setBool(context, TO_WEBVIEW_OR_NOT_TO_WEBVIEW, value); }
+    public static void setDarkView(Context context, Boolean value) { setBool(context, DARK_VIEW, value); }
 
     public static void setTwitchStreamsLastUpdated(Context context, long lastUpdated) { setLong(context, TWITCH_STREAMS_LAST_UPDATED, lastUpdated);
     }
 
-    public static Set<String> getFavoriteStreams(Context context)  { return getStringSet(context, FAVORITE_STREAMS); }
-    public static Set<String> getBlockedStreams(Context context) { return getStringSet(context, BLOCKED_STREAMS); }
     public static long getConfigLastUpdated(Context context) { return getLong(context, CONFIG_LAST_UPDATED); }
     public static long getFeedsLastUpdated(Context context) { return getLong(context, FEEDS_LAST_UPDATED); }
     public static long getTwitchStreamsLastUpdated(Context context) { return getLong(context, TWITCH_STREAMS_LAST_UPDATED); }
-
+    public static Boolean getToWebViewOrNotToWebView(Context context) { return getBoolean(context, TO_WEBVIEW_OR_NOT_TO_WEBVIEW); }
+    public static Boolean getDarkView(Context context) { return getBoolean(context, DARK_VIEW); }
 
     private static long getLong(Context context, String name) {
         return PreferenceManager.getDefaultSharedPreferences(context)
@@ -43,10 +42,21 @@ public class SharedPreferences {
                 .apply();
     }
 
+    private static void setBool(Context context, String name, Boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(name, value)
+                .apply();
+    }
 
     private static String getString(Context context, String name) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(name, null);
+    }
+
+    private static Boolean getBoolean(Context context, String name) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(name, false);
     }
 
     private static void setString(Context context, String name, String value) {

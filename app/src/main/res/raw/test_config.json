@@ -64,6 +64,11 @@
       "name": "r/mortalkombatx",
       "rss_url": "https://www.reddit.com/r/MortalKombatX/hot/.rss?limit=10",
       "website_url": "https://www.reddit.com/r/MortalKombatX/"
+    }, {
+      "id": 5,
+      "name": "Team YP",
+      "rss_url": "http://www.teamyp.com/feed/",
+      "website_url": "http://teamyp.com"
     }
   ],
   "events":  [

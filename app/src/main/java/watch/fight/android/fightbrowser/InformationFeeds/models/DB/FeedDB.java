@@ -138,6 +138,7 @@ public class FeedDB {
         values.put(FeedTable.Cols.PARENT_URL, feed.getWebUrl());
         values.put(FeedTable.Cols.RSS_URL, feed.getRSSUrl());
         values.put(FeedTable.Cols.ORDINAL, feed.getOrdinal());
+        values.put(FeedTable.Cols.IS_FILTERED, feed.getIsFiltered());
 
         return values;
     }

@@ -30,6 +30,15 @@ public class Feed {
     private String mLastUpdated;
 
     private int mOrdinal;
+    private Boolean mIsFiltered;
+
+    public Boolean getIsFiltered() {
+        return mIsFiltered;
+    }
+
+    public void setIsFiltered(Boolean isFiltered) {
+        mIsFiltered = isFiltered;
+    }
 
     public int getOrdinal() {
         return mOrdinal;

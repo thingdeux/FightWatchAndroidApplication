@@ -4,10 +4,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/bracket_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+    <LinearLayout android:id="@+id/fragment_one"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:orientation="vertical">
+    </LinearLayout>
 
 </LinearLayout>

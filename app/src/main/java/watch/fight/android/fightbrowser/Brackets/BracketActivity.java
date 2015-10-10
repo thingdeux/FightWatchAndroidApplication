@@ -32,8 +32,8 @@ public class BracketActivity extends AppCompatActivity {
         Long EventId = intent.getLongExtra(BRACKET_EVENT_ID, -1);
         Event event = EventDB.getInstance(this).getEvent(EventId);
 
-        setContentView(R.layout.bracket_activity);
-        mRecyclerView = (RecyclerView) findViewById(R.id.bracket_recycler_view);
+        setContentView(R.layout.single_recycler_no_loading);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_one);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
 
         mAdapter = new BracketAdapter(this, event);

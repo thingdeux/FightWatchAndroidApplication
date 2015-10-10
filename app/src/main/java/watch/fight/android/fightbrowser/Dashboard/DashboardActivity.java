@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
+import watch.fight.android.fightbrowser.Config.PreferencesActivity;
 import watch.fight.android.fightbrowser.Events.EventsActivity;
 import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
@@ -67,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(this, InformationFeedsActivity.class));
                 return true;
             case R.id.action_preferences:
-                Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, PreferencesActivity.class));
                 return true;
             case R.id.action_events:
                 startActivity(new Intent(this, EventsActivity.class));

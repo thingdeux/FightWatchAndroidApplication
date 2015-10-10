@@ -19,7 +19,8 @@ public class FeedDBHelper extends BaseDB {
                     FeedTable.Cols.PARENT_URL + TEXT_TYPE + "," +
                     FeedTable.Cols.RSS_URL + TEXT_TYPE + "," +
                     FeedTable.Cols.ORDINAL + INTEGER_TYPE + "," +
-                    FeedTable.Cols.LAST_UPDATED + TEXT_TYPE +
+                    FeedTable.Cols.LAST_UPDATED + TEXT_TYPE + "," +
+                    FeedTable.Cols.IS_FILTERED + INTEGER_TYPE +
                     " )";
 
     public static final String SQL_DROP_FEEDS_TABLE = "DROP TABLE IF EXISTS " + FeedTable.NAME;

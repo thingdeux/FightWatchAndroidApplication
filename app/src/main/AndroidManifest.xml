@@ -19,6 +19,11 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Config.PreferencesActivity"
+                  android:label="@string/preferences_activity_name">
+
+        </activity>
+
         <activity
             android:name=".StreamBrowser.BrowserActivity"
             android:label="@string/browser_activity_name">

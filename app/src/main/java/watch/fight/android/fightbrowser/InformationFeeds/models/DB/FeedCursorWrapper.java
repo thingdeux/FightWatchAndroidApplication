@@ -21,6 +21,7 @@ public class FeedCursorWrapper extends CursorWrapper {
         String lastUpdated = getString(getColumnIndex(FeedTable.Cols.LAST_UPDATED));
         String parentUrl = getString(getColumnIndex(FeedTable.Cols.PARENT_URL));
         String rssUrl = getString(getColumnIndex(FeedTable.Cols.RSS_URL));
+        int isFiltered = getInt(getColumnIndex(FeedTable.Cols.IS_FILTERED));
 
         Feed feed = new Feed();
         feed.setId(id);
@@ -30,6 +31,7 @@ public class FeedCursorWrapper extends CursorWrapper {
         feed.setWebUrl(parentUrl);
         feed.setRSSUrl(rssUrl);
         feed.setOrdinal(ordinal);
+        feed.setIsFiltered(isFiltered > 0);
 
         return feed;
     }

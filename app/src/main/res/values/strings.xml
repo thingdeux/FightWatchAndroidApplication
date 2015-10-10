@@ -7,6 +7,7 @@
     <string name="information_feeds_activity_name">Information</string>
     <string name="brackets_activity_name">Brackets</string>
     <string name="participants_activity_name">Participants</string>
+    <string name="preferences_activity_name">Preferences</string>
 
     <!--Intent Chooser Text-->
     <string name="intent_text_share_feed">Share Story With...</string>

@@ -26,6 +26,7 @@ public class ParticipantsHolder {
     private List<String> mAllParticipants = new ArrayList<>();
     private HashMap<String, Participant> mParticipants = new HashMap<>();
     private List<MatchWrapper> mMatches = new ArrayList<>();
+    private List<MatchWrapper> mValidMatches = new ArrayList<>();
     private Bracket mBracket;
     private Context mContext;
     private boolean mIsTournamentActive;
@@ -55,18 +56,7 @@ public class ParticipantsHolder {
             for (int i = 0; i < mMatches.size(); i++) {
                 m = mMatches.get(i).getMatch();
                 if (m != null) {
-                    if (m.getState() != null)
-                    {
-                        if(m.getState().toLowerCase().equals("pending") || m.getState().toLowerCase().equals("open")) {
-                            if (m.getPlayerOneId() != null || m.getPlayerTwoId() != null) {
-                                // Don't want to see the empty brackets from way in the future here
-                                mUpcomingMatches.add(mMatches.get(i));
-                            }
-
-                            addActivePlayer(m.getPlayerOneId());
-                            addActivePlayer(m.getPlayerTwoId());
-                        }
-                    }
+                    addUpcomingMatch(m, i);
                 }
             }
             for (String s : mActiveParticipants) {
@@ -95,10 +85,53 @@ public class ParticipantsHolder {
     public void setIsTournamentActive() {
         if (data != null) {
             if (data.getTournament().getState() != null) {
-                mIsTournamentActive = (data.getTournament().getState().toLowerCase().equals("underway"));
+                mIsTournamentActive = (data.getTournament().getState().toLowerCase().contains("underway"));
             }
         }
+    }
 
+//    public void filterDirtyMatches() {
+//        if (mMatches != null) {
+//            for (int i = 0; i < mMatches.size(); i++) {
+//                Match match = mMatches.get(i).getMatch();
+//                String p1 = match.getPlayerOneId();
+//                String p2 = match.getPlayerTwoId();
+//                if ((p1 != null && !p1.isEmpty()) || (p2 !=null && !p2.isEmpty())) {
+//                    Participant pa1 = mParticipants.get(p1);
+//                    Participant pa2 = mParticipants.get(p2);
+//                    if (mParticipants.get(p1) != null || mParticipants.get(p2) != null) {
+//                        mValidMatches.add(mMatches.get(i));
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    public void addUpcomingMatch(Match match, int index) {
+        /*
+            I need to make sure that both matches have participants whom have valid names in the
+            participant map.  With multi-pool brackets there are playerids that don't match up with
+            the participants and as such no name is retrieved.  *Reported to Challonge 10/11/15*
+         */
+        if (match.getState() != null)
+        {
+            String p1 = match.getPlayerOneId();
+            String p2 = match.getPlayerTwoId();
+
+            if (p1 != null || p2 != null) {
+                if (mParticipants.get(p1) != null || mParticipants.get(p2) != null) {
+                    if(match.getState().toLowerCase().equals("pending") || match.getState().toLowerCase().equals("open")) {
+                        // Don't want to see the empty brackets from way in the future here
+                        mUpcomingMatches.add(mMatches.get(index));
+                    } else {
+                        mValidMatches.add(mMatches.get(index));
+                    }
+                    addActivePlayer(p1);
+                    addActivePlayer(p2);
+                }
+            }
+
+        }
     }
 
     public TournamentWrapper getTournamentWrapper() {
@@ -137,10 +170,15 @@ public class ParticipantsHolder {
         return mAllParticipants;
     }
 
+    public List<MatchWrapper> getValidMatches() {
+        return mValidMatches;
+    }
+
     public void wipe() {
         mAllParticipants.clear();
         mActiveParticipantIds.clear();
         mActiveParticipants.clear();
+        mValidMatches.clear();
         mParticipants.clear();
         mMatches.clear();
         mUpcomingMatches.clear();

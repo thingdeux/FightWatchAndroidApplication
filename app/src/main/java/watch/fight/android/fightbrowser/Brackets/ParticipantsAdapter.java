@@ -27,6 +27,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     private List<String> mActiveParticipants;
     private List<String> mAllParticipants;
     private List<MatchWrapper> mMatches;
+    private List<MatchWrapper> mValidMatches;
     private List<MatchWrapper> mUpcomingMatches;
     private boolean mIsTournamentActive;
     private Context mContext;
@@ -63,6 +64,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         ParticipantsHolder pHolder = ParticipantsHolder.getInstance(mContext);
         mBracket = pHolder.getBracket();
         mMatches = pHolder.getMatches();
+        mValidMatches = pHolder.getValidMatches();
         mParticipants = pHolder.getParticipants();
         mActiveParticipants = pHolder.getActiveParticipantIds();
         mUpcomingMatches = pHolder.getUpcomingMatches();
@@ -115,7 +117,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     }
 
     public void bindBattleLog(final ViewHolder holder, final int position) {
-        final Match match = mMatches.get(position).getMatch();
+        final Match match = mValidMatches.get(position).getMatch();
         final Participant p1 = mParticipants.get(match.getPlayerOneId());
         final Participant p2 = mParticipants.get(match.getPlayerTwoId());
 
@@ -138,12 +140,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     public void bindWhosLeft(final ViewHolder holder, final int position) {
         final String participantId = mActiveParticipants.get(position);
         Participant p = mParticipants.get(participantId);
-        if (p == null) {
-            holder.mPlayerName.setText("??");
-        } else {
-            holder.mPlayerName.setText((p != null) ? p.getName() : "??");
-        }
-
+        holder.mPlayerName.setText((p != null) ? p.getName() : "??");
     }
 
     public void bindRoster(final ViewHolder holder, final int position) {
@@ -186,7 +183,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     public int getItemCount() {
         switch (mFragmentType) {
             case PARTICIPANTS_FRAGMENT_BATTLELOG:
-                return mMatches.size();
+                return mValidMatches.size();
             case PARTICIPANTS_FRAGMENT_WHOSLEFT:
                 return mActiveParticipants.size();
             case PARTICIPANTS_FRAGMENT_UPCOMING:

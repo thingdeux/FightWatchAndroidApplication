@@ -156,6 +156,7 @@ public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
             if (!gameSet.contains(receivedGames.get(i).getId())) {
                 // If DB key is not found in the DB - create it.
                 GameConfig game = receivedGames.get(i);
+                game.setIsFiltered(false);
                 gameDB.addGame(game);
                 if (game.getKnownStreamers() != null && game.getKnownStreamers().size() > 0) {
                     StreamerDB.getInstance(mContext).deleteStreamers(game.getId());
@@ -168,7 +169,7 @@ public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
     private void addNewFeedsAsNecessary(final ArrayList<Feed> feeds) {
         // Place Each ID in a hashset to reduce cost of checks below
         FeedDB feedDB = FeedDB.getInstance(mContext);
-        List<Feed> existingFeeds = feedDB.getAllFeeds();
+        List<Feed> existingFeeds = feedDB.getAllUnfilteredFeeds();
 
         HashSet<Long> feedSet = new HashSet<>();
         for (int i = 0; i < existingFeeds.size(); i++) {
@@ -179,6 +180,7 @@ public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
             if (!feedSet.contains(feeds.get(i).getId())) {
                 // If DB key is not found in the DB - create it.
                 Feed feed = feeds.get(i);
+                feed.setIsFiltered(false);
                 feedDB.addFeed(feed);
             }
         }

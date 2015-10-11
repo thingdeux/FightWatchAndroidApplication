@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class GameDB {
         mDatabase = new GameDBHelper(mContext).getWritableDatabase();
     }
 
-    public GameConfig getGame(Long id) {
+    public GameConfig getGame(Integer id) {
         GameCursorWrapper cursor = queryGames(
                 GameDBSchema.GameTable.Cols.ID + " = ?",
                 new String[]{"" + id}
@@ -65,6 +66,40 @@ public class GameDB {
             cursor.close();
         }
         return games;
+    }
+
+    public List<GameConfig> getAllUnfilteredGames() {
+        List<GameConfig> games = new ArrayList<>();
+
+        // Pass no where clause or args, will return everything.
+        GameCursorWrapper cursor = queryGames(
+                GameDBSchema.GameTable.Cols.IS_FILTERED + " = ?",
+                new String[] {"0"});
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                games.add(cursor.getGame());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return games;
+    }
+
+    public void setFiltered(Integer gameid, boolean isChecked) {
+        if (gameid != null) {
+            GameConfig game = getGame(gameid);
+            game.setIsFiltered(isChecked);
+
+            mDatabase.update(
+                GameDBSchema.GameTable.NAME,
+                getContentValues(game),
+                GameDBSchema.GameTable.Cols.ID + " = ?",
+                new String[] {gameid.toString()});
+        }
+
     }
 
     public void addGame(GameConfig game) {

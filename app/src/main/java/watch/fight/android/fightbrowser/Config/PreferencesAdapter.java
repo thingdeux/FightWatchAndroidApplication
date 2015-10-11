@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -72,18 +73,10 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             switch (mFragmentType) {
                 case PREFERENCES_FRAGMENT_FEEDS:
-                    Feed feed = mFeeds.get(position);
-                    if (feed != null && feed.getName() != null) {
-                        holder.mPrefLabel.setText(feed.getName());
-                        holder.mToggleSwitch.setChecked(feed.getIsFiltered());
-                    }
+                    bindFeed(holder, position);
                     break;
                 case PREFERENCES_FRAGMENT_GAMES:
-                    GameConfig game = mGames.get(position);
-                    if (game != null && game.getGameName() != null) {
-                        holder.mPrefLabel.setText(game.getGameName());
-                        holder.mToggleSwitch.setChecked(game.getIsFiltered());
-                    }
+                    bindGame(holder, position);
                     break;
                 case PREFERENCES_FRAGMENT_GENERAL:
                     SharedPrefManager sharedPref = mSharedPrefManager.get(position);
@@ -94,6 +87,36 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                     break;
             }
         }
+
+    public void bindFeed(final ViewHolder holder, final int position) {
+        final Feed feed = mFeeds.get(position);
+        if (feed != null && feed.getName() != null) {
+            holder.mPrefLabel.setText(feed.getName());
+            holder.mToggleSwitch.setChecked(!feed.getIsFiltered());
+            holder.mToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    FeedDB.getInstance(mContext).setFiltered(feed.getId(), !isChecked);
+                }
+            });
+        }
+    }
+
+        public void bindGame(final ViewHolder holder, final int position) {
+            final GameConfig game = mGames.get(position);
+            if (game != null && game.getGameName() != null) {
+                holder.mPrefLabel.setText(game.getGameName());
+                holder.mToggleSwitch.setChecked(!game.getIsFiltered());
+                holder.mToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        GameDB.getInstance(mContext).setFiltered(game.getId(), !isChecked);
+                    }
+                });
+            }
+        }
+
+
 
         @Override
         public int getItemCount() {

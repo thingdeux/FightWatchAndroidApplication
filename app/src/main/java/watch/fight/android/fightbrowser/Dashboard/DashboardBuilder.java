@@ -129,26 +129,28 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
 
     private DashboardEntry buildStreamModule() {
         // TODO : Perhaps pass in synchronized list to prevent any concurrency issues.
-        List<GameConfig> storedGames = GameDB.getInstance(mContext).getAllGames();
-        if (storedGames != null) {
-            for (int i=0; i < storedGames.size(); i++) {
-                if (i > 3) {
+        List<GameConfig> storedGames = GameDB.getInstance(mContext).getAllUnfilteredGames();
+
+            if (storedGames != null) {
+                for (int i=0; i < storedGames.size(); i++) {
+                    if (i > 3) {
+                        break;
+                    }
+                    mRequestQueue.add(createStreamSummaryRequest(storedGames.get(i).getGameName(), mSummaries));
+                }
+
+
+            // Wait 4 seconds or 3 summary responses
+            while (mTimeAwaitingTwitchSummaryResponse < 4000) {
+                if (mSummaries.size() >= 3 || mSummaries.size() >= storedGames.size()) {
                     break;
                 }
-                mRequestQueue.add(createStreamSummaryRequest(storedGames.get(i).getGameName(), mSummaries));
-            }
-        }
-
-        // Wait 4 seconds or 3 summary responses
-        while (mTimeAwaitingTwitchSummaryResponse < 4000) {
-            if (mSummaries.size() >= 3) {
-                break;
-            }
-            Log.i(TAG, "Waiting for twitch calls to finish: " + mTimeAwaitingTwitchSummaryResponse);
-            try {
-                Thread.sleep(100);
-                mTimeAwaitingTwitchSummaryResponse += 100;
-            } catch (InterruptedException ie) {
+                Log.i(TAG, "Waiting for twitch calls to finish: " + mTimeAwaitingTwitchSummaryResponse);
+                try {
+                    Thread.sleep(100);
+                    mTimeAwaitingTwitchSummaryResponse += 100;
+                } catch (InterruptedException ie) {
+                }
             }
         }
 

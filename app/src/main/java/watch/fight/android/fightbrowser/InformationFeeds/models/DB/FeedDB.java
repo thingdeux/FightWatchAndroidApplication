@@ -9,6 +9,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Config.models.DB.GameCursorWrapper;
+import watch.fight.android.fightbrowser.Config.models.DB.GameDBSchema;
+import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 
 import static watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDBSchema.FeedTable;
@@ -51,7 +54,7 @@ public class FeedDB {
         return feeds;
     }
 
-    public Feed getFeed(int id) {
+    public Feed getFeed(Long id) {
         FeedCursorWrapper cursor = queryFeeds(
                 FeedTable.Cols._ID + " = ?",
                 new String[]{"" + id}
@@ -113,6 +116,58 @@ public class FeedDB {
         if (isDeleted != 1) {
             Log.e("deleteFeeds", "Unable to delete feeds -> " + whereArgs.toString());
         }
+    }
+
+    public List<Feed> getAllUnfilteredFeeds() {
+        List<Feed> feeds = new ArrayList<>();
+
+        // Pass no where clause or args, will return everything.
+        FeedCursorWrapper cursor = queryFeeds(
+                FeedDBSchema.FeedTable.Cols.IS_FILTERED + " = ?",
+                new String[]{"0"});
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                feeds.add(cursor.getFeed());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return feeds;
+    }
+
+    public List<Long> getAllUnfilteredFeedIds() {
+        List<Feed> feeds = getAllUnfilteredFeeds();
+        List<Long> unFilteredIds = new ArrayList<>();
+        for (int i = 0; i < feeds.size(); i++) {
+            unFilteredIds.add(feeds.get(i).getId());
+        }
+        return unFilteredIds;
+    }
+
+    public List<String> getAllUnfilteredFeedNames() {
+        List<Feed> feeds = getAllUnfilteredFeeds();
+        List<String> unFilteredSites = new ArrayList<>();
+        for (int i = 0; i < feeds.size(); i++) {
+            unFilteredSites.add(feeds.get(i).getName());
+        }
+        return unFilteredSites;
+    }
+
+    public void setFiltered(Long feedid, boolean isChecked) {
+        if (feedid != null) {
+            Feed feed = getFeed(feedid);
+            feed.setIsFiltered(isChecked);
+
+            mDatabase.update(
+                FeedDBSchema.FeedTable.NAME,
+                getContentValues(feed),
+                FeedDBSchema.FeedTable.Cols.ID + " = ?",
+                new String[]{feedid.toString()});
+        }
+
     }
 
     private FeedCursorWrapper queryFeeds(String whereClause, String[] whereArgs) {

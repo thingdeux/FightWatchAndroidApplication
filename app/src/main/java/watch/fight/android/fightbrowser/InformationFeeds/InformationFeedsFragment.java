@@ -57,7 +57,7 @@ public class InformationFeedsFragment extends Fragment {
             case R.id.action_mark_all_as_read:
                 // Set all records to marked as read - refresh adapter
                 Log.d(TAG, "Attempting to mark all stories as read");
-                List<Story> stories = StoryDB.getInstance(this.getActivity()).getAllStories();
+                List<Story> stories = StoryDB.getInstance(this.getActivity()).getAllUnfilteredStories();
                 StoryTrackerDB.getInstance(this.getActivity()).addStoryTrackers(stories);
                 new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, true).execute();
                 return true;

@@ -10,13 +10,17 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.Utils.DateParser;
+import watch.fight.android.fightbrowser.Utils.StringUtils;
 
 /**
  * Created by josh on 9/26/15.
  */
 public class StoryDB {
+    static final String TOP_STORIES_SELECT_SQL = "SELECT *, MAX(" + StoryDBSchema.StoryTable.Cols.PUBLISHED_DATE + ") FROM " + StoryDBSchema.StoryTable.NAME;
+    static final String TOP_STORIES_FROM_SQL = " GROUP BY " + StoryDBSchema.StoryTable.Cols.SITE_NAME ;
     private static StoryDB sStoryDB;
     private SQLiteDatabase mDatabase;
     private Context mContext;
@@ -56,6 +60,30 @@ public class StoryDB {
 
         // Pass no where clause or args, will return everything.
         StoryCursorWrapper cursor = queryStoriesWithOrder(null, null, "DESC");
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                stories.add(cursor.getStory());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return stories;
+    }
+
+    public List<Story> getAllUnfilteredStories() {
+        List<String> names = FeedDB.getInstance(mContext).getAllUnfilteredFeedNames();
+        String[] arguments = StringUtils.ListAsStrings(names);
+
+        List<Story> stories = new ArrayList<>();
+
+        // Pass no where clause or args, will return everything.
+        StoryCursorWrapper cursor = queryStoriesWithOrder(
+                StoryDBSchema.StoryTable.Cols.SITE_NAME + " in (" + StringUtils.buildMultiParamSQL(arguments) + ")",
+                arguments,
+                "DESC");
 
         try {
             cursor.moveToFirst();
@@ -190,7 +218,12 @@ public class StoryDB {
     }
 
     private StoryCursorWrapper TopStoriesQuery() {
-        Cursor cursor = mDatabase.rawQuery("SELECT *, MAX(" + StoryDBSchema.StoryTable.Cols.PUBLISHED_DATE + ") " + "FROM stories GROUP BY storysitename", null);
+        String[] feeds = StringUtils.ListAsStrings(FeedDB.getInstance(mContext).getAllUnfilteredFeedNames());
+        String fullQuery = TOP_STORIES_SELECT_SQL + " WHERE " + StoryDBSchema.StoryTable.Cols.SITE_NAME + " IN (" +
+                StringUtils.buildMultiParamSQL(feeds)
+                + ")" + TOP_STORIES_FROM_SQL;
+
+          Cursor cursor = mDatabase.rawQuery(fullQuery, feeds);
         return new StoryCursorWrapper(cursor);
     }
 

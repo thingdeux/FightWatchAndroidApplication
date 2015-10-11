@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -31,10 +32,12 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mPrefLabel;
+        public Switch mToggleSwitch;
 
         public ViewHolder(View v, int fragmentType) {
             super(v);
             mPrefLabel = (TextView) v.findViewById(R.id.preferences_item);
+            mToggleSwitch = (Switch) v.findViewById(R.id.preferences_toggle_switch);
         }
     }
 
@@ -72,18 +75,21 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                     Feed feed = mFeeds.get(position);
                     if (feed != null && feed.getName() != null) {
                         holder.mPrefLabel.setText(feed.getName());
+                        holder.mToggleSwitch.setChecked(feed.getIsFiltered());
                     }
                     break;
                 case PREFERENCES_FRAGMENT_GAMES:
                     GameConfig game = mGames.get(position);
                     if (game != null && game.getGameName() != null) {
                         holder.mPrefLabel.setText(game.getGameName());
+                        holder.mToggleSwitch.setChecked(game.getIsFiltered());
                     }
                     break;
                 case PREFERENCES_FRAGMENT_GENERAL:
                     SharedPrefManager sharedPref = mSharedPrefManager.get(position);
                     if (sharedPref != null) {
                         holder.mPrefLabel.setText(sharedPref.toString());
+                        holder.mToggleSwitch.setChecked(sharedPref.getValue());
                     }
                     break;
             }

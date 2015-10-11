@@ -33,6 +33,17 @@ public class SharedPrefManager {
         return "";
     }
 
+    public Boolean getValue() {
+        switch (mPreference) {
+            case WEB_VIEW_PREF:
+                return SharedPreferences.getToWebViewOrNotToWebView(mContext);
+            case DARK_MODE:
+                return SharedPreferences.getDarkView(mContext);
+            default:
+                return null;
+        }
+    }
+
     @Override
     public String toString() {
         switch (mPreference) {

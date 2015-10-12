@@ -149,7 +149,7 @@ public class GameDB {
                 whereArgs,
                 null, //GroupBy
                 null, // having
-                null // orderBy
+                GameDBSchema.GameTable.Cols.ORDINAL + " ASC" // orderBy
         );
 
         return new GameCursorWrapper(cursor);

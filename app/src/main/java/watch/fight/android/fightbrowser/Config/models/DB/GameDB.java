@@ -94,10 +94,22 @@ public class GameDB {
             game.setIsFiltered(isChecked);
 
             mDatabase.update(
-                GameDBSchema.GameTable.NAME,
-                getContentValues(game),
-                GameDBSchema.GameTable.Cols.ID + " = ?",
-                new String[] {gameid.toString()});
+                    GameDBSchema.GameTable.NAME,
+                    getContentValues(game),
+                    GameDBSchema.GameTable.Cols.ID + " = ?",
+                    new String[]{gameid.toString()});
+        }
+
+    }
+
+    public void setOrdinal(final GameConfig game, int ordinal) {
+        if (game != null) {
+            game.setOrdinal(ordinal);
+            mDatabase.update(
+                    GameDBSchema.GameTable.NAME,
+                    getContentValues(game),
+                    GameDBSchema.GameTable.Cols.ID + " = ?",
+                    new String[]{game.getId().toString()});
         }
 
     }
@@ -139,6 +151,41 @@ public class GameDB {
         if (whereClause == null && isDeleted != 1) {
             Log.e("deleteGames", "Unable to delete games -> " + whereArgs);
         }
+    }
+
+    private void updateOrdinal(Integer currentGameId, Integer toShiftId, final boolean shiftBefore) {
+        // Shift before will be true if the currentGame is being shifted to a position < toShift.
+        GameConfig game = getGame(currentGameId);
+        GameConfig toShiftGame = getGame(toShiftId);
+        if (shiftBefore) {
+            if (game.getId() > 0) {
+                shiftOnOrdinalChange((game.getId() - 1));
+                setOrdinal(toShiftGame, game.getId());
+                setOrdinal(game, (game.getId() - 1));
+            } else {
+                setOrdinal(toShiftGame, 1);
+                shiftOnOrdinalChange(1);
+            }
+        }
+    }
+
+    private void shiftOnOrdinalChange(final Integer shiftPastNumber) {
+        // Shift anything that's the same number as the shiftPastNumber one down.
+        GameCursorWrapper cursor = queryGames(
+                GameDBSchema.GameTable.Cols.ORDINAL + " = ?",
+                new String[] { shiftPastNumber.toString() }
+        );
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                setOrdinal(cursor.getGame(), shiftPastNumber + 1);
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
     }
 
     private GameCursorWrapper queryGames(String whereClause, String[] whereArgs) {

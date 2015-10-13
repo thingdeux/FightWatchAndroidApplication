@@ -169,7 +169,7 @@ public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
     private void addNewFeedsAsNecessary(final ArrayList<Feed> feeds) {
         // Place Each ID in a hashset to reduce cost of checks below
         FeedDB feedDB = FeedDB.getInstance(mContext);
-        List<Feed> existingFeeds = feedDB.getAllUnfilteredFeeds();
+        List<Feed> existingFeeds = feedDB.getAllFeeds();
 
         HashSet<Long> feedSet = new HashSet<>();
         for (int i = 0; i < existingFeeds.size(); i++) {

@@ -75,6 +75,12 @@
       "rss_url": "http://shoryuken.com/feed/",
       "website_url": "http://shoryuken.com",
       "feed_image_url": "http://fgccompanion-79b.kxcdn.com/srk_min.png"
+    }, {
+      "id": 7,
+      "name": "Red Bull eSports",
+      "rss_url": "http://www.redbull.com/us/en/esports/rss/index.rss",
+      "website_url": "http://www.redbull.com/us/en/esports/",
+      "feed_image_url": "http://fgccompanion-79b.kxcdn.com/redbull-min.png"
     }
   ],
   "events":  [

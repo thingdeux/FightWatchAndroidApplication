@@ -2,6 +2,7 @@ package watch.fight.android.fightbrowser.Config;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Brackets.ParticipantsAdapter;
 import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
 import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
@@ -24,7 +27,8 @@ import static watch.fight.android.fightbrowser.Config.PreferencesFragment.*;
 /**
  * Created by josh on 10/10/15.
  */
-public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder> {
+public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.ViewHolder>
+        implements ItemDragHelperAdapter {
     private Context mContext;
     private int mFragmentType;
     private List<GameConfig> mGames;
@@ -142,6 +146,27 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
                 }
             });
+        }
+
+        @Override
+        public void onItemDismiss(int position) {
+            mGames.remove(position);
+            notifyItemRemoved(position);
+        }
+
+        @Override
+        public boolean onItemMove(int fromPosition, int toPosition) {
+            if (fromPosition < toPosition) {
+                for (int i = fromPosition; i < toPosition; i++) {
+                    Collections.swap(mGames, i, i + 1);
+                }
+            } else {
+                for (int i = fromPosition; i > toPosition; i--) {
+                    Collections.swap(mGames, i, i - 1);
+                }
+            }
+            notifyItemMoved(fromPosition, toPosition);
+            return true;
         }
 
 

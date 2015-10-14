@@ -113,7 +113,35 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                         GameDB.getInstance(mContext).setFiltered(game.getId(), !isChecked);
                     }
                 });
+
             }
+
+            holder.mPrefLabel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position > 0 && game.getId() != null) {
+                        GameConfig aboveGame = mGames.get(position - 1);
+//                        GameConfig belowGame = mGames.get(position + 1);
+                        GameDB.getInstance(mContext).updateOrdinal(game.getId(), aboveGame.getId(), true);
+                        mGames = GameDB.getInstance(mContext).getAllGames();
+                        notifyItemChanged(position);
+                        notifyItemChanged(position - 1);
+                    } else if (position <= 0 && game.getId() != null) {
+                        GameConfig belowGame = mGames.get(position + 1);
+                        GameDB.getInstance(mContext).updateOrdinal(game.getId(), belowGame.getId(), false);
+                        mGames = GameDB.getInstance(mContext).getAllGames();
+                        notifyItemChanged(position);
+                        notifyItemChanged(position + 1);
+                    } else if (position >= mGames.size() - 1 && game.getId() != null) {
+                        GameConfig aboveGame = mGames.get(position - 1);
+                        GameDB.getInstance(mContext).updateOrdinal(game.getId(), aboveGame.getId(), true);
+                        mGames = GameDB.getInstance(mContext).getAllGames();
+                        notifyItemChanged(position);
+                        notifyItemChanged(position + 1);
+                    }
+
+                }
+            });
         }
 
 

@@ -153,40 +153,45 @@ public class GameDB {
         }
     }
 
-    private void updateOrdinal(Integer currentGameId, Integer toShiftId, final boolean shiftBefore) {
+    public void updateOrdinal(Integer currentGameId, Integer toShiftId, final boolean shiftBefore) {
         // Shift before will be true if the currentGame is being shifted to a position < toShift.
         GameConfig game = getGame(currentGameId);
         GameConfig toShiftGame = getGame(toShiftId);
         if (shiftBefore) {
-            if (game.getId() > 0) {
-                shiftOnOrdinalChange((game.getId() - 1));
-                setOrdinal(toShiftGame, game.getId());
-                setOrdinal(game, (game.getId() - 1));
+            if (game.getOrdinal() > 0) {
+                setOrdinal(toShiftGame, game.getOrdinal());
+                setOrdinal(game, (game.getOrdinal() - 1));
             } else {
                 setOrdinal(toShiftGame, 1);
-                shiftOnOrdinalChange(1);
+            }
+        } else {
+            if (toShiftGame.getOrdinal() > 0) {
+                setOrdinal(game, toShiftGame.getOrdinal());
+                setOrdinal(toShiftGame, toShiftGame.getOrdinal() - 1);
+            } else {
+                setOrdinal(game, toShiftGame.getOrdinal() + 1);
             }
         }
     }
 
-    private void shiftOnOrdinalChange(final Integer shiftPastNumber) {
-        // Shift anything that's the same number as the shiftPastNumber one down.
-        GameCursorWrapper cursor = queryGames(
-                GameDBSchema.GameTable.Cols.ORDINAL + " = ?",
-                new String[] { shiftPastNumber.toString() }
-        );
-
-        try {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                setOrdinal(cursor.getGame(), shiftPastNumber + 1);
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
-
-    }
+//    private void shiftOnOrdinalChange(final Integer shiftPastNumber) {
+//        // Shift anything that's the same number as the shiftPastNumber one down.
+//        GameCursorWrapper cursor = queryGames(
+//                GameDBSchema.GameTable.Cols.ORDINAL + " = ?",
+//                new String[] { shiftPastNumber.toString() }
+//        );
+//
+//        try {
+//            cursor.moveToFirst();
+//            while (!cursor.isAfterLast()) {
+//                setOrdinal(cursor.getGame(), shiftPastNumber + 1);
+//                cursor.moveToNext();
+//            }
+//        } finally {
+//            cursor.close();
+//        }
+//
+//    }
 
     private GameCursorWrapper queryGames(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
@@ -196,7 +201,10 @@ public class GameDB {
                 whereArgs,
                 null, //GroupBy
                 null, // having
-                GameDBSchema.GameTable.Cols.ORDINAL + " ASC" // orderBy
+
+                // orderBy
+                GameDBSchema.GameTable.Cols.ORDINAL + " ASC, " +
+                 GameDBSchema.GameTable.Cols.ID + " DESC"
         );
 
         return new GameCursorWrapper(cursor);

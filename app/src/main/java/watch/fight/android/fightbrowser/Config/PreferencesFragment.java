@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import de.greenrobot.event.EventBus;
+import watch.fight.android.fightbrowser.Config.events.PreferenceToggleEvent;
 import watch.fight.android.fightbrowser.R;
 
 /**
@@ -24,10 +25,37 @@ public class PreferencesFragment extends Fragment {
     public static final int PREFERENCES_FRAGMENT_GAMES = 2;
     public static final int PREFERENCES_FRAGMENT_FEEDS = 3;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+    }
+
+    @Override
+    public void onStop() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onStop();
+    }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onPause();
     }
 
     @Override
@@ -74,6 +102,12 @@ public class PreferencesFragment extends Fragment {
         preferencesFragment.setArguments(args);
 
         return preferencesFragment;
+    }
+
+    public void onEvent(PreferenceToggleEvent event) {
+        Log.d("onEventReceive", "Received Event: " + event.toString());
+        mAdapter.toggleSwitchAndReOrder();
+        mAdapter.notifyDataSetChanged();
     }
 
     // Text bind to switch toggle w/ boolean

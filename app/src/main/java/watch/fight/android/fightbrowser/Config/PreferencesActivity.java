@@ -7,21 +7,30 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.viewpagerindicator.TitlePageIndicator;
 
+import de.greenrobot.event.EventBus;
+import watch.fight.android.fightbrowser.Config.events.PreferenceToggleEvent;
 import watch.fight.android.fightbrowser.R;
+
+import static watch.fight.android.fightbrowser.Config.events.PreferenceToggleEvent.*;
 
 /**
  * Created by Joshua on 10/9/15.
  */
 public class PreferencesActivity extends AppCompatActivity {
     private static final String[] INDICATOR_TITLE_NAMES = new String[] { "General", "Games", "Feeds"};
+    @PreferenceToggle private int activeItemState;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preferences_activity);
+        activeItemState = ENABLE_TOGGLE;
 
         PreferencesTabAdapter adapter = new PreferencesTabAdapter(getSupportFragmentManager());
         ViewPager mPager = (ViewPager) findViewById(R.id.preferences_viewPager);
@@ -70,6 +79,32 @@ public class PreferencesActivity extends AppCompatActivity {
         public int getCount() {
             return INDICATOR_TITLE_NAMES.length;
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_preferences, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // This menu item will toggle re-order mode or hide mode for preferences.
+        // Reorder will allow the user to shift the position of feeds and games,
+        // Hide will allow them to filter them entirely.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.toggle_reorder_or_switch:
+                int changeTo = (activeItemState == PreferenceToggleEvent.ENABLE_REORDER) ? ENABLE_TOGGLE : ENABLE_REORDER;
+                EventBus.getDefault().post(new PreferenceToggleEvent(activeItemState));
+                Log.i("EventBusPost", "Posted Event");
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

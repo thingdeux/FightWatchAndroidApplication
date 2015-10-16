@@ -1,5 +1,7 @@
 package watch.fight.android.fightbrowser.Config;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -34,6 +36,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     private List<GameConfig> mGames;
     private List<Feed> mFeeds;
     private List<SharedPrefManager> mSharedPrefManager;
+    private boolean isSwitchShowing = true;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mPrefLabel;
@@ -104,6 +107,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
             }
         });
+        doSwitchArrowAnimation(holder, position);
     }
 }
 
@@ -166,7 +170,31 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         return 0;
     }
 
-    private void transitionToReorder() {
+    public void toggleSwitchAndReOrder() {
+        isSwitchShowing = !isSwitchShowing;
+    }
 
+    private void doSwitchArrowAnimation(final ViewHolder holder, final int position) {
+        if (isSwitchShowing) {
+            if (holder.mToggleSwitch.getVisibility() != View.VISIBLE) {
+                holder.mToggleSwitch.setVisibility(View.VISIBLE);
+                holder.mToggleSwitch.animate()
+                        .alpha(100f)
+                        .setDuration(1000);
+            }
+        } else {
+            if (holder.mToggleSwitch.getVisibility() != View.GONE) {
+                holder.mToggleSwitch.animate()
+                        .alpha(0f)
+                        .setDuration(1000)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                holder.mToggleSwitch.setVisibility(View.GONE);
+                            }
+                        });
+            }
+        }
     }
 }

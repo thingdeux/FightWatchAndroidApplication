@@ -19,6 +19,7 @@ import watch.fight.android.fightbrowser.R;
 public class PreferencesFragment extends Fragment {
     private String TAG = PreferencesFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
+    private int debugType;
     private PreferencesAdapter mAdapter;
     private static final String PREFERENCES_FRAGMENT_TYPE = "watch.fight.android.fightbrowser.preferences.fragment_type";
     public static final int PREFERENCES_FRAGMENT_GENERAL = 1;
@@ -36,7 +37,7 @@ public class PreferencesFragment extends Fragment {
 
     @Override
     public void onStop() {
-        if (!EventBus.getDefault().isRegistered(this)) {
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
         super.onStop();
@@ -66,6 +67,7 @@ public class PreferencesFragment extends Fragment {
 
         if (args != null) {
             fragmentType = args.getInt(PREFERENCES_FRAGMENT_TYPE, 0);
+            debugType = args.getInt(PREFERENCES_FRAGMENT_TYPE, 0);
         } else {
             Log.v(TAG, "No arguments found in preferences intent");
         }
@@ -105,9 +107,7 @@ public class PreferencesFragment extends Fragment {
     }
 
     public void onEvent(PreferenceToggleEvent event) {
-        Log.d("onEventReceive", "Received Event: " + event.toString());
         mAdapter.toggleSwitchAndReOrder();
-        mAdapter.notifyDataSetChanged();
     }
 
     // Text bind to switch toggle w/ boolean

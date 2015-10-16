@@ -4,8 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.transition.Fade;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import watch.fight.android.fightbrowser.Brackets.ParticipantsAdapter;
 import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
 import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
@@ -78,6 +75,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        checkSwitchArrowAnimation(holder, position);
         switch (mFragmentType) {
             case PREFERENCES_FRAGMENT_FEEDS:
                 bindFeed(holder, position);
@@ -104,10 +102,8 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 FeedDB.getInstance(mContext).setFiltered(feed.getId(), !isChecked);
-
             }
         });
-        doSwitchArrowAnimation(holder, position);
     }
 }
 
@@ -130,7 +126,6 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             public void onClick(View v) {
                 if (position > 0 && game.getId() != null) {
                     GameConfig aboveGame = mGames.get(position - 1);
-//                        GameConfig belowGame = mGames.get(position + 1);
                     GameDB.getInstance(mContext).updateOrdinal(game.getId(), aboveGame.getId(), true);
                     mGames = GameDB.getInstance(mContext).getAllGames();
                     notifyItemChanged(position);
@@ -172,11 +167,15 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
     public void toggleSwitchAndReOrder() {
         isSwitchShowing = !isSwitchShowing;
+        for (int i = 0; i < getItemCount(); i++) {
+            this.notifyItemChanged(i);
+        }
     }
 
-    private void doSwitchArrowAnimation(final ViewHolder holder, final int position) {
+    private void checkSwitchArrowAnimation(final ViewHolder holder, final int position) {
         if (isSwitchShowing) {
             if (holder.mToggleSwitch.getVisibility() != View.VISIBLE) {
+                Log.i("isShowing", "Receiving on " + position);
                 holder.mToggleSwitch.setVisibility(View.VISIBLE);
                 holder.mToggleSwitch.animate()
                         .alpha(100f)
@@ -184,6 +183,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
             }
         } else {
             if (holder.mToggleSwitch.getVisibility() != View.GONE) {
+                Log.i("isntShowing", "Receiving on " + position);
                 holder.mToggleSwitch.animate()
                         .alpha(0f)
                         .setDuration(1000)

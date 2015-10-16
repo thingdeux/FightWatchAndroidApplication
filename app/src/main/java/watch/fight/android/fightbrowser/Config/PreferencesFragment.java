@@ -50,9 +50,6 @@ public class PreferencesFragment extends Fragment {
         mAdapter = new PreferencesAdapter(this.getActivity(), fragmentType);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        ItemTouchHelper.Callback callback = new ItemDragHelper(mAdapter);
-//        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-//        touchHelper.attachToRecyclerView(mRecyclerView);
 
         return v;
     }

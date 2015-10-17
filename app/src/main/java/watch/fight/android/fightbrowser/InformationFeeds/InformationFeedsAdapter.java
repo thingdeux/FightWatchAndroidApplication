@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDB;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.DateParser;
+import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
 /**
  * Created by josh on 9/25/15.
@@ -100,9 +102,15 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
             @Override
             public void onClick(View v) {
                 if (storyUrl != null) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(storyUrl);
-                    v.getContext().startActivity(intent);
+                    if (SharedPreferences.getToWebViewOrNotToWebView(mContext)) {
+                        Intent i = InformationFeedsWebViewActivity.NewInstance(mContext, storyUrl.toString());
+                        mContext.startActivity(i);
+                    } else {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(storyUrl);
+                        v.getContext().startActivity(intent);
+                    }
+
                 }
             }
         });

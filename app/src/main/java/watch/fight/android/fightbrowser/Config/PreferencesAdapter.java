@@ -92,12 +92,22 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                 bindGame(holder, position);
                 break;
             case PREFERENCES_FRAGMENT_GENERAL:
-                SharedPrefManager sharedPref = mSharedPrefManager.get(position);
-                if (sharedPref != null) {
-                    holder.mPrefLabel.setText(sharedPref.toString());
-                    holder.mToggleSwitch.setChecked(sharedPref.getValue());
-                }
+                bindGeneral(holder, position);
                 break;
+        }
+    }
+
+    public void bindGeneral(final ViewHolder holder, final int position) {
+        final SharedPrefManager sharedPref = mSharedPrefManager.get(position);
+        if (sharedPref != null) {
+            holder.mPrefLabel.setText(sharedPref.toString());
+            holder.mToggleSwitch.setChecked(sharedPref.getValue());
+            holder.mToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    sharedPref.setValue(isChecked);
+                }
+            });
         }
     }
 

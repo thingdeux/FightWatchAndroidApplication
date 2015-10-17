@@ -10,16 +10,27 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import de.greenrobot.event.EventBus;
+import watch.fight.android.fightbrowser.Brackets.events.ParticipantMenuEvent;
 import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
+import watch.fight.android.fightbrowser.Config.PreferencesActivity;
+import watch.fight.android.fightbrowser.Config.events.PreferenceToggleEvent;
+import watch.fight.android.fightbrowser.Events.EventsActivity;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
+import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
 
 /**
@@ -33,6 +44,7 @@ public class ParticipantsActivity extends AppCompatActivity
     private Bracket mBracket;
     private View mLoadingContainer;
 
+    // Response received from Challonge
     public void onSuccess(TournamentWrapper response) {
         Log.i("VolleySuccess", "Received Challonge Success");
 
@@ -152,5 +164,37 @@ public class ParticipantsActivity extends AppCompatActivity
         public int getCount() {
             return INDICATOR_TITLE_NAMES.length;
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_participants, menu);
+
+        return true;
+    }
+
+    public void getBracketsFromChallonge() {
+        if (mBracket != null) {
+            // Make call to Challonge - pass response to onSuccess CB Above and build recyclerView
+            ChallongeNetworkHandlers.getBracketTournamentInformation(this, mBracket, this, true, true);
+        } else {
+            setErrorState();
+        }
+        setUILoading();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_refresh:
+                getBracketsFromChallonge();
+//                EventBus.getDefault().post(new ParticipantMenuEvent(ParticipantMenuEvent.REFRESH));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

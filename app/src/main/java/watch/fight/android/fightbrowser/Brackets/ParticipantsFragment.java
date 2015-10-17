@@ -9,7 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import de.greenrobot.event.EventBus;
+import watch.fight.android.fightbrowser.Brackets.events.ParticipantMenuEvent;
+import watch.fight.android.fightbrowser.Config.events.PreferenceToggleEvent;
 import watch.fight.android.fightbrowser.R;
 
 /**
@@ -47,11 +51,6 @@ public class ParticipantsFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     public static ParticipantsFragment newInstance(int type) {

@@ -54,6 +54,12 @@
             android:name=".InformationFeeds.InformationFeedsActivity"
             android:label="@string/information_feeds_activity_name" >
         </activity>
+
+        <activity
+            android:name=".InformationFeeds.InformationFeedsWebViewActivity"
+            android:label="@string/information_feeds_webview_activity_name" >
+        </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ff7437e9be052e71cf07af8677e9936bf02a3281" />

@@ -5,6 +5,7 @@
     <string name="config_activity_name">Configuration</string>
     <string name="browser_activity_name">Stream Browser</string>
     <string name="information_feeds_activity_name">Information</string>
+    <string name="information_feeds_webview_activity_name">Browser</string>
     <string name="brackets_activity_name">Brackets</string>
     <string name="participants_activity_name">Participants</string>
     <string name="preferences_activity_name">Preferences</string>

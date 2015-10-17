@@ -15,22 +15,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.viewpagerindicator.TitlePageIndicator;
 
-import de.greenrobot.event.EventBus;
-import watch.fight.android.fightbrowser.Brackets.events.ParticipantMenuEvent;
+
 import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
-import watch.fight.android.fightbrowser.Config.PreferencesActivity;
-import watch.fight.android.fightbrowser.Config.events.PreferenceToggleEvent;
-import watch.fight.android.fightbrowser.Events.EventsActivity;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
-import watch.fight.android.fightbrowser.InformationFeeds.InformationFeedsActivity;
 import watch.fight.android.fightbrowser.R;
-import watch.fight.android.fightbrowser.StreamBrowser.BrowserActivity;
 import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
 
 /**

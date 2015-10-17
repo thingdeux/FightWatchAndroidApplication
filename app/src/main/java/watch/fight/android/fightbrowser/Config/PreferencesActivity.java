@@ -100,7 +100,6 @@ public class PreferencesActivity extends AppCompatActivity {
             case R.id.toggle_reorder_or_switch:
                 int changeTo = (activeItemState == PreferenceToggleEvent.ENABLE_REORDER) ? ENABLE_TOGGLE : ENABLE_REORDER;
                 EventBus.getDefault().post(new PreferenceToggleEvent(activeItemState));
-                Log.i("EventBusPost", "Posted Event");
                 return true;
         }
 

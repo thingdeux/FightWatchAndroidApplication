@@ -41,7 +41,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  * Created by josh on 9/20/15.
  */
 public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
-    private static final int CONFIG_CHECK_FREQUENCY_IN_HOURS = 24;
+    private static final int CONFIG_CHECK_FREQUENCY_IN_HOURS = 0;
     private static final String TAG = ConfigFetcher.class.getSimpleName();
     private static final String BASE_CONFIG_SERVER_URL = "https://api.fgccompanion.com";
     private Context mContext;
@@ -85,6 +85,7 @@ public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
                 if (config.getEvents() != null) {
                     addNewEventsAsNecessary(config.getEvents());
                 }
+                GameDB.getInstance(mContext).restructureOrdinals();
             }
             SharedPreferences.setConfigLastUpdated(mContext, System.currentTimeMillis());
             return config;

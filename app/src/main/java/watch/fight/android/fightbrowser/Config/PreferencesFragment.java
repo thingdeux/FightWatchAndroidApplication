@@ -109,9 +109,4 @@ public class PreferencesFragment extends Fragment {
     public void onEvent(PreferenceToggleEvent event) {
         mAdapter.toggleSwitchAndReOrder();
     }
-
-    // Text bind to switch toggle w/ boolean
-    // onToggle
-    // onSlide
-    // Type - Toggle / Slide / Delete
 }

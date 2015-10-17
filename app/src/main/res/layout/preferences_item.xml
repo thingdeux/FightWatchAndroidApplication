@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/root_preferences_item"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:alpha="87.0">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginBottom="8dp"
+    android:alpha="87.0">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView android:id="@+id/preferences_item"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              style="@style/Base.TextAppearance.AppCompat.Title"
+              android:textColor="#000"
+              android:textStyle="bold"
+              android:layout_weight="9"
+              />
+
+    <Switch android:id="@+id/preferences_toggle_switch"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout android:id="@+id/preferences_arrow_container"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp">
+        android:visibility="gone">
+        <ImageButton android:id="@+id/preferences_up_arrow"
+                     android:layout_margin="2dp"
+                     android:padding="4dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:background="@color/action_button_fgc"
+                     android:src="@drawable/ic_keyboard_arrow_up_black"
+                     />
 
-        <TextView android:id="@+id/preferences_item"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/Base.TextAppearance.AppCompat.Title"
-                  android:textColor="#000"
-                  android:textStyle="bold"
-                  android:layout_weight="9"
-                  />
-
-        <Switch android:id="@+id/preferences_toggle_switch"
-                      android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
+        <ImageButton android:id="@+id/preferences_down_arrow"
+                     android:layout_margin="2dp"
+                     android:padding="4dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:background="@color/action_button_fgc"
+                     android:src="@drawable/ic_keyboard_arrow_down_black"/>
 
     </LinearLayout>
-
 
 
 </LinearLayout>

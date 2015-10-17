@@ -158,20 +158,26 @@ public class GameDB {
         GameConfig game = getGame(currentGameId);
         GameConfig toShiftGame = getGame(toShiftId);
         if (shiftBefore) {
-            if (game.getOrdinal() > 0) {
-                setOrdinal(toShiftGame, game.getOrdinal());
-                setOrdinal(game, (game.getOrdinal() - 1));
-            } else {
-                setOrdinal(toShiftGame, 1);
-            }
+            setOrdinal(toShiftGame, game.getOrdinal());
+            setOrdinal(game, (game.getOrdinal() - 1));
+//                setOrdinal(toShiftGame, 1);
         } else {
-            if (toShiftGame.getOrdinal() > 0) {
-                setOrdinal(game, toShiftGame.getOrdinal());
-                setOrdinal(toShiftGame, toShiftGame.getOrdinal() - 1);
-            } else {
-                setOrdinal(game, toShiftGame.getOrdinal() + 1);
+            setOrdinal(game, toShiftGame.getOrdinal());
+            setOrdinal(toShiftGame, toShiftGame.getOrdinal() - 1);
+//            } else {
+//                setOrdinal(game, toShiftGame.getOrdinal() + 1);
+//            }
+        }
+    }
+
+    public void restructureOrdinals() {
+        List<GameConfig> games = getAllGames();
+        if (games != null) {
+            for (int i = 0; i < games.size(); i++) {
+                setOrdinal(games.get(i), i);
             }
         }
+
     }
 
 //    private void shiftOnOrdinalChange(final Integer shiftPastNumber) {
@@ -204,7 +210,7 @@ public class GameDB {
 
                 // orderBy
                 GameDBSchema.GameTable.Cols.ORDINAL + " ASC, " +
-                 GameDBSchema.GameTable.Cols.ID + " DESC"
+                 GameDBSchema.GameTable.Cols.ID + " ASC"
         );
 
         return new GameCursorWrapper(cursor);

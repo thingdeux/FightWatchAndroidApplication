@@ -41,6 +41,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  * Created by josh on 9/20/15.
  */
 public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
+    // TODO : Set this to 24 hours before launch
     private static final int CONFIG_CHECK_FREQUENCY_IN_HOURS = 0;
     private static final String TAG = ConfigFetcher.class.getSimpleName();
     private static final String BASE_CONFIG_SERVER_URL = "https://api.fgccompanion.com";

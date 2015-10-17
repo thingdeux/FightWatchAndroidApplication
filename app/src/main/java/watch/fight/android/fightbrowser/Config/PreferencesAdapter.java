@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
@@ -153,15 +155,18 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
 
                         game.setOrdinal(aboveOrdinal);
                         aboveGame.setOrdinal(position);
+                        Collections.swap(mGames, position, position - 1);
                         notifyItemMoved(position, position - 1);
                     }
                 } else {
                     if (position >= 0 && game.getId() != null && position < getItemCount() - 1) {
                         GameConfig belowGame = mGames.get(position + 1);
+                        int belowOrdinal = belowGame.getOrdinal();
                         GameDB.getInstance(mContext).updateOrdinal(game.getId(), belowGame.getId(), false);
 
-                        game.setOrdinal(belowGame.getOrdinal());
-                        belowGame.setOrdinal(position + 1);
+                        belowGame.setOrdinal(game.getOrdinal());
+                        game.setOrdinal(belowOrdinal);
+                        Collections.swap(mGames, position, position + 1);
                         notifyItemMoved(position, position + 1);
                     }
                 }

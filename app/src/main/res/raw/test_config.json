@@ -161,7 +161,7 @@
       ],
       "end_date": 1443592312000,
       "start_date": 1443592312000,
-      "last_updated": 1445195998
+      "last_updated": 1445198592
     }, {
       "id": 34555,
       "name": "Evo 2015",
@@ -178,7 +178,7 @@
       ],
       "end_date": 1443592312000,
       "start_date": 1443592312000,
-      "last_updated": 1443592312000
+      "last_updated": 1445198592
 
     },  {
       "id": 1,
@@ -191,9 +191,9 @@
       ],
       "end_date": 1443592312000,
       "start_date": 1443592312000,
-      "last_updated": 1443592312000
+      "last_updated": 1445198592
 
     }
   ],
-  "updated": 1443592312000
+  "updated": 1445198592
 }

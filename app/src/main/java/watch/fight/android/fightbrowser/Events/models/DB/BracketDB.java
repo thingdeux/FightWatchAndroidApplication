@@ -126,7 +126,7 @@ public class BracketDB {
             deleteBrackets(BracketTable.Cols.FK_EVENT_ID + " = ?", new String[]{"" + event_id});
         } else {
             deleteBrackets(BracketTable.Cols.FK_EVENT_ID + " = ? AND " + BracketTable.Cols.USER_ADDED + " = ?",
-                    new String[]{"" + event_id, "1" });
+                    new String[]{"" + event_id, "0" });
         }
 
     }

@@ -34,6 +34,10 @@ public class Event {
     private Long mStartDate;
 
     @Expose
+    @SerializedName("last_updated")
+    private Long mLastUpdated;
+
+    @Expose
     @SerializedName("end_date")
     private Long mEndDate;
 
@@ -140,5 +144,13 @@ public class Event {
 
     public void setFlavorText(String flavorText) {
         mFlavorText = flavorText;
+    }
+
+    public Long getLastUpdated() {
+        return mLastUpdated;
+    }
+
+    public void setLastUpdated(Long lastUpdated) {
+        mLastUpdated = lastUpdated;
     }
 }

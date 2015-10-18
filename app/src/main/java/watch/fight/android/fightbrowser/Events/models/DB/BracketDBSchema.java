@@ -16,6 +16,8 @@ public class BracketDBSchema {
             public static final String NAME = "bracketname";
             public static final String URL = "bracketurl";
             public static final String TYPE = "brackettype";
+            public static final String IS_VERIFIED = "bracketverified";
+            public static final String USER_ADDED = "bracketuseradded";
         }
     }
 }

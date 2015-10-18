@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 
@@ -34,7 +35,8 @@ public class BracketActivity extends AppCompatActivity {
 
         setContentView(R.layout.single_recycler_no_loading);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_one);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
 
         mAdapter = new BracketAdapter(this, event);
         mRecyclerView.setAdapter(mAdapter);

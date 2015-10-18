@@ -17,12 +17,26 @@ public class Bracket {
     private String mBracketUrl;
 
     @Expose
+    @SerializedName("is_verified")
+    private Boolean mIsVerified;
+
+    @Expose
     @SerializedName("bracket_type")
     private String mBracketType;
+
+    private Boolean mIsUserAdded;
 
     private Long mRelatedEvent;
 
     private Integer mId;
+
+    public Boolean getIsVerified() {
+        return mIsVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+        mIsVerified = isVerified;
+    }
 
     public Integer getId() {
         return mId;
@@ -62,5 +76,13 @@ public class Bracket {
 
     public void setBracketType(String bracketType) {
         mBracketType = bracketType;
+    }
+
+    public Boolean getIsUserAdded() {
+        return mIsUserAdded;
+    }
+
+    public void setIsUserAdded(Boolean isUserAdded) {
+        mIsUserAdded = isUserAdded;
     }
 }

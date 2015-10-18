@@ -70,7 +70,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         final Date startDate = event.getStartDateObj();
         final Date endDate = event.getEndDateObj();
         final Uri eventSite = event.getWebsiteAsUri();
-        final List<Bracket> brackets = event.getStoredBrackets(mContext);
 
         holder.mEventName.setText(event.getEventName());
         if (event.getFlavorText() != null) {
@@ -83,27 +82,20 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                         DateParser.dateToSimpleDateStr(endDate)
         );
 
-
-
-        if (brackets != null && brackets.size() > 0) {
-            holder.mBracketsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mContext.startActivity(BracketActivity.NewInstance(mContext, event.getId()));
-                }
-            });
-        } else {
-            holder.mBracketsButton.setEnabled(false);
-        }
+        holder.mBracketsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(BracketActivity.NewInstance(mContext, event.getId()));
+            }
+        });
 
         if (eventSite != null && !eventSite.toString().isEmpty()) {
             holder.mViewWebPageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(eventSite);
-                        v.getContext().startActivity(intent);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(eventSite);
+                    v.getContext().startActivity(intent);
                     }
                 });
         } else {
@@ -111,9 +103,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         }
 
         Picasso.with(this.mContext).load(ImageHeader)
-                .placeholder(R.mipmap.fist_icon)
                 .into(holder.mHeaderImage);
-
     }
 
     @Override

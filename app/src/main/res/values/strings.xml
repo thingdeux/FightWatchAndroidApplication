@@ -49,9 +49,8 @@
     <string name="dashboard_streams_button_text">Check Twitch Streams</string>
     <string name="read_more_button_name">Read More</string>
     <string name="events_brackets_button_name">Brackets</string>
-    <string name="events_website_button_name">Event Website</string>
-    <string name="bracket_view_participants_button_name">Participants</string>
-
+    <string name="events_website_button_name">Website</string>
+    <string name="bracket_view_open_button_name">View</string>
 
     <!--Misc-->
     <string name="loading_message_subtitle">Loading Content</string>

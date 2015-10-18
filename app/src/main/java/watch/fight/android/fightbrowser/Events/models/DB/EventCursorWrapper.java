@@ -19,11 +19,13 @@ public class EventCursorWrapper extends CursorWrapper {
         String website = getString(getColumnIndex(EventDBSchema.EventTable.Cols.WEBSITE));
         Long startDate = getLong(getColumnIndex(EventDBSchema.EventTable.Cols.START_DATE));
         Long endDate = getLong(getColumnIndex(EventDBSchema.EventTable.Cols.END_DATE));
+        Long bracketsLastUpdated = getLong(getColumnIndex(EventDBSchema.EventTable.Cols.BRACKETSUPDATED));
 
         Event event = new Event();
         event.setId(id);
         event.setStartDate(startDate);
         event.setEndDate(endDate);
+        event.setLastUpdated(bracketsLastUpdated);
         event.setEventName(name);
         event.setHeaderImageUrl(headerUrl);
         event.setWebsite(website);

@@ -24,6 +24,8 @@ public class BracketDBHelper extends BaseDB {
                     BracketTable.Cols.NAME + TEXT_TYPE + "," +
                     BracketTable.Cols.URL + TEXT_TYPE + "," +
                     BracketTable.Cols.TYPE + TEXT_TYPE + "," +
+                    BracketTable.Cols.IS_VERIFIED + INTEGER_TYPE + "," +
+                    BracketTable.Cols.USER_ADDED + INTEGER_TYPE + "," +
                     SQL_SET_EVENT_FK_CONSTRAINT +
                     ")";
 

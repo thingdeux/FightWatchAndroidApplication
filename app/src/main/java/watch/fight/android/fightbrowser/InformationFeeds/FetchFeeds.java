@@ -35,9 +35,7 @@ public class FetchFeeds {
     public static class FetchStories extends AsyncTask<Void, Void, Boolean> {
         private Context mContext;
         private DashboardFragment mDashboardFragment;
-        private DashboardActivity mDashboardActivity;
         private InformationFeedsFragment mInformationFeedsFragment;
-        private InformationFeedsActivity mInformationFeedsActivity;
         private InformationFeedsAdapter mAdapter;
         private boolean mIsForcedRefresh = false;
         private int mAllotedStoryWaitTime = 0;
@@ -53,19 +51,11 @@ public class FetchFeeds {
         public FetchStories(final DashboardFragment fragment, final FragmentActivity activity) {
             mContext = activity;
             mDashboardFragment = fragment;
-            DashboardActivity da = (DashboardActivity) activity;
-            if (da != null) {
-                mDashboardActivity = da;
-            }
         }
 
         public FetchStories(final InformationFeedsFragment fragment, final FragmentActivity activity) {
             mContext = activity;
             mInformationFeedsFragment = fragment;
-            InformationFeedsActivity ifa = (InformationFeedsActivity) activity;
-            if (ifa != null) {
-                mInformationFeedsActivity = ifa;
-            }
         }
 
         // Created to just allow for refreshing and re-population of stories without notifying a recyclerview.

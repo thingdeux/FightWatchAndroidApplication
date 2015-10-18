@@ -2,7 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:layout_margin="2dp"
@@ -15,9 +15,6 @@
         style="?android:attr/textAppearanceListItem"
         android:gravity="left">
     </TextView>
-
-    <!--android:paddingLeft="4dp"-->
-    <!--android:paddingRight="4dp"-->
 
     <TextView android:id="@+id/vs_line"
         android:layout_width="fill_parent"

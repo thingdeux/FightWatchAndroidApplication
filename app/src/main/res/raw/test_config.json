@@ -93,54 +93,70 @@
       "brackets": [
         {
           "bracket_name": "SCR2015 USF4 3V3",
-          "bracket_url": "http://levelup.challonge.com/scr2015_usf4_3v3"
+          "bracket_url": "http://levelup.challonge.com/scr2015_usf4_3v3",
+          "is_verified": true
         },
         {
           "bracket_name": "SCR2015 TTT2",
-          "bracket_url": "http://levelup.challonge.com/scr2015_ttt2"
+          "bracket_url": "http://levelup.challonge.com/scr2015_ttt2",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 Killer Instinct",
-          "bracket_url": "http://levelup.challonge.com/scr2015_ki"
+          "bracket_url": "http://levelup.challonge.com/scr2015_ki",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 KOFXIII",
-          "bracket_url": "http://levelup.challonge.com/scr2015_kofxiii"
+          "bracket_url": "http://levelup.challonge.com/scr2015_kofxiii",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 USF4",
-          "bracket_url": "http://levelup.challonge.com/scr2015_usf4"
+          "bracket_url": "http://levelup.challonge.com/scr2015_usf4",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 UMVC3",
-          "bracket_url": "http://levelup.challonge.com/scr2015_umvc3"
+          "bracket_url": "http://levelup.challonge.com/scr2015_umvc3",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 Smash 4",
-          "bracket_url": "http://levelup.challonge.com/scr2015_smash4"
+          "bracket_url": "http://levelup.challonge.com/scr2015_smash4",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 SkullGirls",
-          "bracket_url": "http://levelup.challonge.com/scr2015_sg"
+          "bracket_url": "http://levelup.challonge.com/scr2015_sg",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 DFC",
-          "bracket_url": "http://levelup.challonge.com/SCR2015DFC"
+          "bracket_url": "http://levelup.challonge.com/SCR2015DFC",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 Uniel",
-          "bracket_url": "http://levelup.challonge.com/SCR2015UNIEL"
+          "bracket_url": "http://levelup.challonge.com/SCR2015UNIEL",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 +R",
-          "bracket_url": "http://levelup.challonge.com/SCR2015PLUSR"
+          "bracket_url": "http://levelup.challonge.com/SCR2015PLUSR",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 P4AU",
-          "bracket_url": "http://levelup.challonge.com/SCR2015P4AU"
+          "bracket_url": "http://levelup.challonge.com/SCR2015P4AU",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 BB",
-          "bracket_url": "http://levelup.challonge.com/SCR2015BB"
+          "bracket_url": "http://levelup.challonge.com/SCR2015BB",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 MKX",
-          "bracket_url": "http://levelup.challonge.com/scr2015_mkx"
+          "bracket_url": "http://levelup.challonge.com/scr2015_mkx",
+          "is_verified": true
         }, {
           "bracket_name": "SCR2015 XRD",
-          "bracket_url": "http://levelup.challonge.com/SCR2015XRD"
+          "bracket_url": "http://levelup.challonge.com/SCR2015XRD",
+          "is_verified": true
         }
       ],
       "end_date": 1443592312000,
-      "start_date": 1443592312000
+      "start_date": 1443592312000,
+      "last_updated": 1443592312000
     }, {
       "id": 34555,
       "name": "Evo 2015",
@@ -151,7 +167,8 @@
       "brackets": [
       ],
       "end_date": 1443592312000,
-      "start_date": 1443592312000
+      "start_date": 1443592312000,
+      "last_updated": 1443592312000
 
     },  {
       "id": 1,
@@ -163,7 +180,8 @@
       "brackets": [
       ],
       "end_date": 1443592312000,
-      "start_date": 1443592312000
+      "start_date": 1443592312000,
+      "last_updated": 1443592312000
 
     }
   ],

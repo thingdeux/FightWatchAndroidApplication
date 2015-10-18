@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Events.models.DB.EventDBSchema.EventTable;
 import watch.fight.android.fightbrowser.Events.models.Event;
 
 /**
@@ -33,7 +34,7 @@ public class EventDB {
 
     public Event getEvent(Long id) {
         EventCursorWrapper cursor = queryEvents(
-                EventDBSchema.EventTable.Cols.ID + " = ?",
+                EventTable.Cols.ID + " = ?",
                 new String[]{"" + id}
         );
 
@@ -69,7 +70,7 @@ public class EventDB {
 
     public void addEvent(Event event) {
         ContentValues values = getContentValues(event);
-        mDatabase.insert(EventDBSchema.EventTable.NAME, null, values);
+        mDatabase.insert(EventTable.NAME, null, values);
     }
 
     public void addEvents(List<Event> events) {
@@ -77,7 +78,7 @@ public class EventDB {
             mDatabase.beginTransaction();
             for (int i = 0; i < events.size(); i++) {
                 ContentValues values = getContentValues(events.get(i));
-                mDatabase.insert(EventDBSchema.EventTable.NAME, null, values);
+                mDatabase.insert(EventTable.NAME, null, values);
             }
             mDatabase.setTransactionSuccessful();
             mDatabase.endTransaction();
@@ -89,16 +90,16 @@ public class EventDB {
 
     public void deleteEvent(float id) {
         Log.v("DeleteEvent", "Deleting Event: " + id);
-        deleteEvents(EventDBSchema.EventTable.Cols.ID + " = ?", new String[]{"" + id});
+        deleteEvents(EventTable.Cols.ID + " = ?", new String[]{"" + id});
     }
 
     public void deleteAllEvents() {
         Log.v("deleteEvents", "Deleting All Events!");
-        mDatabase.delete(EventDBSchema.EventTable.NAME, null, null);
+        mDatabase.delete(EventTable.NAME, null, null);
     }
 
     private void deleteEvents(String whereClause, String[] whereArgs) {
-        int isDeleted = mDatabase.delete(EventDBSchema.EventTable.NAME, whereClause, whereArgs);
+        int isDeleted = mDatabase.delete(EventTable.NAME, whereClause, whereArgs);
         if (whereClause == null && isDeleted != 1) {
             Log.e("deleteEvents", "Unable to delete events -> " + whereArgs);
         } else {
@@ -108,7 +109,7 @@ public class EventDB {
 
     private EventCursorWrapper queryEvents(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-                EventDBSchema.EventTable.NAME,
+                EventTable.NAME,
                 null, // Columns -null selects all columns
                 whereClause,
                 whereArgs,
@@ -122,13 +123,14 @@ public class EventDB {
 
     private static ContentValues getContentValues(Event event) {
         ContentValues values = new ContentValues();
-        values.put(EventDBSchema.EventTable.Cols.ID, event.getId());
-        values.put(EventDBSchema.EventTable.Cols.NAME, event.getEventName());
-        values.put(EventDBSchema.EventTable.Cols.HEADER_IMAGE_URL, event.getHeaderImageUrl());
-        values.put(EventDBSchema.EventTable.Cols.START_DATE, event.getStartDate());
-        values.put(EventDBSchema.EventTable.Cols.END_DATE, event.getEndDate());
-        values.put(EventDBSchema.EventTable.Cols.WEBSITE, event.getWebsite());
-        values.put(EventDBSchema.EventTable.Cols.FLAVOR_TEXT, event.getFlavorText());
+        values.put(EventTable.Cols.ID, event.getId());
+        values.put(EventTable.Cols.NAME, event.getEventName());
+        values.put(EventTable.Cols.HEADER_IMAGE_URL, event.getHeaderImageUrl());
+        values.put(EventTable.Cols.START_DATE, event.getStartDate());
+        values.put(EventTable.Cols.END_DATE, event.getEndDate());
+        values.put(EventTable.Cols.WEBSITE, event.getWebsite());
+        values.put(EventTable.Cols.FLAVOR_TEXT, event.getFlavorText());
+        values.put(EventTable.Cols.BRACKETSUPDATED, event.getLastUpdated());
 
         return values;
     }

@@ -13,7 +13,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/participants_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:paddingBottom="25dp"/>
     </LinearLayout>
 
@@ -24,7 +24,7 @@
         >
 
         <TextView android:id="@+id/bracket_footer_message"
-                  android:layout_width="fill_parent"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textColor="@color/primary_dark_fgc"
                   android:text="@string/bracket_winner_formatted"

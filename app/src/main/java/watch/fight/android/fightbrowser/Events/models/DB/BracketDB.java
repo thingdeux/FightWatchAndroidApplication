@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Events.models.Bracket;
+import watch.fight.android.fightbrowser.Events.models.DB.BracketDBSchema.BracketTable;
 import watch.fight.android.fightbrowser.Events.models.Event;
 
 /**
  * Created by josh on 10/4/15.
  */
 public class BracketDB {
+    private static int IS_VERIFIED_DEFAULT_STATE = 0;
+    private static int IS_USER_ADDED_DEFAULT_STATE = 0;
     private static BracketDB sBracketDB;
     private SQLiteDatabase mDatabase;
     private Context mContext;
@@ -36,7 +39,7 @@ public class BracketDB {
         List<Bracket> brackets = new ArrayList<>();
 
         BracketCursorWrapper cursor = queryBrackets(
-                BracketDBSchema.BracketTable.Cols.FK_EVENT_ID + " = ?",
+                BracketTable.Cols.FK_EVENT_ID + " = ?",
                 new String[]{"" + fk_event_id}
         );
 
@@ -58,7 +61,7 @@ public class BracketDB {
 
     public Bracket getBracket(Integer id) {
         BracketCursorWrapper cursor = queryBrackets(
-                BracketDBSchema.BracketTable.Cols._ID + " = ?",
+                BracketTable.Cols._ID + " = ?",
                 new String[]{"" + id}
         );
 
@@ -97,7 +100,7 @@ public class BracketDB {
             bracket.setRelatedEvent(parentEvent.getId());
         }
         ContentValues values = getContentValues(bracket);
-        mDatabase.insert(BracketDBSchema.BracketTable.NAME, null, values);
+        mDatabase.insert(BracketTable.NAME, null, values);
     }
 
     public void addBrackets(List<Bracket> brackets, Event parentEvent) {
@@ -106,7 +109,7 @@ public class BracketDB {
             for (int i = 0; i < brackets.size(); i++) {
                 brackets.get(i).setRelatedEvent(parentEvent.getId());
                 ContentValues values = getContentValues(brackets.get(i));
-                mDatabase.insert(BracketDBSchema.BracketTable.NAME, null, values);
+                mDatabase.insert(BracketTable.NAME, null, values);
             }
             mDatabase.setTransactionSuccessful();
             mDatabase.endTransaction();
@@ -118,16 +121,16 @@ public class BracketDB {
 
     public void deleteBrackets(long event_id) {
         Log.v("DeleteBracket", "Deleting Bracket: " + event_id);
-        deleteBrackets(BracketDBSchema.BracketTable.Cols.FK_EVENT_ID + " = ?", new String[]{"" + event_id});
+        deleteBrackets(BracketTable.Cols.FK_EVENT_ID + " = ?", new String[]{"" + event_id});
     }
 
     public void deleteAllBrackets() {
         Log.v("deleteBrackets", "Deleting All Brackets!");
-        mDatabase.delete(BracketDBSchema.BracketTable.NAME, null, null);
+        mDatabase.delete(BracketTable.NAME, null, null);
     }
 
     private void deleteBrackets(String whereClause, String[] whereArgs) {
-        int isDeleted = mDatabase.delete(BracketDBSchema.BracketTable.NAME, whereClause, whereArgs);
+        int isDeleted = mDatabase.delete(BracketTable.NAME, whereClause, whereArgs);
         if (whereClause == null && isDeleted != 1) {
             Log.e("deleteBrackets", "Unable to delete brackets -> " + whereArgs);
         } else {
@@ -137,7 +140,7 @@ public class BracketDB {
 
     private BracketCursorWrapper queryBrackets(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
-                BracketDBSchema.BracketTable.NAME,
+                BracketTable.NAME,
                 null, // Columns -null selects all columns
                 whereClause,
                 whereArgs,
@@ -151,11 +154,24 @@ public class BracketDB {
 
     private static ContentValues getContentValues(Bracket bracket) {
         ContentValues values = new ContentValues();
-        values.put(BracketDBSchema.BracketTable.Cols._ID, bracket.getId());
-        values.put(BracketDBSchema.BracketTable.Cols.FK_EVENT_ID, bracket.getRelatedEvent());
-        values.put(BracketDBSchema.BracketTable.Cols.NAME, bracket.getBracketName());
-        values.put(BracketDBSchema.BracketTable.Cols.URL, bracket.getBracketUrl());
-        values.put(BracketDBSchema.BracketTable.Cols.TYPE, bracket.getBracketType());
+        // Bools stored in DB as Int / convert to bool
+        int isVerified = IS_VERIFIED_DEFAULT_STATE;
+        if (bracket.getIsVerified() != null) {
+            isVerified = (bracket.getIsVerified()) ? 1 : 0;
+        }
+
+        int isUserAdded = IS_USER_ADDED_DEFAULT_STATE;
+        if (bracket.getIsVerified() != null) {
+            isUserAdded = (bracket.getIsUserAdded()) ? 1 : 0;
+        }
+
+        values.put(BracketTable.Cols._ID, bracket.getId());
+        values.put(BracketTable.Cols.FK_EVENT_ID, bracket.getRelatedEvent());
+        values.put(BracketTable.Cols.NAME, bracket.getBracketName());
+        values.put(BracketTable.Cols.URL, bracket.getBracketUrl());
+        values.put(BracketTable.Cols.TYPE, bracket.getBracketType());
+        values.put(BracketTable.Cols.IS_VERIFIED, isVerified);
+        values.put(BracketTable.Cols.USER_ADDED, isUserAdded);
 
         return values;
     }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Events.models.Bracket;
@@ -33,13 +34,16 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
             mBracketName = (TextView) v.findViewById(R.id.bracket_name);
             mViewParticipants = (Button) v.findViewById(R.id.bracket_view_participants);
         }
-
     }
 
     public BracketAdapter(Context c, Event event) {
         mContext = c;
         mEvent = event;
-        mBrackets = event.getStoredBrackets(c);
+        if (event.getStoredBrackets(c) != null) {
+            mBrackets = event.getStoredBrackets(c);
+        } else {
+            mBrackets = new ArrayList<>();
+        }
     }
 
     @Override

@@ -100,6 +100,7 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     public void bindGeneral(final ViewHolder holder, final int position) {
         final SharedPrefManager sharedPref = mSharedPrefManager.get(position);
         if (sharedPref != null) {
+            Log.i("PrefCheckAssigner", sharedPref.toString() + ": " + sharedPref.getValue());
             holder.mPrefLabel.setText(sharedPref.toString());
             holder.mToggleSwitch.setChecked(sharedPref.getValue());
             holder.mToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -211,57 +212,44 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     }
 
     private void checkSwitchArrowAnimation(final ViewHolder holder, final int position) {
-        int animationDelay = (position < getItemCount()) ? 1000 + (position*25) : 500;
         if (isSwitchShowing) {
             if (holder.mToggleSwitch.getVisibility() != View.VISIBLE) {
                 holder.mArrowContainer.setVisibility(View.GONE);
                 holder.mToggleSwitch.setVisibility(View.VISIBLE);
-//                holder.mToggleSwitch.setAlpha(0f);
-//                holder.mToggleSwitch.setVisibility(View.VISIBLE);
-//                holder.mToggleSwitch.animate().alpha(100f).setDuration(animationDelay);
             }
         } else {
             if (holder.mToggleSwitch.getVisibility() != View.GONE) {
-//                holder.mToggleSwitch.animate().alpha(0f).setDuration(animationDelay)
-//                        .setListener(new AnimatorListenerAdapter() {
-//                            @Override
-//                            public void onAnimationEnd(Animator animation) {
-//                                super.onAnimationEnd(animation);
-//                                holder.mToggleSwitch.setVisibility(View.GONE);
-//                            }
-//                        });
-//                animateArrows(holder, position);
                 holder.mToggleSwitch.setVisibility(View.GONE);
                 holder.mArrowContainer.setVisibility(View.VISIBLE);
             }
         }
     }
 
-    private void animateArrows(final ViewHolder holder, final int position) {
-        int animationDelay = (position < getItemCount()) ? 1000 + (position*25) : 500;
-        if (!isSwitchShowing) {
-            if (holder.mArrowContainer.getVisibility() != View.VISIBLE) {
-                holder.mArrowContainer.setAlpha(0f);
-                holder.mArrowContainer.setVisibility(View.VISIBLE);
-                holder.mArrowContainer.animate()
-                        .alpha(100f)
-                        .setDuration(animationDelay);
-            }
-        } else {
-            if (holder.mArrowContainer.getVisibility() != View.GONE) {
-                holder.mArrowContainer.animate()
-                        .alpha(0f)
-                        .setDuration(animationDelay)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                holder.mArrowContainer.setVisibility(View.GONE);
-                            }
-                        })
-                ;
-            }
-
-        }
-    }
+//    private void animateArrows(final ViewHolder holder, final int position) {
+//        int animationDelay = (position < getItemCount()) ? 1000 + (position*25) : 500;
+//        if (!isSwitchShowing) {
+//            if (holder.mArrowContainer.getVisibility() != View.VISIBLE) {
+//                holder.mArrowContainer.setAlpha(0f);
+//                holder.mArrowContainer.setVisibility(View.VISIBLE);
+//                holder.mArrowContainer.animate()
+//                        .alpha(100f)
+//                        .setDuration(animationDelay);
+//            }
+//        } else {
+//            if (holder.mArrowContainer.getVisibility() != View.GONE) {
+//                holder.mArrowContainer.animate()
+//                        .alpha(0f)
+//                        .setDuration(animationDelay)
+//                        .setListener(new AnimatorListenerAdapter() {
+//                            @Override
+//                            public void onAnimationEnd(Animator animation) {
+//                                super.onAnimationEnd(animation);
+//                                holder.mArrowContainer.setVisibility(View.GONE);
+//                            }
+//                        })
+//                ;
+//            }
+//
+//        }
+//    }
 }

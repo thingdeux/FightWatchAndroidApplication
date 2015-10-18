@@ -2,6 +2,7 @@ package watch.fight.android.fightbrowser.Utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import watch.fight.android.fightbrowser.R;
 
@@ -14,7 +15,7 @@ public class SharedPrefManager {
     private int mPreference;
     private Context mContext;
 
-    public SharedPrefManager(@NonNull Context c, @NonNull final int preference) {
+    public SharedPrefManager(@NonNull Context c, final int preference) {
         mPreference = preference;
         mContext = c;
     }
@@ -37,8 +38,10 @@ public class SharedPrefManager {
         switch (mPreference) {
             case WEB_VIEW_PREF:
                 SharedPreferences.setToWebviewOrNotToWebview(mContext, value);
+                break;
             case DARK_MODE:
                 SharedPreferences.setDarkView(mContext, value);
+                break;
         }
     }
 
@@ -57,10 +60,8 @@ public class SharedPrefManager {
     public String toString() {
         switch (mPreference) {
             case WEB_VIEW_PREF:
-                //  SharedPreferences.getToWebViewOrNotToWebView(mContext).toString(
                 return mContext.getResources().getString(R.string.web_view_label);
             case DARK_MODE:
-                // + SharedPreferences.getDarkView(mContext).toString()
                 return mContext.getResources().getString(R.string.dark_view_label);
         }
         return "";

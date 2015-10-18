@@ -6,24 +6,24 @@
           android:title="@string/menu_news_name"
           android:orderInCategory="80"
           android:icon="@drawable/ic_news_rss"
-          app:showAsAction="ifRoom|withText"/>
+          app:showAsAction="always|withText"/>
 
     <item android:id="@+id/action_events"
           android:title="@string/menu_events_name"
           android:orderInCategory="100"
           android:icon="@drawable/ic_events"
-          app:showAsAction="ifRoom|withText"/>
+          app:showAsAction="always|withText"/>
 
     <item android:id="@+id/action_streams"
           android:title="@string/menu_stream_name"
           android:orderInCategory="120"
           android:icon="@drawable/ic_twitch_stream"
-          app:showAsAction="ifRoom|withText"/>
+          app:showAsAction="always|withText"/>
 
     <item android:id="@+id/action_preferences"
           android:title="@string/menu_preferences_name"
           android:icon="@drawable/ic_settings"
           android:orderInCategory="140"
-          app:showAsAction="ifRoom|withText"/>
+          app:showAsAction="always|withText"/>
 
 </menu>

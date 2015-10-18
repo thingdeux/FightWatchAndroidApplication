@@ -61,6 +61,9 @@ public class InformationFeedsFragment extends Fragment {
                 StoryTrackerDB.getInstance(this.getActivity()).addStoryTrackers(stories);
                 new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, true).execute();
                 return true;
+            case R.id.action_show_all:
+                new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, false).execute();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

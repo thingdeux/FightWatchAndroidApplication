@@ -69,15 +69,22 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
         } else {
             mStories = new ArrayList<>();
         }
+
         List<Story> latestStories = StoryDB.getInstance(mContext.getApplicationContext()).getAllUnfilteredStories();
-        HashSet<String> markedRead = StoryTrackerDB.getInstance(mContext.getApplicationContext()).getAllTrackers();
-        for (int i = 0; i < latestStories.size(); i++) {
-            if (latestStories.get(i) != null && latestStories.get(i).getUrl() != null) {
-                if (!markedRead.contains(latestStories.get(i).getUrl().toString())) {
-                    mStories.add(latestStories.get(i));
+
+        if (!SharedPreferences.getShowFilteredFeeds(mContext)) {
+            HashSet<String> markedRead = StoryTrackerDB.getInstance(mContext.getApplicationContext()).getAllTrackers();
+            for (int i = 0; i < latestStories.size(); i++) {
+                if (latestStories.get(i) != null && latestStories.get(i).getUrl() != null) {
+                    if (!markedRead.contains(latestStories.get(i).getUrl().toString())) {
+                        mStories.add(latestStories.get(i));
+                    }
                 }
             }
+        } else {
+            mStories = latestStories;
         }
+
     }
 
     @Override

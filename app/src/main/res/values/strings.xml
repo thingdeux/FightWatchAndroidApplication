@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FGC Companion</string>
     <!--Activity Names-->
+    <string name="dashboard_activity_name">Dashboard</string>
     <string name="events_activity_name">FGC Events</string>
     <string name="config_activity_name">Configuration</string>
     <string name="browser_activity_name">Stream Browser</string>
@@ -30,6 +31,8 @@
     <!--Menu Options -->
     <string name="information_menu_refresh_name">Refresh</string>
     <string name="information_menu_mark_as_read_name">Mark all as Read</string>
+    <string name="information_menu_show_all_enable">Show All</string>
+    <string name="information_menu_show_all_disable">Hide Read</string>
     <string name="menu_dashboard_name">Dashboard</string>
     <string name="menu_events_name">Events</string>
     <string name="menu_news_name">News</string>

@@ -89,7 +89,7 @@ public class FetchFeeds {
             return false;
         }
 
-        protected void onPostExecute(Boolean didUpdate) {
+        protected void onPostExecute(Boolean didPollRSSFeeds) {
             if (mDashboardFragment != null) {
                 // If this is called from the Dashboard Activity, spin up the dashboardBuilder after fetching new stories.
                 new DashboardBuilder().execute(new DashboardBuilder.DashboardBuilderValues(mDashboardFragment.getActivity(), mDashboardFragment));
@@ -99,14 +99,13 @@ public class FetchFeeds {
                 // Notify the recyclerview adapter if one has been passed in.
                 mAdapter.refreshStories();
                 mAdapter.notifyDataSetChanged();
-                didUpdate = true;
             }
 
             if (mInformationFeedsFragment != null) {
                 mInformationFeedsFragment.setUIReady();
             }
 
-            if (didUpdate) {
+            if (didPollRSSFeeds) {
                 Toast t = Toast.makeText(mContext, "Fetched New Feeds!", Toast.LENGTH_SHORT);
                 t.show();
             }

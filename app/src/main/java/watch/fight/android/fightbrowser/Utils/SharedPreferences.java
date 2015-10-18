@@ -14,21 +14,26 @@ public class SharedPreferences {
     public static final String TWITCH_STREAMS_LAST_UPDATED = "TwitchStreamsLastUpdated";
     public static final String TO_WEBVIEW_OR_NOT_TO_WEBVIEW = "WebviewChoice";
     public static final String DARK_VIEW = "DarkView";
+    public static final String SHOW_FILTERED_FEEDS = "ShowFilteredFeeds";
 
     public static void setConfigLastUpdated(Context context, long lastUpdated) { setLong(context, CONFIG_LAST_UPDATED, lastUpdated); }
     public static void setFeedsLastUpdated(Context context, long lastUpdated) { setLong(context, FEEDS_LAST_UPDATED, lastUpdated); }
     public static void setFeedsLastUpdatedToNow(Context context) { setLong(context, FEEDS_LAST_UPDATED, System.currentTimeMillis()); }
     public static void setToWebviewOrNotToWebview(Context context, Boolean value) { setBool(context, TO_WEBVIEW_OR_NOT_TO_WEBVIEW, value); }
     public static void setDarkView(Context context, Boolean value) { setBool(context, DARK_VIEW, value); }
-
-    public static void setTwitchStreamsLastUpdated(Context context, long lastUpdated) { setLong(context, TWITCH_STREAMS_LAST_UPDATED, lastUpdated);
-    }
+    public static void setShowFilteredFeeds(Context context, Boolean value) { setBool(context, SHOW_FILTERED_FEEDS, value); }
+    public static void setTwitchStreamsLastUpdated(Context context, long lastUpdated) { setLong(context, TWITCH_STREAMS_LAST_UPDATED, lastUpdated); }
 
     public static long getConfigLastUpdated(Context context) { return getLong(context, CONFIG_LAST_UPDATED); }
     public static long getFeedsLastUpdated(Context context) { return getLong(context, FEEDS_LAST_UPDATED); }
     public static long getTwitchStreamsLastUpdated(Context context) { return getLong(context, TWITCH_STREAMS_LAST_UPDATED); }
+    public static Boolean getShowFilteredFeeds(Context context) { return getBoolean(context, SHOW_FILTERED_FEEDS); }
     public static Boolean getToWebViewOrNotToWebView(Context context) { return getBoolean(context, TO_WEBVIEW_OR_NOT_TO_WEBVIEW); }
     public static Boolean getDarkView(Context context) { return getBoolean(context, DARK_VIEW); }
+
+    public static void toggleShowFilteredFeeds(Context context) {
+        setBool(context, SHOW_FILTERED_FEEDS, !getShowFilteredFeeds(context));
+    }
 
     private static long getLong(Context context, String name) {
         return PreferenceManager.getDefaultSharedPreferences(context)

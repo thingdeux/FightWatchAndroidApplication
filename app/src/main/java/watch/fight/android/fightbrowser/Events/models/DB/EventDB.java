@@ -11,6 +11,8 @@ import java.util.List;
 
 import watch.fight.android.fightbrowser.Events.models.DB.EventDBSchema.EventTable;
 import watch.fight.android.fightbrowser.Events.models.Event;
+import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDBSchema;
+import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 
 /**
  * Created by josh on 9/28/15.
@@ -96,6 +98,15 @@ public class EventDB {
     public void deleteAllEvents() {
         Log.v("deleteEvents", "Deleting All Events!");
         mDatabase.delete(EventTable.NAME, null, null);
+    }
+
+    public void updateEvent(Event event) {
+        String id = "" + event.getId();
+        ContentValues values = getContentValues(event);
+
+        mDatabase.update(EventTable.NAME, values,
+                EventTable.Cols.ID + " = ?",
+                new String[]{id});
     }
 
     private void deleteEvents(String whereClause, String[] whereArgs) {

@@ -30,9 +30,20 @@
             style="?android:attr/borderlessButtonStyle"
             android:textColor="@color/action_button_fgc"
             android:text="@string/bracket_view_open_button_name"
-            android:layout_toRightOf="@id/bracket_name"
             android:gravity="center_vertical|right"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+    </Button>
+
+    <Button android:id="@+id/bracket_verify"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
+            android:textColor="@color/action_button_fgc"
+            android:text="@string/bracket_plus_one_button_name"
+            android:layout_toLeftOf="@id/bracket_view_participants"
+            android:gravity="right|end|center_vertical"
+            >
     </Button>
 
 </RelativeLayout>

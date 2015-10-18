@@ -1,12 +1,12 @@
 package watch.fight.android.fightbrowser.Brackets;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
         public TextView mBracketName;
         public TextView mBracketIsVerified;
         public Button mViewParticipants;
+        public Button mVerifyButton;
 
         public ViewHolder(View v) {
             super(v);
@@ -36,6 +37,7 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
             mBracketName = (TextView) v.findViewById(R.id.bracket_name);
             mBracketIsVerified = (TextView) v.findViewById(R.id.bracket_is_verified);
             mViewParticipants = (Button) v.findViewById(R.id.bracket_view_participants);
+            mVerifyButton = (Button) v.findViewById(R.id.bracket_verify);
         }
     }
 
@@ -59,17 +61,35 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Bracket bracket = mBrackets.get(position);
 
+        if (bracket.getIsVerified()) {
+            holder.mVerifyButton.setEnabled(false);
+            holder.mVerifyButton.setVisibility(View.INVISIBLE);
+        } else {
+            holder.mVerifyButton.setEnabled(true);
+            holder.mVerifyButton.setVisibility(View.VISIBLE);
+        }
+
+
         holder.mBracketName.setText(bracket.getBracketName());
-        // TODO : REPLACE WITH LOCALIZED VALUES
-        holder.mBracketIsVerified.setText(
-                (bracket.getIsVerified()) ? "Verified Bracket" : "Community Suggested Bracket"
-        );
+
+        bindBracketVerified(holder, bracket);
         holder.mViewParticipants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mContext.startActivity(ParticipantsActivity.NewInstance(mContext, bracket.getId()));
             }
         });
+    }
+
+    public void bindBracketVerified(ViewHolder holder, final Bracket bracket) {
+        Resources resources = mContext.getResources();
+
+        if (bracket.getIsUserAdded()) {
+            holder.mBracketIsVerified.setText(resources.getString(R.string.bracket_user_header));
+        } else {
+            holder.mBracketIsVerified.setText((bracket.getIsVerified()) ?
+            resources.getString(R.string.bracket_verified_header) : resources.getString(R.string.bracket_community_header));
+        }
     }
 
     @Override

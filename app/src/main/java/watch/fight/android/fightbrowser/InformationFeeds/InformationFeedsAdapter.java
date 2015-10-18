@@ -147,11 +147,18 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
             }
         });
 
-        Picasso.with(this.mContext).load(mThumbnail)
-                .placeholder(R.mipmap.fist_icon)
-                .resize(200, 200)
-                .centerCrop()
-                .into(holder.mPreviewImage);
+        if (mThumbnail != null && !mThumbnail.isEmpty()) {
+            Picasso.with(this.mContext).load(mThumbnail)
+                    .placeholder(R.mipmap.fist_icon)
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(holder.mPreviewImage);
+        } else {
+            Picasso.with(this.mContext).load(R.mipmap.fist_icon)
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(holder.mPreviewImage);
+        }
 
     }
 

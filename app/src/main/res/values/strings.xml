@@ -22,6 +22,10 @@
     <!--Headers-->
     <string name="dashboard_stories_header_name">Latest Stories</string>
     <string name="dashboard_header">Dashboard</string>
+    <string name="bracket_verified_header">Verified Bracket</string>
+    <string name="bracket_community_header">Community Suggested Bracket</string>
+    <string name="bracket_user_header">My Custom Bracket</string>
+
 
     <!--Action Menu Options-->
     <string name="browser_action_refresh">Refresh</string>
@@ -51,6 +55,7 @@
     <string name="events_brackets_button_name">Brackets</string>
     <string name="events_website_button_name">Website</string>
     <string name="bracket_view_open_button_name">View</string>
+    <string name="bracket_plus_one_button_name">Verify</string>
 
     <!--Misc-->
     <string name="loading_message_subtitle">Loading Content</string>

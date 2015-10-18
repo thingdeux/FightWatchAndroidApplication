@@ -80,6 +80,11 @@
       "rss_url": "http://www.redbull.com/us/en/esports/rss/index.rss",
       "website_url": "http://www.redbull.com/us/en/esports/",
       "feed_image_url": "http://fgccompanion-79b.kxcdn.com/redbull-min.png"
+    }, {
+      "id": 8,
+      "name": "r/StreetFighter",
+      "rss_url": "https://www.reddit.com/r/streetfighter/hot/.rss?limit=10",
+      "website_url": "https://www.reddit.com/r/streetfighter/"
     }
   ],
   "events":  [
@@ -156,7 +161,7 @@
       ],
       "end_date": 1443592312000,
       "start_date": 1443592312000,
-      "last_updated": 1443592312000
+      "last_updated": 1445195998
     }, {
       "id": 34555,
       "name": "Evo 2015",
@@ -165,6 +170,11 @@
       "flavor_text": "What can be said about Evo other than that it's the most prolific fighting game tournament in the scene.  If a fighting game exists, chances are you'll find someone who plays it at a competitive level in Evo.",
       "streams": ["http://twitch.tv/srkevo1", "http://twitch.tv/srkevo2"],
       "brackets": [
+        {
+          "bracket_name": "Smash Brothers Melee Top 32",
+          "bracket_url": "http://challonge.com/evotop32smashwiiu",
+          "is_verified": false
+        }
       ],
       "end_date": 1443592312000,
       "start_date": 1443592312000,

@@ -205,8 +205,8 @@ public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
                 if (events.get(i).getBrackets() != null) {
                     // Always replace existing brackets with what's coming back from server.
                     // Will ensure if brackets are reported as false or are wrong that the
-                    // Server is the authority.
-                    BracketDB.getInstance(mContext).deleteBrackets(events.get(i).getId());
+                    // Server is the authority. Except the users own manually added brackets.
+                    BracketDB.getInstance(mContext).deleteBrackets(events.get(i).getId(), false);
                     BracketDB.getInstance(mContext).addBrackets(events.get(i).getBrackets(), events.get(i));
                 }
             }

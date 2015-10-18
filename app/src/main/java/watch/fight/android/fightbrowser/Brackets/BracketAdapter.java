@@ -27,11 +27,14 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mBracketName;
+        public TextView mBracketIsVerified;
         public Button mViewParticipants;
 
         public ViewHolder(View v) {
             super(v);
+
             mBracketName = (TextView) v.findViewById(R.id.bracket_name);
+            mBracketIsVerified = (TextView) v.findViewById(R.id.bracket_is_verified);
             mViewParticipants = (Button) v.findViewById(R.id.bracket_view_participants);
         }
     }
@@ -57,6 +60,10 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
         final Bracket bracket = mBrackets.get(position);
 
         holder.mBracketName.setText(bracket.getBracketName());
+        // TODO : REPLACE WITH LOCALIZED VALUES
+        holder.mBracketIsVerified.setText(
+                (bracket.getIsVerified()) ? "Verified Bracket" : "Community Suggested Bracket"
+        );
         holder.mViewParticipants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

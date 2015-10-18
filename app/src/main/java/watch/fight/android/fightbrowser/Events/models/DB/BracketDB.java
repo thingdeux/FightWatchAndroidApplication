@@ -119,9 +119,16 @@ public class BracketDB {
 
     }
 
-    public void deleteBrackets(long event_id) {
+    public void deleteBrackets(long event_id, boolean deleteUserAdded) {
         Log.v("DeleteBracket", "Deleting Bracket: " + event_id);
-        deleteBrackets(BracketTable.Cols.FK_EVENT_ID + " = ?", new String[]{"" + event_id});
+        if (deleteUserAdded) {
+            // The cheaper query without doing table scan for USER_ADDED
+            deleteBrackets(BracketTable.Cols.FK_EVENT_ID + " = ?", new String[]{"" + event_id});
+        } else {
+            deleteBrackets(BracketTable.Cols.FK_EVENT_ID + " = ? AND " + BracketTable.Cols.USER_ADDED + " = ?",
+                    new String[]{"" + event_id, "1" });
+        }
+
     }
 
     public void deleteAllBrackets() {
@@ -161,7 +168,7 @@ public class BracketDB {
         }
 
         int isUserAdded = IS_USER_ADDED_DEFAULT_STATE;
-        if (bracket.getIsVerified() != null) {
+        if (bracket.getIsUserAdded() != null) {
             isUserAdded = (bracket.getIsUserAdded()) ? 1 : 0;
         }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_width="match_parent"
@@ -8,29 +8,31 @@
               android:layout_marginRight="6dp"
               >
 
+    <TextView android:id="@+id/bracket_is_verified"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Bracket Is Verified"
+        android:gravity="left">
+    </TextView>
+
     <TextView android:id="@+id/bracket_name"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_below="@id/bracket_is_verified"
               style="?android:textAppearanceListItem"
-              android:layout_weight=".8"
               tools:text="Bracket Name"
-              >
+              android:gravity="left">
     </TextView>
 
     <Button android:id="@+id/bracket_view_participants"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:minHeight="30dp"
-            android:minWidth="15dp"
-            android:maxHeight="40dp"
-            android:maxWidth="25dp"
-            android:textSize="14sp"
             style="?android:attr/borderlessButtonStyle"
             android:textColor="@color/action_button_fgc"
             android:text="@string/bracket_view_open_button_name"
-            android:layout_weight=".2"
+            android:layout_toRightOf="@id/bracket_name"
             android:gravity="center_vertical|right"
-            >
+            android:layout_alignParentRight="true">
     </Button>
 
-</LinearLayout>
+</RelativeLayout>

@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 
 import java.util.List;
@@ -24,6 +27,7 @@ public class BracketActivity extends AppCompatActivity {
     public static String BRACKET_EVENT_ID = "watch.fight.android.fightbrowser.bracket.event_id";
     private RecyclerView mRecyclerView;
     private BracketAdapter mAdapter;
+    private ImageButton mFloatingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,16 @@ public class BracketActivity extends AppCompatActivity {
         Long EventId = intent.getLongExtra(BRACKET_EVENT_ID, -1);
         Event event = EventDB.getInstance(this).getEvent(EventId);
 
-        setContentView(R.layout.single_recycler_no_loading);
+        setContentView(R.layout.bracket_fragment);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_one);
+        mFloatingButton = (ImageButton) findViewById((R.id.bracket_floating_button));
+
+        mFloatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("CLICKED IT", "Clicked my Floating Action Button");
+            }
+        });
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
 

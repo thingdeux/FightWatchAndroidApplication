@@ -1,7 +1,6 @@
 package watch.fight.android.fightbrowser.InformationFeeds;
 
 import android.content.Context;
-import android.os.Looper;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -12,7 +11,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 
-import org.apache.http.params.CoreProtocolPNames;
 import org.mcsoxford.rss.RSSConfig;
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSParser;
@@ -102,8 +100,8 @@ public class InformationFeedsNetworkHandlers {
             Map headers = new HashMap();
 
             // Add custom header for reddit rss feeds
-            String userAgent = "android:watch.fight.android.fightbrowser:v0.1.5 (by /u/thingdeux)";
-            headers.put(CoreProtocolPNames.USER_AGENT, userAgent);
+            String userAgent = "android:watch.fight.android.fightbrowser:v0.1.7 (by /u/thingdeux)";
+            headers.put(System.getProperty("http.agent"), userAgent);
             return headers;
         }
 

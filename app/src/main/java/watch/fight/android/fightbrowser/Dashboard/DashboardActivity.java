@@ -27,7 +27,8 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());  // Crashlytics Init - Don't Remove
 
-        String actionBarText = getResources().getString(R.string.dashboard_activity_name);
+//        String actionBarText = getResources().getString(R.string.dashboard_activity_name);
+        String actionBarText = getResources().getString(R.string.fgc_name);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(actionBarText);
         }

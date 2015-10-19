@@ -18,6 +18,9 @@ package org.mcsoxford.rss;
 
 import android.util.Log;
 
+import com.android.volley.toolbox.HttpClientStack;
+import com.squareup.picasso.OkHttpDownloader;
+
 import java.io.IOException;
 import java.io.InputStream;
 

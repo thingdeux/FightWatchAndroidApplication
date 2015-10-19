@@ -5,4 +5,8 @@
     <color name="action_button_fgc">#EF5350</color>
     <color name="card_background_fgc">#FFEBEE</color>
     <color name="viewpager_underline_fgc">#FF8A80</color>
+    <color name="fgc_accent_1">#FF8A80</color>
+    <color name="fgc_accent_2">#FF5252</color>
+    <color name="fgc_accent_3">#FF1744</color>
+    <color name="fgc_accent_4">#D50000</color>
 </resources>

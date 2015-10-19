@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimaryDark">@color/toolbar_dark_fgc</item>
         <item name="colorPrimary">@color/primary_dark_fgc</item>
+        <item name="colorAccent">@color/fgc_accent_1</item>
     </style>
 
     <style name="Widget.CustomTitlepageIndicator">

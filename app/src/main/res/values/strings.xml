@@ -41,7 +41,7 @@
     <string name="menu_events_name">Events</string>
     <string name="menu_news_name">News</string>
     <string name="menu_stream_name">Streams</string>
-    <string name="menu_preferences_name">Preferences</string>
+    <string name="menu_preferences_name">Settings</string>
 
     <!--Button Names -->
     <string name="twitch_watch_button">Watch</string>
@@ -62,6 +62,7 @@
     <string name="bracket_vs_text">VS</string>
     <string name="bracket_winner_formatted">Winner: %1$s</string>
     <string name="dbinspector_app_name">FGC Comp. Debug DB</string>
+    <string name="fgc_name">FGC</string>
 
     <!--Preferences labels-->
     <string name="dark_view_label">Enable Dark Viewing Mode</string>

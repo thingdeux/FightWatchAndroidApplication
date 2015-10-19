@@ -39,22 +39,24 @@ public class ChallongeAPI {
     public Uri getTournamentUri(final String tournamentID, final Boolean includeParticipants, final Boolean includeMatches) {
         if (tournamentID != null) {
             String parsedTournamentID = ParseTournamentID(tournamentID);
-            String ip = (includeParticipants) ? "1" : "0";
-            String im = (includeMatches) ? "1" : "0";
+            if (parsedTournamentID != null) {
+                String ip = (includeParticipants) ? "1" : "0";
+                String im = (includeMatches) ? "1" : "0";
 
-            return new Uri.Builder()
-                    .scheme("https")
-                    .authority(API_URL)
-                    .appendPath(API_VERSION)
-                    .appendPath(GET_TOURNAMENT)
-                    .appendPath(parsedTournamentID + FORMAT)
-                    .appendQueryParameter("api_key", API_KEY)
-                    .appendQueryParameter("include_participants", ip)
-                    .appendQueryParameter("include_matches", im)
-                    .build();
-        } else {
-            return null;
+                return new Uri.Builder()
+                        .scheme("https")
+                        .authority(API_URL)
+                        .appendPath(API_VERSION)
+                        .appendPath(GET_TOURNAMENT)
+                        .appendPath(parsedTournamentID + FORMAT)
+                        .appendQueryParameter("api_key", API_KEY)
+                        .appendQueryParameter("include_participants", ip)
+                        .appendQueryParameter("include_matches", im)
+                        .build();
+            }
+
         }
+        return null;
     }
 
     public Uri getParticipantsUri(String tournamentID) {
@@ -113,21 +115,24 @@ public class ChallongeAPI {
            Find out if the passed id has a subdomain and build the proper id. */
 
         // Strip http/https
-
         // EX: challonge.com/EVOSSBMPicks | nextlevel.challonge.com/nlbc140usf4
+
         if (id != null) {
-            String stripped = id.replaceFirst("^(https?://|https?://www\\.|www\\.)", "");
-            String[] splitID = stripped.split("/");
-            String bracketName = splitID[1];
-            String[] possibleSubdomain = splitID[0].split("\\.");
-            if (possibleSubdomain.length > 2) {
-                return possibleSubdomain[0] + "-" + bracketName;
-            } else {
-                return bracketName;
+            try {
+                String stripped = id.replaceFirst("^(https?://|https?://www\\.|www\\.)", "");
+                String[] splitID = stripped.split("/");
+                String bracketName = splitID[1];
+                String[] possibleSubdomain = splitID[0].split("\\.");
+                if (possibleSubdomain.length > 2) {
+                    return possibleSubdomain[0] + "-" + bracketName;
+                } else {
+                    return bracketName;
+                }
+             } catch (ArrayIndexOutOfBoundsException error) {
+                // Fall through to return null if the url can't be  parsed
             }
         }
         return null;
-
-
     }
+
 }

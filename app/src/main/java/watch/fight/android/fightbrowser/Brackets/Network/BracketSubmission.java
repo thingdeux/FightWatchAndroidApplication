@@ -1,12 +1,14 @@
 package watch.fight.android.fightbrowser.Brackets.Network;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,6 +70,29 @@ public abstract class BracketSubmission {
         queue.add(submitRequest);
     }
 
+    public static boolean isValidSearchQuery(String url) {
+        return (url != null && url.contains("q="));
+    }
+
+    public static boolean isValidChallongeBracket(String url, Context context) {
+        ChallongeAPI api = ChallongeAPI.getInstance(context);
+        Uri tournamentURI = api.getTournamentUri(url, false, false);
+        testChallongeBracket(tournamentURI, context);
+        return (tournamentURI != null);
+    }
+
+    public static void testChallongeBracket(Uri uri, Context context) {
+        RequestQueue queue = NetworkRequest.getInstance(context).getRequestQueue();
+
+        if (uri != null && context != null) {
+            // Hit the callback on the searchactivity when finished.
+            Response.Listener<String> responseListener = (Response.Listener) context;
+            Response.ErrorListener errorListener = (Response.ErrorListener) context;
+            StringRequest stringRequest = new StringRequest(uri.toString(), responseListener, errorListener);
+            Log.v(TAG, "Requesting Bracket -> " + uri);
+            queue.add(stringRequest);
+        }
+    }
 
 }
 

@@ -57,6 +57,7 @@
     <string name="events_website_button_name">Website</string>
     <string name="bracket_view_open_button_name">View</string>
     <string name="bracket_plus_one_button_name">Verify</string>
+    <string name="bracket_search_add_button_name">Add</string>
 
     <!--Misc-->
     <string name="loading_message_subtitle">Loading Content</string>
@@ -64,6 +65,8 @@
     <string name="bracket_winner_formatted">Winner: %1$s</string>
     <string name="dbinspector_app_name">FGC Comp. Debug DB</string>
     <string name="fgc_name">FGC</string>
+    <string name="search_tournaments_default_status">Search for brackets</string>
+    <string name="search_tournaments_checking_status">Search for brackets</string>
 
     <!--Preferences labels-->
     <string name="dark_view_label">Enable Dark Viewing Mode</string>
@@ -71,10 +74,11 @@
 
     <!--Error Text-->
     <string name="challonge_participants_loading_error">Error Loading Brackets</string>
+    <string name="search_invalid_tournament_error">Invalid Tournament</string>
+    <string name="search_valid_bracket_error">Valid Tournament</string>
+
     <!--Text for winner being unknown-->
     <string name="challonge_participants_winner_unknown">Not Determined</string>
-
-
 
     <string-array name="main_menu_options">
         <item>Dashboard</item>

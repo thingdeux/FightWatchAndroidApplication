@@ -17,8 +17,8 @@ import watch.fight.android.fightbrowser.Events.models.Event;
  * Created by josh on 10/4/15.
  */
 public class BracketDB {
-    private static int IS_VERIFIED_DEFAULT_STATE = 0;
-    private static int IS_USER_ADDED_DEFAULT_STATE = 0;
+    private static final int IS_VERIFIED_DEFAULT_STATE = 0;
+    private static final int IS_USER_ADDED_DEFAULT_STATE = 0;
     private static BracketDB sBracketDB;
     private SQLiteDatabase mDatabase;
     private Context mContext;

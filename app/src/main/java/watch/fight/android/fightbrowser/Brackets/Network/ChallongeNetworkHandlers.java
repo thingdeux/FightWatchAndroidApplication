@@ -6,7 +6,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import watch.fight.android.fightbrowser.Brackets.ChallongeAPI;
 import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Utils.Network.GsonRequest;

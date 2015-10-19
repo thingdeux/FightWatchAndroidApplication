@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+               xmlns:tools="http://schemas.android.com/tools"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+
+
+    <WebView android:id="@+id/search_webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:marginTop="10dp"
+         android:minHeight="200dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView android:id="@+id/search_bracket_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bracket Name"
+              android:layout_alignTop="@+id/search_webview"/>
+
+    <TextView android:id="@+id/search_bracket_submitter_label"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Submitted by"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Bracket_Name"
+        android:layout_above="@id/search_webview"
+        android:layout_toRightOf="@id/search_bracket_name_label"
+        android:id="@+id/search_bracket_name"/>
+
+
+
+    <EditText android:id="@+id/search_bracket_submitter_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Bracket_Submitter"
+      android:layout_above="@id/search_webview"
+        android:layout_below="@id/search_bracket_name"
+        android:layout_toRightOf="@id/search_bracket_submitter_label"
+        />
+</RelativeLayout>

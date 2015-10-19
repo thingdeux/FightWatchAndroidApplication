@@ -44,7 +44,7 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
     public BracketAdapter(Context c, Event event) {
         mContext = c;
         mEvent = event;
-        if (event.getStoredBrackets(c) != null) {
+        if (event != null && event.getStoredBrackets(c) != null) {
             mBrackets = event.getStoredBrackets(c);
         } else {
             mBrackets = new ArrayList<>();

@@ -30,45 +30,45 @@ public class BracketActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private BracketAdapter mAdapter;
     private ImageButton mFloatingButton;
+    private Event mEvent;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Intent intent = getIntent();
+        mContext = this;
         Long EventId = intent.getLongExtra(BRACKET_EVENT_ID, -1);
-        Event event = EventDB.getInstance(this).getEvent(EventId);
+        mEvent = EventDB.getInstance(this).getEvent(EventId);
 
         setContentView(R.layout.bracket_fragment);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_one);
         mFloatingButton = (ImageButton) findViewById((R.id.bracket_floating_button));
-        final Context c = this;
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+
+        mAdapter = new BracketAdapter(this, mEvent);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         mFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("CLICKED IT", "Clicked my Floating Action Button");
-                // TODO : REMOVE - TEST
-                Event event = EventDB.getInstance(c).getAllEvents().get(0);
-                Bracket bracket = new Bracket();
-                bracket.setBracketName("TEST BRACKET");
-                bracket.setBracketUrl("http://127.0.0.1/Test");
-
-                BracketSubmission.submitBracket(c, event, bracket, false, "Josh");
+//            // TODO : REMOVE - TEST
+//            Event event = EventDB.getInstance(c).getAllEvents().get(0);
+//            Bracket bracket = new Bracket();
+//            bracket.setBracketName("TEST BRACKET");
+//            bracket.setBracketUrl("http://127.0.0.1/Test");
+//            BracketSubmission.submitBracket(c, event, bracket, false, "Josh");
+                mContext.startActivity(BracketSearchActivity.NewInstance(mContext, mEvent.getId()));
             }
         });
-
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-
-        mAdapter = new BracketAdapter(this, event);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     @Override
@@ -87,4 +87,7 @@ public class BracketActivity extends AppCompatActivity {
         intent.putExtra(BRACKET_EVENT_ID, eventId);
         return intent;
     }
+
+
+
 }

@@ -38,6 +38,8 @@ public class ParticipantsActivity extends AppCompatActivity
     private Bracket mBracket;
     private View mLoadingContainer;
 
+    // TODO : IVolleyResponse makes this Activity way too unyieldy, refactor
+
     // Response received from Challonge
     public void onSuccess(TournamentWrapper response) {
         Log.i("VolleySuccess", "Received Challonge Success");

@@ -59,6 +59,10 @@
             android:name=".InformationFeeds.InformationFeedsWebViewActivity"
             android:label="@string/information_feeds_webview_activity_name" >
         </activity>
+        
+        <activity android:name=".Brackets.BracketSearchActivity"
+            android:label="@string/brackets_submission_activity_name">
+        </activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"

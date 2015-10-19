@@ -28,7 +28,7 @@ public class PutRequest<T> extends Request<T> {
 
     public PutRequest(String url, Class<T> clazz, Map<String, String> headers, JSONObject requestBody,
                        Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, url, errorListener);
+        super(Method.PUT, url, errorListener);
         this.clazz = clazz;
         this.headers = headers;
         this.listener = listener;

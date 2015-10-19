@@ -1,4 +1,4 @@
-package watch.fight.android.fightbrowser.Brackets;
+package watch.fight.android.fightbrowser.Brackets.Network;
 
 import android.content.Context;
 import android.net.Uri;

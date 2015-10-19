@@ -14,10 +14,12 @@ import android.widget.ImageButton;
 
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Brackets.Network.BracketSubmission;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.Network.PutRequest;
 
 
 /**
@@ -40,11 +42,19 @@ public class BracketActivity extends AppCompatActivity {
         setContentView(R.layout.bracket_fragment);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_one);
         mFloatingButton = (ImageButton) findViewById((R.id.bracket_floating_button));
+        final Context c = this;
 
         mFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("CLICKED IT", "Clicked my Floating Action Button");
+                // TODO : REMOVE - TEST
+                Event event = EventDB.getInstance(c).getAllEvents().get(0);
+                Bracket bracket = new Bracket();
+                bracket.setBracketName("TEST BRACKET");
+                bracket.setBracketUrl("http://127.0.0.1/Test");
+
+                BracketSubmission.submitBracket(c, event, bracket, false, "Josh");
             }
         });
 

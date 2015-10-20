@@ -82,6 +82,14 @@
     <!--Text for winner being unknown-->
     <string name="challonge_participants_winner_unknown">Not Determined</string>
 
+    <!--Dialog Button Options-->
+    <string name="base_dialog_ok">OK</string>
+    <string name="base_dialog_cancel">CANCEL</string>
+
+    <!--Dialog Text-->
+    <string name="dialog_are_you_sure">Are you sure?</string>
+    <string name="dialog_delete_bracket_content">Stop Following This Bracket?</string>
+
     <string-array name="main_menu_options">
         <item>Dashboard</item>
         <item>Events</item>

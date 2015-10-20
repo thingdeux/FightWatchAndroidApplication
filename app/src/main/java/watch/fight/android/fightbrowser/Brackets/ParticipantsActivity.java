@@ -26,13 +26,14 @@ import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.Dialogs.BasicAlertDialog;
 import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
 
 /**
  * Created by josh on 10/5/15.
  */
 public class ParticipantsActivity extends AppCompatActivity
-        implements IVolleyResponse<TournamentWrapper> {
+        implements IVolleyResponse<TournamentWrapper>,  BasicAlertDialog.BasicAlertButtonListener {
     private static final String[] INDICATOR_TITLE_NAMES = new String[] { "Who's Left", "Battlelog", "Upcoming Matches", "Player Roster"};
     public static String BRACKET_ID = "watch.fight.android.fightbrowser.brackets.participants.bracket";
     private View mParticipantsContainer;
@@ -192,15 +193,26 @@ public class ParticipantsActivity extends AppCompatActivity
         switch (id) {
             case R.id.participants_action_refresh:
                 getBracketsFromChallonge();
-//                EventBus.getDefault().post(new ParticipantMenuEvent(ParticipantMenuEvent.REFRESH));
                 return true;
             case R.id.participants_action_delete:
-                BracketDB.getInstance(this).deleteOneBracket(mBracket);
-                Toast.makeText(this, "DELETED", Toast.LENGTH_SHORT).show();
-                finish();
+                BasicAlertDialog d = BasicAlertDialog.newInstance(R.string.dialog_are_you_sure, R.string.dialog_delete_bracket_content);
+                d.show(getSupportFragmentManager(), "Bracket Delete");
+
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onOk() {
+        BracketDB.getInstance(this).deleteOneBracket(mBracket);
+        Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onCancel() {
+        // Intentionally blank - do nothing on cancel
     }
 }

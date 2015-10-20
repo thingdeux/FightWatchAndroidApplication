@@ -123,11 +123,11 @@ public class ParticipantsHolder {
                     if(match.getState().toLowerCase().equals("pending") || match.getState().toLowerCase().equals("open")) {
                         // Don't want to see the empty brackets from way in the future here
                         mUpcomingMatches.add(mMatches.get(index));
+                        if (p1 != null) { addActivePlayer(p1); }
+                        if (p2 != null) { addActivePlayer(p2); }
                     } else {
                         mValidMatches.add(mMatches.get(index));
                     }
-                    addActivePlayer(p1);
-                    addActivePlayer(p2);
                 }
             }
 

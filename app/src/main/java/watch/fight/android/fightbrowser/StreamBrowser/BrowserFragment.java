@@ -165,8 +165,6 @@ public class BrowserFragment extends Fragment {
         });
 
         mTwitchLoader.getTwitchData(url);
-
-
     }
 
     public void setUILoading() {
@@ -182,4 +180,5 @@ public class BrowserFragment extends Fragment {
             mRecylerView.setVisibility(View.VISIBLE);
         }
     }
+
 }

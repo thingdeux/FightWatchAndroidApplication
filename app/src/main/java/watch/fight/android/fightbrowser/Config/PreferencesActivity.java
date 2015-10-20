@@ -1,5 +1,7 @@
 package watch.fight.android.fightbrowser.Config;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,18 +27,40 @@ import static watch.fight.android.fightbrowser.Config.events.PreferenceToggleEve
  */
 public class PreferencesActivity extends AppCompatActivity {
     private static final String[] INDICATOR_TITLE_NAMES = new String[] { "General", "Games", "Feeds"};
+    private static final String PREFERENCES_STARTING_WINDOW = "watch.fight.android.fightbrowser.Config.PreferencesActivity.StartingWindow";
+
+    // The number of these ints isn't arbitrary, it coincides with the indicator title names above.
+    // When an intent is received for one of these the viewpager will jump to the corresponding
+    // Position from the title names.
+    public static final int FILTER_GENERAL = 0;
+    public static final int FILTER_GAMES = 1;
+    public static final int FILTER_FEEDS = 2;
+
+    public static Intent NewInstance(Context context, int preferenceType) {
+        Intent intent = new Intent(context, PreferencesActivity.class);
+        intent.putExtra(PREFERENCES_STARTING_WINDOW, preferenceType);
+        return intent;
+    }
+
     @PreferenceToggle private int activeItemState;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preferences_activity);
         activeItemState = ENABLE_TOGGLE;
+        int pagerLocation = FILTER_GENERAL;
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            pagerLocation = intent.getIntExtra(PREFERENCES_STARTING_WINDOW, 0);
+        }
 
         PreferencesTabAdapter adapter = new PreferencesTabAdapter(getSupportFragmentManager());
         ViewPager mPager = (ViewPager) findViewById(R.id.preferences_viewPager);
         TitlePageIndicator mIndicator = (TitlePageIndicator) findViewById(R.id.preferences_viewpager_indicator);
 
         mPager.setAdapter(adapter);
+        mPager.setCurrentItem(pagerLocation);
         mIndicator.setViewPager(mPager);
     }
 

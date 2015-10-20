@@ -1,6 +1,8 @@
 package watch.fight.android.fightbrowser.StreamBrowser;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import com.viewpagerindicator.LinePageIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Config.PreferencesActivity;
 import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
 import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.R;
@@ -79,61 +82,11 @@ public class BrowserActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_filter:
-                Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
+                startActivity(PreferencesActivity.NewInstance(this, PreferencesActivity.FILTER_GAMES));
                 return true;
-            case R.id.participants_action_refresh:
-                Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
-                return true;
-
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-
-//    public JSONObject getTestJson(int resId) {
-//        //Get Data From Text Resource File Contains Json Data.
-//        InputStream inputStream = getResources().openRawResource(resId);
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//
-//        int ctr;
-//        try {
-//            ctr = inputStream.read();
-//            while (ctr != -1) {
-//                byteArrayOutputStream.write(ctr);
-//                ctr = inputStream.read();
-//            }
-//            inputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Log.v("Text Data", byteArrayOutputStream.toString());
-//        try {
-//            // Parse the data into jsonobject to get original data in form of json.
-//            return (new JSONObject(byteArrayOutputStream.toString()));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-//
-//    public String getTestJsonString(int resId) {
-//        //Get Data From Text Resource File Contains Json Data.
-//        InputStream inputStream = getResources().openRawResource(resId);
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//
-//        int ctr;
-//        try {
-//            ctr = inputStream.read();
-//            while (ctr != -1) {
-//                byteArrayOutputStream.write(ctr);
-//                ctr = inputStream.read();
-//            }
-//            inputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return(byteArrayOutputStream.toString());
-//    }
 
 }

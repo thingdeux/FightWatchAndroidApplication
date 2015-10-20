@@ -90,23 +90,6 @@ public class ParticipantsHolder {
         }
     }
 
-//    public void filterDirtyMatches() {
-//        if (mMatches != null) {
-//            for (int i = 0; i < mMatches.size(); i++) {
-//                Match match = mMatches.get(i).getMatch();
-//                String p1 = match.getPlayerOneId();
-//                String p2 = match.getPlayerTwoId();
-//                if ((p1 != null && !p1.isEmpty()) || (p2 !=null && !p2.isEmpty())) {
-//                    Participant pa1 = mParticipants.get(p1);
-//                    Participant pa2 = mParticipants.get(p2);
-//                    if (mParticipants.get(p1) != null || mParticipants.get(p2) != null) {
-//                        mValidMatches.add(mMatches.get(i));
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public void addUpcomingMatch(Match match, int index) {
         /*
             I need to make sure that both matches have participants whom have valid names in the

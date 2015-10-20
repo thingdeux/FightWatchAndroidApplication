@@ -25,8 +25,7 @@ import watch.fight.android.fightbrowser.Utils.Network.PutRequest;
 public abstract class BracketSubmission {
     private static final String TAG = BracketSubmission.class.getSimpleName();
 
-    private static JSONObject createSubmissionObj(Event event, Bracket bracket,
-                                                 boolean isValidated, String reporter) {
+    private static JSONObject createSubmissionObj(Event event, Bracket bracket, String reporter) {
 
         /* EXAMPLE PUT REQUEST
         Url: /brackets/<event_id>
@@ -34,7 +33,6 @@ public abstract class BracketSubmission {
             "bracket_name": "SoCal Regionals Killer Instinct Top 32",
             "bracket_url": "http://challonge.com/SocalRegionalsBBCS2",
             "reporter_name": "12321312",
-            "is_validated": true
         }
         */
 
@@ -46,7 +44,6 @@ public abstract class BracketSubmission {
                 if (reporter != null) {
                     putObj.put("reporter_name", reporter);
                 }
-                putObj.put("is_validated", isValidated);
 
                 return putObj;
             } catch (JSONException exception) {
@@ -57,12 +54,11 @@ public abstract class BracketSubmission {
         return null;
     }
 
-    public static void submitBracket(Context context, Event event, Bracket bracket,
-                                     boolean isValidated, String reporter) {
+    public static void submitBracket(Context context, Event event, Bracket bracket, String reporter) {
 
         String putUrl = String.format("https://api.fgccompanion/brackets/%s",
                 "" + event.getId());
-        JSONObject putObj = createSubmissionObj(event, bracket, isValidated, reporter);
+        JSONObject putObj = createSubmissionObj(event, bracket, reporter);
 
         // TODO : May be useful to add a response listener to catch 404's or other errors at some point.
         // Fire and forget for now.

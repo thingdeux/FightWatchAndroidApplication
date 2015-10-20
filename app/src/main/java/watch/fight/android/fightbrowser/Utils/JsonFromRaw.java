@@ -43,3 +43,48 @@ public class JsonFromRaw {
         return getJsonObj(context, resId).toString();
     }
 }
+
+//    public JSONObject getTestJson(int resId) {
+//        //Get Data From Text Resource File Contains Json Data.
+//        InputStream inputStream = getResources().openRawResource(resId);
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//
+//        int ctr;
+//        try {
+//            ctr = inputStream.read();
+//            while (ctr != -1) {
+//                byteArrayOutputStream.write(ctr);
+//                ctr = inputStream.read();
+//            }
+//            inputStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Log.v("Text Data", byteArrayOutputStream.toString());
+//        try {
+//            // Parse the data into jsonobject to get original data in form of json.
+//            return (new JSONObject(byteArrayOutputStream.toString()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+//
+//    public String getTestJsonString(int resId) {
+//        //Get Data From Text Resource File Contains Json Data.
+//        InputStream inputStream = getResources().openRawResource(resId);
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//
+//        int ctr;
+//        try {
+//            ctr = inputStream.read();
+//            while (ctr != -1) {
+//                byteArrayOutputStream.write(ctr);
+//                ctr = inputStream.read();
+//            }
+//            inputStream.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return(byteArrayOutputStream.toString());
+//    }

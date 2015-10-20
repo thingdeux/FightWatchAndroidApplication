@@ -135,16 +135,13 @@ public class BracketActivity extends AppCompatActivity implements BasicAlertDial
     @Override
     public void onOk() {
         if (mBracket != null) {
-            Log.i("BracketActivity", "Would be sending: " + mBracket.getBracketName());
+            BracketSubmission.submitBracket(mContext, mEvent, mBracket, "Test");
         }
-        mBracket = null;
     }
 
     @Override
     public void onCancel() {
         // Intentionally blank
     }
-
-
 
 }

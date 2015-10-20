@@ -10,15 +10,20 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
 import watch.fight.android.fightbrowser.Brackets.Network.BracketSubmission;
+import watch.fight.android.fightbrowser.Brackets.models.Tournament;
 import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
+import watch.fight.android.fightbrowser.Events.models.Bracket;
+import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
+import watch.fight.android.fightbrowser.Utils.StringUtils;
 
 /**
  * Created by josh on 10/19/15.
@@ -32,6 +37,7 @@ public class BracketSearchActivity extends AppCompatActivity
     private WebView mWebView;
     private FloatingActionButton mEnabledFAB;
     private FloatingActionButton mDisabledFAB;
+    private TournamentWrapper foundTournament;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +51,22 @@ public class BracketSearchActivity extends AppCompatActivity
 
         mDisabledFAB = (FloatingActionButton) findViewById(R.id.bracket_add_floating_button_disabled);
         mEnabledFAB = (FloatingActionButton) findViewById(R.id.bracket_add_floating_button);
+        mEnabledFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (foundTournament != null && mEvent != null) {
+                    BracketDB.getInstance(mContext).addUserBracket(foundTournament, mEvent);
+                    if (foundTournament.getTournament().getName() != null) {
+                        String tournamentName = StringUtils.limitCharacters(foundTournament.getTournament().getName(), 35, true);
+                        String toastMessage = String.format(getResources().getString(R.string.bracket_added_toast_message), tournamentName);
+                        Toast.makeText(mContext, toastMessage, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
 
         mWebView = (WebView) findViewById(R.id.search_webview);
-        mWebView.loadUrl("http://challonge.com/tournaments");
+        mWebView.loadUrl("http://challonge.com/tournaments?q=");
         mWebView.getSettings().setJavaScriptEnabled(false);
         mContext = this;
         setupWebViewClient();
@@ -103,6 +122,7 @@ public class BracketSearchActivity extends AppCompatActivity
         if (response.getTournament() != null && response.getTournament().getName() != null) {
             Log.i(TAG, "Found Tournament: " + response.getTournament().getName());
         }
+        foundTournament = response;
         setFABState(true);
     }
 
@@ -122,4 +142,5 @@ public class BracketSearchActivity extends AppCompatActivity
         }
 
     }
+
 }

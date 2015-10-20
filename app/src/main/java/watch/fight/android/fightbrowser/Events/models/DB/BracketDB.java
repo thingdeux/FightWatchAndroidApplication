@@ -9,6 +9,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import watch.fight.android.fightbrowser.Brackets.models.Tournament;
+import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.DB.BracketDBSchema.BracketTable;
 import watch.fight.android.fightbrowser.Events.models.Event;
@@ -126,7 +128,7 @@ public class BracketDB {
             deleteBrackets(BracketTable.Cols.FK_EVENT_ID + " = ?", new String[]{"" + event_id});
         } else {
             deleteBrackets(BracketTable.Cols.FK_EVENT_ID + " = ? AND " + BracketTable.Cols.USER_ADDED + " = ?",
-                    new String[]{"" + event_id, "0" });
+                    new String[]{"" + event_id, "0"});
         }
 
     }
@@ -145,6 +147,17 @@ public class BracketDB {
         }
     }
 
+    public void deleteOneBracket(final Bracket b) {
+        if (b != null) {
+            if (b.getIsUserAdded() && b.getId() != null) {
+                mDatabase.delete(BracketTable.NAME,
+                        BracketTable.Cols._ID + " = ?",
+                        new String[] { b.getId().toString() }
+                        );
+            }
+        }
+    }
+
     private BracketCursorWrapper queryBrackets(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 BracketTable.NAME,
@@ -157,6 +170,19 @@ public class BracketDB {
         );
 
         return new BracketCursorWrapper(cursor);
+    }
+
+    public void addUserBracket(TournamentWrapper tournament, Event event) {
+        if (tournament.getTournament() != null) {
+            Tournament t = tournament.getTournament();
+            Bracket bracket = new Bracket();
+            bracket.setIsUserAdded(true);
+            bracket.setIsVerified(false);
+            bracket.setBracketType("1");
+            bracket.setBracketUrl(t.getFullChallongeUrl());
+            bracket.setBracketName(t.getName());
+            addBracket(bracket, event);
+        }
     }
 
     private static ContentValues getContentValues(Bracket bracket) {

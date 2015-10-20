@@ -1,17 +1,11 @@
 package watch.fight.android.fightbrowser.InformationFeeds;
 
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.List;
-
-import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryDB;
-import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryTrackerDB;
-import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 
@@ -61,7 +55,7 @@ public class InformationFeedsActivity extends AppCompatActivity {
         InformationFeedsFragment feedsFragment = (InformationFeedsFragment) getSupportFragmentManager().findFragmentById(
                 R.id.information_feed_main_fragment);
         switch (item.getItemId()) {
-            case R.id.action_refresh:
+            case R.id.participants_action_refresh:
 
                 if (feedsFragment != null) {
                     feedsFragment.onOptionsItemSelected(item);

@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".BrowserActivity">
 
-    <item android:id="@+id/action_refresh"
+    <item android:id="@+id/participants_action_refresh"
           android:title="@string/browser_action_refresh"
           android:orderInCategory="80"
           app:showAsAction="ifRoom|withText"/>

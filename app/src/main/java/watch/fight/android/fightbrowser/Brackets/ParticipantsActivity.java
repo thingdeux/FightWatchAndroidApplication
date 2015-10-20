@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -77,6 +78,7 @@ public class ParticipantsActivity extends AppCompatActivity
         if (mBracket != null) {
             // Make call to Challonge - pass response to onSuccess CB Above and build recyclerView
             ChallongeNetworkHandlers.getBracketTournamentInformation(this, mBracket, this, true, true);
+
         } else {
             setErrorState();
         }
@@ -85,7 +87,6 @@ public class ParticipantsActivity extends AppCompatActivity
         if (ap != null) {
             ap.setElevation(0);
         }
-
         setUILoading();
     }
 
@@ -167,6 +168,10 @@ public class ParticipantsActivity extends AppCompatActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_participants, menu);
 
+        if (mBracket != null) {
+            MenuItem f = menu.findItem(R.id.participants_action_delete);
+            f.setVisible(mBracket.getIsUserAdded());
+        }
         return true;
     }
 
@@ -185,9 +190,14 @@ public class ParticipantsActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_refresh:
+            case R.id.participants_action_refresh:
                 getBracketsFromChallonge();
 //                EventBus.getDefault().post(new ParticipantMenuEvent(ParticipantMenuEvent.REFRESH));
+                return true;
+            case R.id.participants_action_delete:
+                BracketDB.getInstance(this).deleteOneBracket(mBracket);
+                Toast.makeText(this, "DELETED", Toast.LENGTH_SHORT).show();
+                finish();
                 return true;
         }
 

@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_refresh"
+
+      <item android:id="@+id/participants_action_delete"
+            android:title="@string/participants_action_delete"
+            android:orderInCategory="60"
+            android:icon="@drawable/ic_delete_white"
+            android:visible="false"
+            app:showAsAction="ifRoom|withText"
+          />
+
+    <item android:id="@+id/participants_action_refresh"
           android:title="@string/information_menu_refresh_name"
           android:orderInCategory="80"
           android:icon="@drawable/ic_menu_refresh"

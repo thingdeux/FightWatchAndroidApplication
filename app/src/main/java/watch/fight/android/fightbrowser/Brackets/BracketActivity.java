@@ -54,21 +54,20 @@ public class BracketActivity extends AppCompatActivity {
         mFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//            // TODO : REMOVE - TEST
-//            Event event = EventDB.getInstance(c).getAllEvents().get(0);
-//            Bracket bracket = new Bracket();
-//            bracket.setBracketName("TEST BRACKET");
-//            bracket.setBracketUrl("http://127.0.0.1/Test");
-//            BracketSubmission.submitBracket(c, event, bracket, false, "Josh");
                 mContext.startActivity(BracketSearchActivity.NewInstance(mContext, mEvent.getId()));
             }
         });
+        Log.i("BracketActivity", "OnCreate");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        Log.i("BracketActivity", "OnResume");
+        if (mAdapter != null) {
+            mAdapter.refreshBracketContents();
+            Log.i("BracketActivity", "RefreshedBracketContents");
+        }
     }
 
     @Override
@@ -87,7 +86,5 @@ public class BracketActivity extends AppCompatActivity {
         intent.putExtra(BRACKET_EVENT_ID, eventId);
         return intent;
     }
-
-
 
 }

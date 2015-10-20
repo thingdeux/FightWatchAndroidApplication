@@ -8,9 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.LinePageIndicator;
-import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +81,7 @@ public class BrowserActivity extends AppCompatActivity {
             case R.id.action_filter:
                 Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.action_refresh:
+            case R.id.participants_action_refresh:
                 Toast.makeText(this, "Not Yet Implement", Toast.LENGTH_SHORT).show();
                 return true;
 

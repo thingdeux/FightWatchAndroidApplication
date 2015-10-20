@@ -81,6 +81,13 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
         });
     }
 
+    public void refreshBracketContents() {
+        if (mEvent != null && mEvent.getStoredBrackets(mContext) != null) {
+            mBrackets = mEvent.getStoredBrackets(mContext);
+            notifyDataSetChanged();
+        }
+    }
+
     public void bindBracketVerified(ViewHolder holder, final Bracket bracket) {
         Resources resources = mContext.getResources();
 

@@ -1,7 +1,13 @@
 package watch.fight.android.fightbrowser.Events.models;
 
+import android.content.Context;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import watch.fight.android.fightbrowser.Brackets.models.Tournament;
+import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
+import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
 
 /**
  * Created by josh on 9/16/15.
@@ -85,4 +91,5 @@ public class Bracket {
     public void setIsUserAdded(Boolean isUserAdded) {
         mIsUserAdded = isUserAdded;
     }
+
 }

@@ -50,7 +50,7 @@ public class InformationFeedsFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_refresh:
+            case R.id.participants_action_refresh:
                 setUILoading();
                 new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, true).execute();
                 return true;

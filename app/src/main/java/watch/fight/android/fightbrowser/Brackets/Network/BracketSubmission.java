@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import watch.fight.android.fightbrowser.Brackets.BracketSearchActivity;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.Utils.Network.NetworkRequest;
@@ -63,7 +64,8 @@ public abstract class BracketSubmission {
                 "" + event.getId());
         JSONObject putObj = createSubmissionObj(event, bracket, isValidated, reporter);
 
-        // TODO : May be useful to add a response listener to catch 404's or other errors
+        // TODO : May be useful to add a response listener to catch 404's or other errors at some point.
+        // Fire and forget for now.
         PutRequest<JSONObject> submitRequest = new PutRequest<>(putUrl, JSONObject.class, null,
                 putObj, null, null);
         RequestQueue queue = NetworkRequest.getInstance(context).getRequestQueue();
@@ -74,24 +76,9 @@ public abstract class BracketSubmission {
         return (url != null && url.contains("q="));
     }
 
-    public static boolean isValidChallongeBracket(String url, Context context) {
-        ChallongeAPI api = ChallongeAPI.getInstance(context);
-        Uri tournamentURI = api.getTournamentUri(url, false, false);
-        testChallongeBracket(tournamentURI, context);
-        return (tournamentURI != null);
-    }
-
-    public static void testChallongeBracket(Uri uri, Context context) {
-        RequestQueue queue = NetworkRequest.getInstance(context).getRequestQueue();
-
-        if (uri != null && context != null) {
-            // Hit the callback on the searchactivity when finished.
-            Response.Listener<String> responseListener = (Response.Listener) context;
-            Response.ErrorListener errorListener = (Response.ErrorListener) context;
-            StringRequest stringRequest = new StringRequest(uri.toString(), responseListener, errorListener);
-            Log.v(TAG, "Requesting Bracket -> " + uri);
-            queue.add(stringRequest);
-        }
+    public static void checkIfValidChallongeBracket(String url, Context context) {
+        BracketSearchActivity bsa = (BracketSearchActivity) context;
+        ChallongeNetworkHandlers.getTournamentInformation(context, url, bsa, false, false);
     }
 
 }

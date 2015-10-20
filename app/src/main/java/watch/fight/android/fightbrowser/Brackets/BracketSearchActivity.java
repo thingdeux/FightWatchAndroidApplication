@@ -7,29 +7,31 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import watch.fight.android.fightbrowser.Brackets.Network.BracketSubmission;
+import watch.fight.android.fightbrowser.Brackets.models.TournamentWrapper;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
 
 /**
  * Created by josh on 10/19/15.
  */
 public class BracketSearchActivity extends AppCompatActivity
-        implements Response.Listener<String>, Response.ErrorListener {
+        implements IVolleyResponse<TournamentWrapper> {
     public static final String TAG = BracketSearchActivity.class.getSimpleName();
     public static final String BRACKET_EVENT_ID = "watch.fight.android.fightbrowser.bracket.bracketsearchactivity.event_id";
     private Context mContext;
     private Event mEvent;
     private WebView mWebView;
-    private FloatingActionButton mFloatingAddButton;
+    private FloatingActionButton mEnabledFAB;
+    private FloatingActionButton mDisabledFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,8 @@ public class BracketSearchActivity extends AppCompatActivity
         }
         setContentView(R.layout.bracket_search_activity);
 
-        mFloatingAddButton = (FloatingActionButton) findViewById(R.id.bracket_add_floating_button);
+        mDisabledFAB = (FloatingActionButton) findViewById(R.id.bracket_add_floating_button_disabled);
+        mEnabledFAB = (FloatingActionButton) findViewById(R.id.bracket_add_floating_button);
 
         mWebView = (WebView) findViewById(R.id.search_webview);
         mWebView.loadUrl("http://challonge.com/tournaments");
@@ -57,8 +60,7 @@ public class BracketSearchActivity extends AppCompatActivity
         if (ap != null) {
             ap.setElevation(0);
         }
-        mFloatingAddButton.setEnabled(false);
-        mFloatingAddButton.hide();
+        setFABState(false);
     }
 
     @Override
@@ -83,8 +85,9 @@ public class BracketSearchActivity extends AppCompatActivity
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (BracketSubmission.isValidSearchQuery(url)) {
                     mWebView.loadUrl(url);
-                } else if (BracketSubmission.isValidChallongeBracket(url, mContext)) {
-                    Log.i(TAG, "Checking url: " + url);
+                } else {
+                    Log.v(TAG, "Checking url: " + url);
+                    BracketSubmission.checkIfValidChallongeBracket(url, mContext);
                 }
                 return true;
             }
@@ -96,15 +99,27 @@ public class BracketSearchActivity extends AppCompatActivity
     // The link attempts to parse out and hit a tournament api call, if it can success is returned.
     // And the floating action button is displayed. If not error.
     @Override
-    public void onResponse(String response) {
-        mFloatingAddButton.setEnabled(true);
-        mFloatingAddButton.show();
+    public void onSuccess(TournamentWrapper response) {
+        if (response.getTournament() != null && response.getTournament().getName() != null) {
+            Log.i(TAG, "Found Tournament: " + response.getTournament().getName());
+        }
+        setFABState(true);
     }
 
     @Override
-    public void onErrorResponse(VolleyError error) {
+    public void onFailure(VolleyError error) {
         Log.e(TAG, "Bracket Parse Error: " + error);
-        mFloatingAddButton.setEnabled(false);
-        mFloatingAddButton.hide();
+        setFABState(false);
+    }
+
+    private void setFABState(boolean isEnabled) {
+        if (isEnabled) {
+            mDisabledFAB.hide();
+            mEnabledFAB.show();
+        } else {
+            mDisabledFAB.show();
+            mEnabledFAB.hide();
+        }
+
     }
 }

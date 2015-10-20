@@ -35,8 +35,21 @@ public class ChallongeNetworkHandlers {
                                              Boolean includeParticipants, Boolean includeMatches) {
         ChallongeAPI api = ChallongeAPI.getInstance(context.getApplicationContext());
         RequestQueue queue = NetworkRequest.getInstance(context.getApplicationContext()).getRequestQueue();
-        queue.add(new GsonRequest<TournamentWrapper>(
+        queue.add(new GsonRequest<>(
                 api.getTournamentUri(bracket.getBracketUrl(), includeParticipants, includeMatches).toString(),
+                TournamentWrapper.class,
+                null,
+                ChallongeSuccessListener(callback),
+                ChallongeErrorListener(callback)
+        ));
+    }
+
+    public static void getTournamentInformation(Context context, String url, IVolleyResponse<TournamentWrapper> callback,
+                                                       Boolean includeParticipants, Boolean includeMatches) {
+        ChallongeAPI api = ChallongeAPI.getInstance(context.getApplicationContext());
+        RequestQueue queue = NetworkRequest.getInstance(context.getApplicationContext()).getRequestQueue();
+        queue.add(new GsonRequest<>(
+                api.getTournamentUri(url, includeParticipants, includeMatches).toString(),
                 TournamentWrapper.class,
                 null,
                 ChallongeSuccessListener(callback),

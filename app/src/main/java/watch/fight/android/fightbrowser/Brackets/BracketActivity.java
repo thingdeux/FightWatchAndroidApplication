@@ -1,5 +1,6 @@
 package watch.fight.android.fightbrowser.Brackets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,24 +15,30 @@ import android.widget.ImageButton;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import watch.fight.android.fightbrowser.Brackets.Network.BracketSubmission;
+import watch.fight.android.fightbrowser.Brackets.events.BracketSuggestEvent;
+import watch.fight.android.fightbrowser.Config.events.PreferenceToggleEvent;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.Dialogs.BasicAlertDialog;
 import watch.fight.android.fightbrowser.Utils.Network.PutRequest;
 
 
 /**
  * Created by josh on 10/5/15.
  */
-public class BracketActivity extends AppCompatActivity {
+public class BracketActivity extends AppCompatActivity implements BasicAlertDialog.BasicAlertButtonListener {
     public static String BRACKET_EVENT_ID = "watch.fight.android.fightbrowser.bracket.event_id";
     private RecyclerView mRecyclerView;
     private BracketAdapter mAdapter;
     private ImageButton mFloatingButton;
     private Event mEvent;
     private Context mContext;
+    private Bracket mBracket;
+    private Integer mVerifyType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +64,32 @@ public class BracketActivity extends AppCompatActivity {
                 mContext.startActivity(BracketSearchActivity.NewInstance(mContext, mEvent.getId()));
             }
         });
-        Log.i("BracketActivity", "OnCreate");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+    }
+
+    @Override
+    public void onStop() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onStop();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("BracketActivity", "OnResume");
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         if (mAdapter != null) {
             mAdapter.refreshBracketContents();
             Log.i("BracketActivity", "RefreshedBracketContents");
@@ -73,6 +99,9 @@ public class BracketActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -86,5 +115,36 @@ public class BracketActivity extends AppCompatActivity {
         intent.putExtra(BRACKET_EVENT_ID, eventId);
         return intent;
     }
+
+    public void onEvent(BracketSuggestEvent event) {
+        mBracket = event.mBracket;
+        mVerifyType = event.submissionType;
+
+        if (mVerifyType == BracketSuggestEvent.NEW_BRACKET) {
+            BasicAlertDialog bad = BasicAlertDialog.newInstance(R.string.dialog_submit_suggestion_header,
+                    R.string.dialog_suggest_custom_bracket_content);
+            bad.show(getSupportFragmentManager(), "Bracket Suggest");
+        } else {
+            BasicAlertDialog bad = BasicAlertDialog.newInstance(R.string.dialog_approve_suggestion_header,
+                    R.string.dialog_approve_community_bracket_content);
+            bad.show(getSupportFragmentManager(), "Bracket Approve");
+        }
+
+    }
+
+    @Override
+    public void onOk() {
+        if (mBracket != null) {
+            Log.i("BracketActivity", "Would be sending: " + mBracket.getBracketName());
+        }
+        mBracket = null;
+    }
+
+    @Override
+    public void onCancel() {
+        // Intentionally blank
+    }
+
+
 
 }

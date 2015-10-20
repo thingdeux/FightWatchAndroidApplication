@@ -1,5 +1,6 @@
 package watch.fight.android.fightbrowser.Brackets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+import watch.fight.android.fightbrowser.Brackets.events.BracketSuggestEvent;
+import watch.fight.android.fightbrowser.Config.events.PreferenceToggleEvent;
 import watch.fight.android.fightbrowser.Events.models.Bracket;
 import watch.fight.android.fightbrowser.Events.models.Event;
 import watch.fight.android.fightbrowser.R;
+import watch.fight.android.fightbrowser.Utils.Dialogs.BasicAlertDialog;
 
 
 /**
@@ -61,12 +66,27 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Bracket bracket = mBrackets.get(position);
 
+
         if (bracket.getIsVerified()) {
             holder.mVerifyButton.setEnabled(false);
             holder.mVerifyButton.setVisibility(View.INVISIBLE);
         } else {
+            int resourceID = (bracket.getIsUserAdded()) ?
+                    R.string.bracket_suggest_button_name : R.string.bracket_plus_one_button_name;
+
             holder.mVerifyButton.setEnabled(true);
             holder.mVerifyButton.setVisibility(View.VISIBLE);
+            holder.mVerifyButton.setText(resourceID);
+
+            holder.mVerifyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int suggestionType = (bracket.getIsUserAdded()) ?
+                            BracketSuggestEvent.NEW_BRACKET : BracketSuggestEvent.VERIFY_CURRENT_BRACKET;
+
+                    EventBus.getDefault().post(new BracketSuggestEvent(mBrackets.get(position), suggestionType));
+                }
+            });
         }
 
 

@@ -195,7 +195,7 @@ public class ParticipantsActivity extends AppCompatActivity
                 getBracketsFromChallonge();
                 return true;
             case R.id.participants_action_delete:
-                BasicAlertDialog d = BasicAlertDialog.newInstance(R.string.dialog_are_you_sure, R.string.dialog_delete_bracket_content);
+                BasicAlertDialog d = BasicAlertDialog.newInstance(R.string.dialog_are_you_sure_header, R.string.dialog_delete_bracket_content);
                 d.show(getSupportFragmentManager(), "Bracket Delete");
 
                 return true;

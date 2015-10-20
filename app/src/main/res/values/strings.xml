@@ -57,7 +57,8 @@
     <string name="events_brackets_button_name">Brackets</string>
     <string name="events_website_button_name">Website</string>
     <string name="bracket_view_open_button_name">View</string>
-    <string name="bracket_plus_one_button_name">Verify</string>
+    <string name="bracket_plus_one_button_name">Approve</string>
+    <string name="bracket_suggest_button_name">Suggest</string>
     <string name="bracket_search_add_button_name">Add</string>
 
     <!--Misc-->
@@ -87,8 +88,18 @@
     <string name="base_dialog_cancel">CANCEL</string>
 
     <!--Dialog Text-->
-    <string name="dialog_are_you_sure">Are you sure?</string>
+    <string name="dialog_are_you_sure_header">Are you sure?</string>
+    <string name="dialog_submit_suggestion_header">Submit Suggestion?</string>
+    <string name="dialog_approve_suggestion_header">Approve Suggestion?</string>
     <string name="dialog_delete_bracket_content">Stop Following This Bracket?</string>
+    <string name="dialog_suggest_custom_bracket_content">Suggest this bracket be added to this event?\n\n
+    This will send a message to the FGC Companion Servers for review and verification.  \n It may appear in other
+    users\' bracket list as \'Community Suggested\' in the interim.  \n\n Only send once,
+        additional submissions will be ignored and blocked. Thanks</string>
+
+    <string name="dialog_approve_community_bracket_content">Verify this bracket is legitimately part of this event?\n\n
+    This will send a message to the FGC Companion Servers for review and verification.  \n\n Only send once,
+        additional submissions will be ignored and blocked. Thanks</string>
 
     <string-array name="main_menu_options">
         <item>Dashboard</item>

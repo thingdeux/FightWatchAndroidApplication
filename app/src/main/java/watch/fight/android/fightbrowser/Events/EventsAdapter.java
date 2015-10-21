@@ -54,7 +54,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
     public EventsAdapter(Context c) {
         mContext = c;
-        mEvents = EventDB.getInstance(c.getApplicationContext()).getAllEvents();
+        mEvents = EventDB.getInstance(c.getApplicationContext()).getAllUpcomingEvents();
     }
 
     @Override

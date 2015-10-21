@@ -30,7 +30,11 @@ public class InformationFeedsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setUILoading();
-        new FetchFeeds.FetchStories(this, this.getActivity()).execute();
+        if (mAdapter != null) {
+//            new FetchFeeds.FetchStories(this, this.getActivity(), true).execute();
+            new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, true).execute();
+        }
+
     }
 
     @Override
@@ -59,7 +63,8 @@ public class InformationFeedsFragment extends Fragment {
                 Log.d(TAG, "Attempting to mark all stories as read");
                 List<Story> stories = StoryDB.getInstance(this.getActivity()).getAllUnfilteredStories();
                 StoryTrackerDB.getInstance(this.getActivity()).addStoryTrackers(stories);
-                new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, true).execute();
+                mAdapter.clearStories();
+                mAdapter.notifyDataSetChanged();
                 return true;
             case R.id.action_show_all:
                 new FetchFeeds.FetchStories(this.getActivity(), mAdapter, this, false).execute();

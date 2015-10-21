@@ -164,4 +164,8 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
 
     @Override
     public int getItemCount() { return mStories.size(); }
+
+    public void clearStories() {
+        this.mStories.clear();
+    }
 }

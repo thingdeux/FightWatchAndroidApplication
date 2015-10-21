@@ -103,7 +103,7 @@ public class DashboardBuilder extends AsyncTask<DashboardBuilder.DashboardBuilde
 
     private DashboardEntry buildEventsModule() {
         // Get Upcoming Events
-        List<Event> events = EventDB.getInstance(mContext).getAllEvents();
+        List<Event> events = EventDB.getInstance(mContext).getAllUpcomingEvents();
         if (events != null) {
             DashboardEntry dashboardEntry = new DashboardEntry();
             dashboardEntry.setType(DashboardEntry.EVENT_TYPE);

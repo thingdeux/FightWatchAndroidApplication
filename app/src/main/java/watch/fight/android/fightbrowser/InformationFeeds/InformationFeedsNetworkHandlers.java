@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -70,8 +71,7 @@ public class InformationFeedsNetworkHandlers {
                 feed.getRSSUrl(),
                 RSSFeed.class,
                 InformationFeedResponseListener(feed, context),
-                informationFeedErrorListener(feed.getRSSUrl(), context)
-        );
+                informationFeedErrorListener(feed.getRSSUrl(), context));
     }
 
     public static class VolleyRSSRequest<T> extends Request<T> {

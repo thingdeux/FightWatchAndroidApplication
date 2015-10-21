@@ -33,6 +33,7 @@
     <string name="browser_action_filter">Filter</string>
     <string name="participants_action_delete">Delete</string>
     <string name="preferences_action_toggle_reorder">ReOrder</string>
+    <string name="preferences_action_toggle_filter">Filter</string>
 
     <!--Menu Options -->
     <string name="information_menu_refresh_name">Refresh</string>

@@ -161,7 +161,7 @@
       ],
       "end_date": 1443592312000,
       "start_date": 1443592312000,
-      "last_updated": 1445198592
+      "last_updated": 1445366681612
     }, {
       "id": 34555,
       "name": "Evo 2015",
@@ -178,7 +178,7 @@
       ],
       "end_date": 1443592312000,
       "start_date": 1443592312000,
-      "last_updated": 1445198592
+      "last_updated": 1445366681612
 
     },  {
       "id": 1,
@@ -191,9 +191,35 @@
       ],
       "end_date": 1443592312000,
       "start_date": 1443592312000,
-      "last_updated": 1445198592
+      "last_updated": 1445366681612
+
+    },  {
+      "id": 2,
+      "name": "Millan Games Week",
+      "website": "http://www.gamesweek.it/gamesweek2015/",
+      "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/milan-games-week.png",
+      "flavor_text": "Millan Games Week",
+      "streams": [],
+      "brackets": [
+      ],
+      "end_date": 1445839200000,
+      "start_date": 1445605200000,
+      "last_updated": 1445366808033
+
+    },  {
+      "id": 3,
+      "name": "Capcom Cup Finals",
+      "website": "http://capcomcup.com/",
+      "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/capcom-cup.png",
+      "flavor_text": "For months on end, players have been battling in events all over the world for CPT points and qualification spots, in order to make it into Capcom Cup. Out of thousands of hopeful players, only 32 will make the cut and have a chance to compete for the title of Street Fighter World Champion and a shot at the massive $250,000 prize pool, making this THE must-attend tournament of the year.",
+      "streams": [],
+      "brackets": [
+      ],
+      "end_date": 1449473400000,
+      "start_date": 1449307800000,
+      "last_updated": 1445369106322
 
     }
   ],
-  "updated": 1445198592
+  "updated": 1445366681612
 }

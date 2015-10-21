@@ -35,6 +35,7 @@ public class PreferencesActivity extends AppCompatActivity {
     public static final int FILTER_GENERAL = 0;
     public static final int FILTER_GAMES = 1;
     public static final int FILTER_FEEDS = 2;
+    private MenuItem mReorderMenuItem;
 
     public static Intent NewInstance(Context context, int preferenceType) {
         Intent intent = new Intent(context, PreferencesActivity.class);
@@ -67,6 +68,7 @@ public class PreferencesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         ActionBar ap = getSupportActionBar();
         if (ap != null) {
             ap.setElevation(0);
@@ -109,6 +111,8 @@ public class PreferencesActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_preferences, menu);
+        mReorderMenuItem = menu.findItem(R.id.toggle_reorder_or_switch);
+
 
         return true;
     }
@@ -122,12 +126,21 @@ public class PreferencesActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.toggle_reorder_or_switch:
-                int changeTo = (activeItemState == PreferenceToggleEvent.ENABLE_REORDER) ? ENABLE_TOGGLE : ENABLE_REORDER;
+                activeItemState = (activeItemState == PreferenceToggleEvent.ENABLE_REORDER) ? ENABLE_TOGGLE : ENABLE_REORDER;
+                updateButtonName();
                 EventBus.getDefault().post(new PreferenceToggleEvent(activeItemState));
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateButtonName() {
+        if (mReorderMenuItem != null) {
+            mReorderMenuItem.setTitle(
+                    (activeItemState != PreferenceToggleEvent.ENABLE_REORDER)
+                            ? R.string.preferences_action_toggle_reorder : R.string.preferences_action_toggle_filter);
+        }
     }
 
 }

@@ -16,7 +16,7 @@ public class PreferenceToggleEvent {
     @IntDef({ENABLE_REORDER, ENABLE_TOGGLE})
     public @interface PreferenceToggle {}
 
-    @PreferenceToggle private int BUTTON_TO_ACTIVATE;
+    @PreferenceToggle public int BUTTON_TO_ACTIVATE;
 
     public PreferenceToggleEvent(@PreferenceToggle int toEnable) {
         this.BUTTON_TO_ACTIVATE = toEnable;

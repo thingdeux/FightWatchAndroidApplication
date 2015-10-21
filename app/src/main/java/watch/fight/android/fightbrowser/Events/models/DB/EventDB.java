@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import watch.fight.android.fightbrowser.Events.models.DB.EventDBSchema.EventTable;
@@ -57,6 +58,28 @@ public class EventDB {
 
         // Pass no where clause or args, will return everything.
         EventCursorWrapper cursor = queryEvents(null, null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                events.add(cursor.getEvent());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return events;
+    }
+
+    public List<Event> getAllUpcomingEvents() {
+        List<Event> events = new ArrayList<>();
+        GregorianCalendar now = new GregorianCalendar();
+        Long nowMil = now.getTimeInMillis();
+
+        // Pass no where clause or args, will return everything.
+        EventCursorWrapper cursor = queryEvents(
+                EventTable.Cols.START_DATE + " >= ?",
+                new String[] { "" + nowMil });
 
         try {
             cursor.moveToFirst();

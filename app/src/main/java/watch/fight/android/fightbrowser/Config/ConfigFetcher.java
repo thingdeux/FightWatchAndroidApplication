@@ -74,7 +74,6 @@ public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
 
             if (config != null) {
                 List<GameConfig> receivedGames = config.getGames();
-                // TODO : Only process if updated flag in response is > last update or null.
                 if (receivedGames != null && receivedGames.size() > 0) {
                     addNewGamesAsNecessary(receivedGames);
                 }

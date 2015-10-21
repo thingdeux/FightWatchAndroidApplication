@@ -63,9 +63,10 @@
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:paddingTop="10dp"
-                          android:layout_marginBottom="10dp"
+                          android:layout_marginBottom="15dp"
                           style="?android:titleTextStyle"
-                          tools:text="Event Details" />
+                          tools:text="Event Details"
+                          android:paddingRight="8dp"/>
 
 
 

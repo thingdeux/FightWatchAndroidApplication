@@ -29,7 +29,7 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 public class FetchFeeds {
     public static final String TAG = FetchFeeds.class.getSimpleName();
     public static final int ACCEPTABLE_TIME_SINCE_LAST_FEED_CHECK_IN_MINS = 30;
-    public static final int ACCEPTABLE_FEED_GATHER_TIME = 8000; // in ms
+    public static final int ACCEPTABLE_FEED_GATHER_TIME = 8000; // 8 seconds, in ms
     public static final int MAX_FEEDS_ACQUIRED_AYSNC = 4;
 
     public static class FetchStories extends AsyncTask<Void, Void, Boolean> {
@@ -53,9 +53,10 @@ public class FetchFeeds {
             mDashboardFragment = fragment;
         }
 
-        public FetchStories(final InformationFeedsFragment fragment, final FragmentActivity activity) {
+        public FetchStories(final InformationFeedsFragment fragment, final FragmentActivity activity, boolean isForcedRefresh) {
             mContext = activity;
             mInformationFeedsFragment = fragment;
+            mIsForcedRefresh = isForcedRefresh;
         }
 
         // Created to just allow for refreshing and re-population of stories without notifying a recyclerview.

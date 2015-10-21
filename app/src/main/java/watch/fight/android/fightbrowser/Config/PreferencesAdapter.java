@@ -100,13 +100,13 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
     public void bindGeneral(final ViewHolder holder, final int position) {
         final SharedPrefManager sharedPref = mSharedPrefManager.get(position);
         if (sharedPref != null) {
-            Log.i("PrefCheckAssigner", sharedPref.toString() + ": " + sharedPref.getValue());
             holder.mPrefLabel.setText(sharedPref.toString());
             holder.mToggleSwitch.setChecked(sharedPref.getValue());
-            holder.mToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            holder.mToggleSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    sharedPref.setValue(isChecked);
+                public void onClick(View v) {
+                    Switch clickedSwitch = (Switch) v.findViewById(R.id.preferences_toggle_switch);
+                    sharedPref.setValue(clickedSwitch.isChecked());
                 }
             });
         }
@@ -119,12 +119,13 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         if (feed != null && feed.getName() != null) {
             holder.mPrefLabel.setText(feed.getName());
             holder.mToggleSwitch.setChecked(!feed.getIsFiltered());
-            holder.mToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            holder.mToggleSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    FeedDB.getInstance(mContext).setFiltered(feed.getId(), !isChecked);
+                public void onClick(View v) {
+                    Switch clickedSwitch = (Switch) v.findViewById(R.id.preferences_toggle_switch);
+                    FeedDB.getInstance(mContext).setFiltered(feed.getId(), !clickedSwitch.isChecked());
                     // Because I'm not refreshing the dataset on button change, update the data used by the adapter.
-                    feed.setIsFiltered(!isChecked);
+                    feed.setIsFiltered(!clickedSwitch.isChecked());
                 }
             });
         }
@@ -137,12 +138,13 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         if (game != null && game.getGameName() != null) {
             holder.mPrefLabel.setText(game.getGameName());
             holder.mToggleSwitch.setChecked(!game.getIsFiltered());
-            holder.mToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            holder.mToggleSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    GameDB.getInstance(mContext).setFiltered(game.getId(), !isChecked);
+                public void onClick(View v) {
+                    Switch clickedSwitch = (Switch) v.findViewById(R.id.preferences_toggle_switch);
+                    GameDB.getInstance(mContext).setFiltered(game.getId(), !clickedSwitch.isChecked());
                     // Because I'm not refreshing the dataset on button change, update the data used by the adapter.
-                    game.setIsFiltered(!isChecked);
+                    game.setIsFiltered(!clickedSwitch.isChecked());
                 }
             });
 
@@ -192,12 +194,14 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
                 if (mFeeds != null) {
                     return mFeeds.size();
                 }
+                break;
             case PREFERENCES_FRAGMENT_GENERAL:
                 return mSharedPrefManager.size();
             case PREFERENCES_FRAGMENT_GAMES:
                 if (mGames != null) {
                     return mGames.size();
                 }
+                break;
         }
         return 0;
     }
@@ -225,31 +229,4 @@ public class PreferencesAdapter extends RecyclerView.Adapter<PreferencesAdapter.
         }
     }
 
-//    private void animateArrows(final ViewHolder holder, final int position) {
-//        int animationDelay = (position < getItemCount()) ? 1000 + (position*25) : 500;
-//        if (!isSwitchShowing) {
-//            if (holder.mArrowContainer.getVisibility() != View.VISIBLE) {
-//                holder.mArrowContainer.setAlpha(0f);
-//                holder.mArrowContainer.setVisibility(View.VISIBLE);
-//                holder.mArrowContainer.animate()
-//                        .alpha(100f)
-//                        .setDuration(animationDelay);
-//            }
-//        } else {
-//            if (holder.mArrowContainer.getVisibility() != View.GONE) {
-//                holder.mArrowContainer.animate()
-//                        .alpha(0f)
-//                        .setDuration(animationDelay)
-//                        .setListener(new AnimatorListenerAdapter() {
-//                            @Override
-//                            public void onAnimationEnd(Animator animation) {
-//                                super.onAnimationEnd(animation);
-//                                holder.mArrowContainer.setVisibility(View.GONE);
-//                            }
-//                        })
-//                ;
-//            }
-//
-//        }
-//    }
 }

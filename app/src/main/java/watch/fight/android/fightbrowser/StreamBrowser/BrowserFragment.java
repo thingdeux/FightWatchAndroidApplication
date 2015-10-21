@@ -99,7 +99,7 @@ public class BrowserFragment extends Fragment {
                     case BROWSER_FRAGMENT_GAME_SPECIFIC_TYPE:
                         if (gameName != null) {
                             mRecylerViewTitle.setText(gameName);
-                            loadTwitchStream("https://api.twitch.tv/kraken/search/streams?q=" + gameName.replace(" ", "%20") + "&limit=30", fragment_type);
+                            loadTwitchStream("https://api.twitch.tv/kraken/streams?game=" + gameName.replace(" ", "+") + "&limit=30", fragment_type);
                         } else {
                             throw new IllegalArgumentException("Game name required for a game specific fragment");
                         }

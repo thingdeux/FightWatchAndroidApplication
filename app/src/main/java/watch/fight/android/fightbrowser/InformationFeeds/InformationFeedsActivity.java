@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import de.greenrobot.event.EventBus;
+import watch.fight.android.fightbrowser.InformationFeeds.events.InformationFeedsUIStateEvent;
 import watch.fight.android.fightbrowser.R;
 import watch.fight.android.fightbrowser.Utils.SharedPreferences;
 

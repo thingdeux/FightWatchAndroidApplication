@@ -71,6 +71,7 @@
     <string name="fgc_name">FGC</string>
     <string name="search_tournaments_default_status">Search for brackets</string>
     <string name="search_tournaments_checking_status">Search for brackets</string>
+    <string name="no_new_stories_status">No New Stories Found</string>
 
     <!--Preferences labels-->
     <string name="dark_view_label">Enable Dark Viewing Mode</string>

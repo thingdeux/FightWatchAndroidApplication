@@ -20,10 +20,12 @@ import java.util.HashSet;
 import java.util.List;
 
 
+import de.greenrobot.event.EventBus;
 import watch.fight.android.fightbrowser.Config.models.Config;
 import watch.fight.android.fightbrowser.Config.models.DB.GameDB;
 import watch.fight.android.fightbrowser.Config.models.GameConfig;
 import watch.fight.android.fightbrowser.Dashboard.DashboardFragment;
+import watch.fight.android.fightbrowser.Dashboard.events.DashboardUIStateEvent;
 import watch.fight.android.fightbrowser.Events.models.DB.BracketDB;
 import watch.fight.android.fightbrowser.Events.models.DB.EventDB;
 import watch.fight.android.fightbrowser.Events.models.Event;
@@ -42,7 +44,8 @@ import watch.fight.android.fightbrowser.Utils.SharedPreferences;
  */
 public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
     // TODO : Set this to 24 hours before launch
-    private static final int CONFIG_CHECK_FREQUENCY_IN_HOURS = 0;
+    private static final int CONFIG_CHECK_FREQUENCY_IN_HOURS = 24;  // Currently in mins for debug change below
+    private static final int CONFIG_CHECK_FREQUENCY_IN_MINUTES = 15;  // Currently in mins for debug change below
     private static final String TAG = ConfigFetcher.class.getSimpleName();
     private static final String BASE_CONFIG_SERVER_URL = "https://api.fgccompanion.com";
     private Context mContext;
@@ -64,11 +67,12 @@ public class ConfigFetcher extends AsyncTask<Void, Void, Config> {
         // The "fixtures" will set the app to the latest state.
         // Call API Server - convert to Config Object return Config instance
         GregorianCalendar dateToCheckConfig = DateParser.epochToGregorian(SharedPreferences.getConfigLastUpdated(mContext));
-        dateToCheckConfig.add(Calendar.HOUR, CONFIG_CHECK_FREQUENCY_IN_HOURS);
+        dateToCheckConfig.add(Calendar.MINUTE, CONFIG_CHECK_FREQUENCY_IN_MINUTES);
         GregorianCalendar today = new GregorianCalendar();
 
         // If today > LastConfigUpdate + 24 hours -- Only check for new config once a day
         if (today.after(dateToCheckConfig)) {
+            EventBus.getDefault().post(new DashboardUIStateEvent(DashboardUIStateEvent.LOADING));
             // TODO : Actually make API call here instead of just getting test config.
             Config config = ConfigFetcher.getTestConfig(mContext);
 

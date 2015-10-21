@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import de.greenrobot.event.EventBus;
 import watch.fight.android.fightbrowser.Config.ConfigFetcher;
+import watch.fight.android.fightbrowser.Dashboard.events.DashboardUIStateEvent;
 import watch.fight.android.fightbrowser.InformationFeeds.FetchFeeds;
 import watch.fight.android.fightbrowser.R;
 
@@ -25,8 +27,10 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         new ConfigFetcher(this.getActivity(), this).execute();
-        setUILoading();
     }
 
     @Override
@@ -63,4 +67,30 @@ public class DashboardFragment extends Fragment {
             mRecyclerView.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+    }
+
+    @Override
+    public void onStop() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onStop();
+    }
+
+    public void onEventMainThread(DashboardUIStateEvent event) {
+        if (event.uiState == DashboardUIStateEvent.LOADING) {
+            setUILoading();
+        } else {
+            setUIReady();
+        }
+    }
+
 }

@@ -65,6 +65,7 @@
     <!--Misc-->
     <string name="loading_message_subtitle">Loading Content</string>
     <string name="bracket_vs_text">VS</string>
+    <string name="bracket_beat_text">BEAT</string>
     <string name="bracket_winner_formatted">Winner: %1$s</string>
     <string name="bracket_added_toast_message">Added Bracket: %1$s</string>
     <string name="dbinspector_app_name">FGC Comp. Debug DB</string>

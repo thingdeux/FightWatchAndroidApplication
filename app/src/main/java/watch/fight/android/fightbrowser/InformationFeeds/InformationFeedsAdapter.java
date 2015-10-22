@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+import watch.fight.android.fightbrowser.InformationFeeds.events.InformationFeedsUIStateEvent;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryTracker;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.StoryTrackerDB;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Story;
@@ -83,6 +85,13 @@ public class InformationFeedsAdapter extends RecyclerView.Adapter<InformationFee
             }
         } else {
             mStories = latestStories;
+        }
+
+        // Send message to the fragment to set UI state
+        if (mStories.size() < 1) {
+            EventBus.getDefault().post(new InformationFeedsUIStateEvent(InformationFeedsUIStateEvent.NO_NEW_FEEDS));
+        } else {
+            EventBus.getDefault().post(new InformationFeedsUIStateEvent(InformationFeedsUIStateEvent.NORMAL));
         }
 
     }

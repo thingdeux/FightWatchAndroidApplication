@@ -121,17 +121,20 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         final Participant p1 = mParticipants.get(match.getPlayerOneId());
         final Participant p2 = mParticipants.get(match.getPlayerTwoId());
 
-        holder.mPlayerOne.setText((p1 == null) ? "??" : p1.getName());
-        holder.mPlayerTwo.setText((p2 == null) ? "??" : p2.getName());
         if (match.getWinnerId() != null && p1 != null && p2 != null) {
             if (match.getWinnerId().equals(p1.getId())) {
-                holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
-                holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_text_disabled_material_light));
+                holder.mPlayerOne.setText(p1.getName());
+                holder.mPlayerTwo.setText(p2.getName());
             } else if (match.getWinnerId().equals(p2.getId())) {
-                holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
-                holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.primary_text_disabled_material_light));
+                holder.mPlayerOne.setText(p2.getName());
+                holder.mPlayerTwo.setText(p1.getName());
             }
+            holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.primary_dark_fgc));
+            holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.primary_text_disabled_material_light));
+            holder.mVs.setText(R.string.bracket_beat_text);
         } else {
+            holder.mPlayerOne.setText((p1 != null) ? p1.getName() : "??");
+            holder.mPlayerOne.setText((p2 != null) ? p2.getName() : "??");
             holder.mPlayerTwo.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
             holder.mPlayerOne.setTextColor(mContext.getResources().getColor(R.color.abc_primary_text_material_light));
         }

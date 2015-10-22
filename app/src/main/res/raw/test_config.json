@@ -216,10 +216,21 @@
       "brackets": [
       ],
       "end_date": 1449473400000,
-      "start_date": 1449307800000,
-      "last_updated": 1445369106322
+      "start_date": 1449473400000,
+      "last_updated": 1445368673645
 
+    }, {
+      "id": 446,
+      "name": "Wednesday Night Fights",
+      "website": "http://www.levelup-series.com/",
+      "header_image_url": "http://fgccompanion-79b.kxcdn.com/tournaments/levelup.png",
+      "flavor_text": "It's been about a year since Wednesday Night Fights departed from their local tournament setting, but starting October 21st, LevelUp is raring up to put on the biggest and baddest WNF to date. Boasting a brand new, multi-level eSports arena in Santa Ana, California, WNF plans to make its return in no small way.",
+      "streams": [""],
+      "brackets": [],
+      "end_date": 1445605860000,
+      "start_date": 1445433060000,
+      "last_updated": 1445404447073
     }
   ],
-  "updated": 1445366681612
+  "updated": 1445404447073
 }

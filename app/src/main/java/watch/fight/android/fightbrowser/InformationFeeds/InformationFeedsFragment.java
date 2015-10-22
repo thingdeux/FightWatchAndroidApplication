@@ -113,8 +113,7 @@ public class InformationFeedsFragment extends Fragment {
     public void onEventMainThread(InformationFeedsUIStateEvent event) {
         switch (event.stateToSet) {
             case InformationFeedsUIStateEvent.NO_NEW_FEEDS:
-                mNoNewFeeds.setVisibility(View.VISIBLE);
-                mRecyclerView.setVisibility(View.INVISIBLE);
+                setUINoNewFeeds();
                 break;
             case InformationFeedsUIStateEvent.LOADING:
                 setUILoading();

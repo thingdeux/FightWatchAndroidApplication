@@ -35,10 +35,15 @@ import watch.fight.android.fightbrowser.Utils.Network.IVolleyResponse;
 public class ParticipantsActivity extends AppCompatActivity
         implements IVolleyResponse<TournamentWrapper>,  BasicAlertDialog.BasicAlertButtonListener {
     private static final String[] INDICATOR_TITLE_NAMES = new String[] { "Who's Left", "Battlelog", "Upcoming Matches", "Player Roster"};
+    private static final int WHOS_LEFT_TAB = 0;
+    private static final int BATTLELOG_TAB = 1;
+    private static final int UPCOMING_MATCHES_TAB = 2;
+    private static final int PLAYER_ROSTER_TAB = 3;
     public static String BRACKET_ID = "watch.fight.android.fightbrowser.brackets.participants.bracket";
     private View mParticipantsContainer;
     private Bracket mBracket;
     private View mLoadingContainer;
+    private ViewPager mViewPager;
 
     // TODO : IVolleyResponse makes this Activity way too unyieldy, refactor
 
@@ -74,19 +79,15 @@ public class ParticipantsActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         Integer BracketId = intent.getIntExtra(BRACKET_ID, -1);
-
         mBracket = BracketDB.getInstance(this).getBracket(BracketId);
-        if (mBracket != null) {
-            // Make call to Challonge - pass response to onSuccess CB Above and build recyclerView
-            ChallongeNetworkHandlers.getBracketTournamentInformation(this, mBracket, this, true, true);
-
-        } else {
-            setErrorState();
-        }
+        getBracketsFromChallonge();
 
         ActionBar ap = getSupportActionBar();
         if (ap != null) {
             ap.setElevation(0);
+            if (mBracket != null && mBracket.getBracketName() != null) {
+                ap.setTitle(mBracket.getBracketName());
+            }
         }
         setUILoading();
     }
@@ -135,14 +136,15 @@ public class ParticipantsActivity extends AppCompatActivity
     public void initViewPager() {
         // Setup FragmentManager
         ParticipantTabAdapter adapter = new ParticipantTabAdapter(getSupportFragmentManager());
-        ViewPager mPager = (ViewPager) findViewById(R.id.participant_viewPager);
+        mViewPager = (ViewPager) findViewById(R.id.participant_viewPager);
         TitlePageIndicator mIndicator = (TitlePageIndicator) findViewById(R.id.participant_viewPager_indicator);
 
-        mPager.setAdapter(adapter);
-        mIndicator.setViewPager(mPager);
+        mViewPager.setAdapter(adapter);
+        mIndicator.setViewPager(mViewPager);
+        determineViewPagerStartTab();
     }
 
-    // Extension of pager adapter to name tabs in tabpageindicator
+    // Extension of pager adapter to name tabs in tabpageindicator for viewpagernotification
     class ParticipantTabAdapter extends FragmentPagerAdapter {
         public ParticipantTabAdapter(FragmentManager fm) {
             super(fm);
@@ -176,6 +178,17 @@ public class ParticipantsActivity extends AppCompatActivity
         return true;
     }
 
+    public void determineViewPagerStartTab() {
+        // Send Viewpager to 'Battlelog' if the tournament is complete.
+        ParticipantsHolder holder = ParticipantsHolder.getInstance(this);
+        if (holder != null) {
+            if (!holder.isTournamentActive()) {
+                mViewPager.setCurrentItem(BATTLELOG_TAB);
+            }
+        }
+
+    }
+
     public void getBracketsFromChallonge() {
         if (mBracket != null) {
             // Make call to Challonge - pass response to onSuccess CB Above and build recyclerView
@@ -204,6 +217,7 @@ public class ParticipantsActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    // Dialog window callbacks
     @Override
     public void onOk() {
         BracketDB.getInstance(this).deleteOneBracket(mBracket);

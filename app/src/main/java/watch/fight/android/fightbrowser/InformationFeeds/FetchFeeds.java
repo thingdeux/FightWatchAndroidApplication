@@ -16,6 +16,7 @@ import de.greenrobot.event.EventBus;
 import watch.fight.android.fightbrowser.Dashboard.DashboardActivity;
 import watch.fight.android.fightbrowser.Dashboard.DashboardBuilder;
 import watch.fight.android.fightbrowser.Dashboard.DashboardFragment;
+import watch.fight.android.fightbrowser.Dashboard.events.DashboardUIStateEvent;
 import watch.fight.android.fightbrowser.InformationFeeds.events.InformationFeedsUIStateEvent;
 import watch.fight.android.fightbrowser.InformationFeeds.models.Feed;
 import watch.fight.android.fightbrowser.InformationFeeds.models.DB.FeedDB;
@@ -55,12 +56,6 @@ public class FetchFeeds {
             mDashboardFragment = fragment;
         }
 
-//        public FetchStories(final InformationFeedsFragment fragment, final FragmentActivity activity, boolean isForcedRefresh) {
-//            mContext = activity;
-//            mInformationFeedsFragment = fragment;
-//            mIsForcedRefresh = isForcedRefresh;
-//        }
-
         // Created to just allow for refreshing and re-population of stories without notifying a recyclerview.
         public FetchStories(Context c) {
             mContext = c;
@@ -75,6 +70,7 @@ public class FetchFeeds {
             // Feed schedule will be set on the fragment, but sharedpref will determine whether or not the correct amount
             // of time has passed (in case the app goes to sleep or does something else, don't want it to reset the clock)
             if (today.after(date) || mIsForcedRefresh) {
+                EventBus.getDefault().post(new DashboardUIStateEvent(DashboardUIStateEvent.LOADING));
                 updateStories();
                 SharedPreferences.setFeedsLastUpdatedToNow(mContext);
                 return true;
@@ -94,13 +90,15 @@ public class FetchFeeds {
                 mAdapter.notifyDataSetChanged();
             }
 
-            EventBus.getDefault().post(
-                    new InformationFeedsUIStateEvent(InformationFeedsUIStateEvent.NORMAL));
-
-            if (didPollRSSFeeds) {
-                Toast t = Toast.makeText(mContext, "Checked New Feeds!", Toast.LENGTH_SHORT);
-                t.show();
+            if (mDashboardFragment != null) {
+                EventBus.getDefault().post(
+                        new DashboardUIStateEvent(DashboardUIStateEvent.READY));
             }
+
+//            if (didPollRSSFeeds) {
+//                Toast t = Toast.makeText(mContext, "Checked New Feeds!", Toast.LENGTH_SHORT);
+//                t.show();
+//            }
         }
 
         private void updateStories() {

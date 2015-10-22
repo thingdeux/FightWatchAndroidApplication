@@ -179,11 +179,16 @@ public class ParticipantsActivity extends AppCompatActivity
     }
 
     public void determineViewPagerStartTab() {
-        // Send Viewpager to 'Battlelog' if the tournament is complete.
         ParticipantsHolder holder = ParticipantsHolder.getInstance(this);
         if (holder != null) {
             if (!holder.isTournamentActive()) {
-                mViewPager.setCurrentItem(BATTLELOG_TAB);
+                if (holder.getMatches() != null && holder.getMatches().size() > 0) {
+                    // Send Viewpager to 'Battlelog' if the tournament isn't active and there are matches.
+                    mViewPager.setCurrentItem(BATTLELOG_TAB);
+                } else {
+                    // Send Viewpager to 'Player Roster' otherwise.
+                    mViewPager.setCurrentItem(PLAYER_ROSTER_TAB);
+                }
             }
         }
 

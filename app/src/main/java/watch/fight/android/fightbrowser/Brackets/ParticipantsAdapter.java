@@ -66,7 +66,7 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
         mMatches = pHolder.getMatches();
         mValidMatches = pHolder.getValidMatches();
         mParticipants = pHolder.getParticipants();
-        mActiveParticipants = pHolder.getActiveParticipantIds();
+        mActiveParticipants = pHolder.getActiveParticipants();
         mUpcomingMatches = pHolder.getUpcomingMatches();
         mIsTournamentActive = pHolder.isTournamentActive();
         mAllParticipants = pHolder.getAllParticipants();
@@ -141,16 +141,14 @@ public class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapte
     }
 
     public void bindWhosLeft(final ViewHolder holder, final int position) {
-        final String participantId = mActiveParticipants.get(position);
-        Participant p = mParticipants.get(participantId);
-        holder.mPlayerName.setText((p != null) ? p.getName() : "??");
+        String participantName = mActiveParticipants.get(position);
+        holder.mPlayerName.setText((participantName != null) ? participantName : "??");
     }
 
     public void bindRoster(final ViewHolder holder, final int position) {
-        final String participantId = mAllParticipants.get(position);
-        Participant p = mParticipants.get(participantId);
-        if (p != null) {
-            holder.mPlayerName.setText(p.getName());
+        String participantName = mAllParticipants.get(position);
+        if (participantName != null && !participantName.isEmpty()) {
+            holder.mPlayerName.setText(participantName);
         } else {
             holder.mPlayerName.setText("??");
         }

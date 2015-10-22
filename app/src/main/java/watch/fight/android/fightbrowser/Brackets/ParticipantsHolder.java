@@ -1,8 +1,11 @@
 package watch.fight.android.fightbrowser.Brackets;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,8 +24,8 @@ public class ParticipantsHolder {
     private static ParticipantsHolder sParticipantsHolder;
     private TournamentWrapper data;
     private List<MatchWrapper> mUpcomingMatches = new ArrayList<>();
-    private HashSet<String> mActiveParticipants = new HashSet<>();
-    private List<String> mActiveParticipantIds = new ArrayList<>();
+    private HashSet<String> mActiveParticipantSet = new HashSet<>();
+    private List<String> mActiveParticipants = new ArrayList<>();
     private List<String> mAllParticipants = new ArrayList<>();
     private HashMap<String, Participant> mParticipants = new HashMap<>();
     private List<MatchWrapper> mMatches = new ArrayList<>();
@@ -59,15 +62,18 @@ public class ParticipantsHolder {
                     addUpcomingMatch(m, i);
                 }
             }
-            for (String s : mActiveParticipants) {
-                mActiveParticipantIds.add(s);
+
+            for (String s : mActiveParticipantSet) {
+                mActiveParticipants.add(s);
             }
+
+            Collections.sort(mActiveParticipants, String.CASE_INSENSITIVE_ORDER);
         }
     }
 
     public void addActivePlayer(String id) {
-        if (id != null && !id.isEmpty()) {
-            mActiveParticipants.add(id);
+        if (id != null && !id.isEmpty() && mParticipants.get(id) != null) {
+            mActiveParticipantSet.add(mParticipants.get(id).getName());
         }
     }
 
@@ -77,8 +83,12 @@ public class ParticipantsHolder {
             for (int i = 0; i < participants.size(); i++) {
                 p = participants.get(i).getParticipant();
                 mParticipants.put(p.getId().toString(), p);
-                mAllParticipants.add(p.getId().toString());
+                if (p.getName() != null && !p.getName().isEmpty()) {
+                    mAllParticipants.add(p.getName());
+                }
             }
+
+            Collections.sort(mAllParticipants, String.CASE_INSENSITIVE_ORDER);
         }
     }
 
@@ -145,8 +155,8 @@ public class ParticipantsHolder {
         return mIsTournamentActive;
     }
 
-    public List<String> getActiveParticipantIds() {
-        return mActiveParticipantIds;
+    public List<String> getActiveParticipants() {
+        return mActiveParticipants;
     }
 
     public List<String> getAllParticipants() {
@@ -159,8 +169,8 @@ public class ParticipantsHolder {
 
     public void wipe() {
         mAllParticipants.clear();
-        mActiveParticipantIds.clear();
         mActiveParticipants.clear();
+        mActiveParticipantSet.clear();
         mValidMatches.clear();
         mParticipants.clear();
         mMatches.clear();

@@ -1,6 +1,8 @@
 # Fight.Watch Android Application
 Fight Watch Android Application
 
+(Moved continued development to private repo. for paid features)
+
 Android Application for the FGC (Fighting Game Community)
 
 Dependencies

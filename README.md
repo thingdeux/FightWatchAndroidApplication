@@ -1,4 +1,4 @@
-# Fight.Watch Android Application
+# Fight.Watch Android Application (Moved Oct.23rd to private)
 Fight Watch Android Application
 
 (Moved continued development to private repo. for paid features)

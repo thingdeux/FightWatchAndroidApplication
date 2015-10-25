@@ -1,7 +1,7 @@
 # Fight.Watch Android Application (Moved Oct.23rd to private)
 Fight Watch Android Application
 
-(Moved continued development to private repo. for paid features)
+(Moved continued development to private repo. for paid features - *lots of updates and bugfixes*)
 
 Android Application for the FGC (Fighting Game Community)
 
